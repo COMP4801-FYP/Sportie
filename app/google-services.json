@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1092062534112",
+    "project_id": "sportie-a3ce0",
+    "storage_bucket": "sportie-a3ce0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092062534112:android:71625552e3b92e0bc07385",
+        "android_client_info": {
+          "package_name": "hk.hkucs.sportieapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092062534112-4h72222k54vu8lur4o1a5ghngv3dluod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Tpp1oSQmJYfbfiDirShezQ4vZ1fx9Ns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092062534112-4h72222k54vu8lur4o1a5ghngv3dluod.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
