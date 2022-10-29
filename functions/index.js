@@ -41,7 +41,7 @@ exports.countPlayers = functions.https.onCall(async(data,context)=>{
       videoContext: {
         personDetectionConfig: {
           // Must set includeBoundingBoxes to true to get poses and attributes.
-          includeBoundingBoxes: true,
+//          includeBoundingBoxes: true,
           // includePoseLandmarks: true,
           // includeAttributes: true,
         },
