@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Sportie</string>
+
+    <string name="title_profile">Profile</string>
+
+    <string name="nav_booking">Booking</string>
+    <string name="nav_groups">Groups</string>
+    <string name="nav_home">Add</string>
+    <string name="nav_friends">Friends</string>
+    <string name="nav_profile">Profile</string>
 </resources>

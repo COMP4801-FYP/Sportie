@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/button_background"
+    tools:context=".activities.RegisterActivity">
+
+<!--    <ImageView-->
+<!--        android:id="@+id/signUpLogoImage"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="86dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@drawable/snap_split_logo_blue"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <hk.hkucs.sportieapplication.utils.STextViewBold
+        android:id="@+id/signUpLogoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="Sportie"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/signUpLogoImage">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+            <hk.hkucs.sportieapplication.utils.STextViewBold
+                android:id="@+id/signUpRegisterText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="REGISTER"
+                android:textColor="@color/green3"
+                android:textSize="30sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/signUpLogoImage" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpFirstNameLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:boxStrokeColor="@color/green1"
+                app:hintTextColor="@color/darkgreen3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signUpRegisterText" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameEt"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First name"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpLastNameLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/green1"
+                app:hintTextColor="@color/darkgreen3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signUpFirstNameLayout" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastNameEt"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last name"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpEmailLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/green1"
+                app:hintTextColor="@color/darkgreen3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signUpLastNameLayout" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEt"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email ID"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpPasswordLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/green1"
+                app:hintTextColor="@color/darkgreen3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signUpEmailLayout"
+                app:passwordToggleEnabled="true" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passEt"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpConfirmPassLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/green1"
+                app:hintTextColor="@color/darkgreen3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signUpPasswordLayout"
+                app:passwordToggleEnabled="true" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirmPassEt"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm password"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signUpButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="@color/green3"
+                android:text="REGISTER"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signUpConfirmPassLayout" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signUpButton" >
+
+                <hk.hkucs.sportieapplication.utils.STextView
+                    android:id="@+id/signUpAccountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/clickable_text_view_padding"
+                    android:text="Already have an account?"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/lbl_text_view_textSize" />
+
+                <hk.hkucs.sportieapplication.utils.STextViewBold
+                    android:id="@+id/signUpLogInText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/clickable_text_view_padding"
+                    android:text="Log in now!"
+                    android:textColor="@color/green3"
+                    android:textSize="@dimen/lbl_text_view_textSize" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

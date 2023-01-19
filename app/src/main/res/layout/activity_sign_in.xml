@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SignInActivity"
+    android:background="@drawable/button_background">
+
+<!--    <ImageView-->
+<!--        android:id="@+id/signInLogoImage"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="86dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@drawable/snap_split_logo_blue"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <hk.hkucs.sportieapplication.utils.STextViewBold
+        android:id="@+id/signInLogoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="Sportie"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/signInLogoImage"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <hk.hkucs.sportieapplication.utils.STextViewBold
+                    android:id="@+id/signInLogInText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="LOG IN"
+                    android:textColor="@color/green3"
+                    android:textSize="30sp"
+                    android:layout_gravity="center"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/signInEmailLayout"
+                    style="@style/LoginTextInputOuterFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:boxStrokeColor="@color/green1"
+                    app:hintTextColor="@color/darkgreen3"
+                    android:layout_gravity="center">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailEt"
+                        style="@style/LoginTextInputInnerFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email ID"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/signInPasswordLayout"
+                    style="@style/LoginTextInputOuterFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:boxStrokeColor="@color/green1"
+                    app:hintTextColor="@color/darkgreen3"
+                    android:layout_gravity="center"
+                    app:passwordToggleEnabled="true" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passEt"
+                        style="@style/LoginTextInputInnerFieldStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/signInButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="75dp"
+                    android:background="@color/green3"
+                    android:text="SIGN IN"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/signInButton" >
+
+                    <hk.hkucs.sportieapplication.utils.STextView
+                        android:id="@+id/signInAccountText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/clickable_text_view_padding"
+                        android:text="Don't have an account?"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/lbl_text_view_textSize" />
+
+                    <hk.hkucs.sportieapplication.utils.STextViewBold
+                        android:id="@+id/signInRegisterText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/clickable_text_view_padding"
+                        android:text="Register now!"
+                        android:textColor="@color/green3"
+                        android:textSize="@dimen/lbl_text_view_textSize" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

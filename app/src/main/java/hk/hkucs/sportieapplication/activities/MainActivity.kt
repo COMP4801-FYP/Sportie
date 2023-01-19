@@ -1,6 +1,6 @@
-package hk.hkucs.sportieapplication
+package hk.hkucs.sportieapplication.activities
 
-import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,16 +9,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.android.gms.tasks.OnFailureListener
 
-import com.google.firebase.firestore.DocumentReference
-
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
+import hk.hkucs.sportieapplication.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 //            temp.addOnSuccessListener {
 //                Log.d("TAG",temp.getResult())
 //            }
+            saveFireStore(inputFirstName.getText().toString(),inputLastName.getText().toString())
             val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
             val playerCount: Task<String> = countPlayers();
             playerCount.addOnSuccessListener {
@@ -99,5 +96,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "record added unsuccessful", Toast.LENGTH_SHORT).show();
             }
     }
+
+    fun switchActivity(){
+        val intent = Intent(this, GeodataActivity::class.java)
+        startActivity(intent)
+    }
+
+
+
 
 }

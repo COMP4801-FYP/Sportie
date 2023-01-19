@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/booking"
+        android:title="@string/nav_booking"
+        android:icon="@drawable/booking"/>
+    <item
+        android:id="@+id/groups"
+        android:title="@string/nav_groups"
+        android:icon="@drawable/groups"/>
+    <item
+        android:id="@+id/home"
+        android:title="@string/nav_home"
+        android:icon="@drawable/add"/>
+    <item
+        android:id="@+id/friends"
+        android:title="@string/nav_friends"
+        android:icon="@drawable/friends"/>
+    <item
+        android:id="@+id/profile"
+        android:title="@string/nav_profile"
+        android:icon="@drawable/profile"/>
+</menu>
