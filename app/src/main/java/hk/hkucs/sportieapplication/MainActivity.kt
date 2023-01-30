@@ -30,19 +30,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         functions = Firebase.functions // initialize Firebase functions
-
-        val inputFirstName = findViewById<EditText>(R.id.inputFirstName);
-        val inputLastName = findViewById<EditText>(R.id.inputLastName);
+//
+//        val inputFirstName = findViewById<EditText>(R.id.inputFirstName);
+//        val inputLastName = findViewById<EditText>(R.id.inputLastName);
 
 
         val saveButton = findViewById<Button>(R.id.saveButton);
         saveButton.setOnClickListener{
-//            val temp: Task<String> = addMessage(inputFirstName.text.toString());
-//            temp.addOnSuccessListener {
-//                Log.d("TAG",temp.getResult())
-//            }
+            Log.d("TAG", "saveButton pressed")
+//            countPlayersImages();
+            Log.d("TAG", "1");
             val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
-            val playerCount: Task<String> = countPlayers();
+            Log.d("TAG", "2");
+            val playerCount: Task<String> = countPlayersImages();
+            Log.d("TAG", "3");
             playerCount.addOnSuccessListener {
                 Log.d("TAG","Counting player succeed")
                 val count = playerCount.getResult()
@@ -50,6 +51,34 @@ class MainActivity : AppCompatActivity() {
                 numOfPlayersTextView.text = count;
             }
         }
+//        saveButton.setOnClickListener{
+////            val temp: Task<String> = addMessage(inputFirstName.text.toString());
+////            temp.addOnSuccessListener {
+////                Log.d("TAG",temp.getResult())
+////            }
+//            Log.d("TAG","Save Button pressed")
+//
+//            val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
+//            val playerCount: Task<String> = countPlayers();
+//            playerCount.addOnSuccessListener {
+//                Log.d("TAG","Counting player succeed")
+//                val count = playerCount.getResult()
+//                Log.d("TAG",count)
+//                numOfPlayersTextView.text = count;
+//            }
+//
+//
+//        }
+    }
+
+    private fun countPlayersImages(): Task<String>{
+        return functions
+            .getHttpsCallable("countPlayersImages")
+            .call()
+            .continueWith{task->
+                val result = task.result?.data as String
+                result
+            }
     }
 
     // Sample function to count players based on a video

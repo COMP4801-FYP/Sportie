@@ -155,30 +155,11 @@ admin.initializeApp();
 
 const {ImageAnnotatorClient} = require('@google-cloud/vision').v1;
 
-
 const inputImageUriArray = ['gs://sportie-a3ce0.appspot.com/1.png',
   'gs://sportie-a3ce0.appspot.com/2.png',
   'gs://sportie-a3ce0.appspot.com/3.png',
   'gs://sportie-a3ce0.appspot.com/4.png',
   'gs://sportie-a3ce0.appspot.com/5.png']
-
-//async function getImageCounts(){
-//  var countArray = [];
-//  const client = new ImageAnnotatorClient();
-//  inputImageUriArray.forEach(async function(inputImageUri){
-//    const [result] = await client.objectLocalization(inputImageUri);
-//    const objects = result.localizedObjectAnnotations;
-//    var count = 0;
-//    objects.forEach(object => {
-//      if (object.name == 'Person' && object.score >= 0.8){
-//        count += 1;
-//      }
-//    });
-//    countArray.push(count)
-//  })
-//  console.log(countArray);
-//  return countArray;
-//}
 
 exports.countPlayersImages = functions.https.onCall(async(data,context)=>{
 //  const inputImageUri = 'gs://sportie-a3ce0.appspot.com/Screenshot 2023-01-12 at 4.59.01 PM.png';
@@ -189,8 +170,10 @@ exports.countPlayersImages = functions.https.onCall(async(data,context)=>{
   for (var i = 0; i < inputImageUriArray.length; i++){
     const [result] = await client.objectLocalization(inputImageUriArray[i]);
     const objects = result.localizedObjectAnnotations;
+
     var count = 0;
     objects.forEach(object => {
+      console.log(object)
       if (object.name == 'Person' && object.score >= 0.8){
         count += 1;
       }
@@ -204,5 +187,6 @@ exports.countPlayersImages = functions.https.onCall(async(data,context)=>{
   console.log(countAvg);
   const db = getFirestore();
   await db.collection('testVenueCollection').doc('testVenue').update({player_count: countAvg});
-
+  console.log('finisheedddd!!');
+  return countAvg.toString();
 })
