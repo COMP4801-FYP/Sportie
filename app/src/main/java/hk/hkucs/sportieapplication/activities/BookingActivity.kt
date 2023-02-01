@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import dmax.dialog.SpotsDialog
 import hk.hkucs.sportieapplication.Common.Common
+import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.databinding.ActivityBookingBinding
 import hk.hkucs.sportieapplication.adapter.MyViewPagerAdapter
@@ -35,6 +36,10 @@ class BookingActivity : AppCompatActivity() {
             }
             else if(step == 2){
                 Common.currentCourt = intent.getParcelableExtra("COURT_SELECTED")
+            }
+
+            else if(step == 3){
+                Common.currentTimeSlot = intent.getIntExtra("TIME_SLOT",-1)
             }
 
             binding.btnNextStep.isEnabled = true
@@ -79,12 +84,21 @@ class BookingActivity : AppCompatActivity() {
                         loadCourtBySportCentre(Common.currentSportCentre!!.getCourtId())
                     }
                 }
+
                 // pick time slot
                 else if(Common.step == 2){
                     if (Common.currentCourt != null){
                         loadTimeSlotOfBarber(Common.currentCourt!!.getCourtId())
                     }
                 }
+
+                // confirmation
+                else if(Common.step == 3){
+                    if (Common.currentTimeSlot != -1){
+                        confirmBooking()
+                    }
+                }
+
                 binding.viewPager.currentItem = (Common.step)
             }
         }
@@ -142,6 +156,12 @@ class BookingActivity : AppCompatActivity() {
         }
     }
 
+    private fun confirmBooking() {
+        // send broadcast to fragment step four
+        val intent = Intent("CONFIRM_BOOKING")
+        localBroadcastManager.sendBroadcast(intent)
+    }
+
     private fun loadTimeSlotOfBarber(courtId: String) {
         // send local broadcast to Fragment step 3
         val intent = Intent("DISPLAY_TIME_SLOT")
@@ -150,9 +170,9 @@ class BookingActivity : AppCompatActivity() {
 
     private fun loadCourtBySportCentre(courtId: String) {
         dialog.show()
-
         // Select all court of the Sport centre
         if(!TextUtils.isEmpty(Common.district)){
+
             FirebaseFirestore.getInstance()
                 .collection("AllCourt")
                 .document(Common.district!!)
@@ -180,6 +200,9 @@ class BookingActivity : AppCompatActivity() {
                     )
                     dialog.dismiss();
                 }
+        }
+        else{
+            dialog.dismiss();
         }
     }
 

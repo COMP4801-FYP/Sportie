@@ -2,7 +2,9 @@ package hk.hkucs.sportieapplication.Common
 
 import hk.hkucs.sportieapplication.models.Court
 import hk.hkucs.sportieapplication.models.SportCentre
+import hk.hkucs.sportieapplication.models.TimeSlot
 import hk.hkucs.sportieapplication.models.User
+import java.util.Calendar
 
 class Common {
     companion object {
@@ -23,11 +25,18 @@ class Common {
             }
         }
 
+        var currentDate: Calendar = Calendar.getInstance()
+        var bookingDate:Calendar = Calendar.getInstance()
         val TIME_SLOT_TOTAL: Int = 11
         var district: String? = null
         var currentUser: User? = null
+        var currentTimeSlot: Int = -1
         var currentSportCentre: SportCentre? = null
         var currentCourt: Court? = null
         var step:Int = 0 // first step is 0
+
+        var ALL_DISTRICT:String = "Please choose district"
+
+        var allCentreArray: ArrayList<SportCentre> = ArrayList()
     }
 }

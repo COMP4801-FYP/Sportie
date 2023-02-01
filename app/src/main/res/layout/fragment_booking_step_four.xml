@@ -1,15 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <TextView
-        android:text="STEP 4"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sportie_logo"
+        android:background="@color/light_grey"
+        android:layout_gravity="bottom"/>
 
-    </TextView>
-</RelativeLayout>
+    <LinearLayout
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thank you for the booking!"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:fontFamily="@font/bellerose"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Booking details are as follows:"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:fontFamily="@font/bellerose"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_event_note_24"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/txt_booking_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="11:00 at 25/01/2023"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/bellerose"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_account_circle_24"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/txt_user_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Username"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/bellerose"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_location_on_24"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/txt_booking_court_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Court #1"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/bellerose"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/background_dark"/>
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/txt_sportctr_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="Pokfulam Field"
+            android:fontFamily="@font/bellerose"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_phone_24"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/txt_sportctr_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="+852 8123521"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/bellerose"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_access_time_24"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/txt_sportctr_open_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="09:00 - 19:00"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/bellerose"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_location_on_24"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/txt_sportctr_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Address of Sport Centre"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/bellerose"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_confirm"
+            android:text="CONFIRM"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorButton"
+            />
+
+    </LinearLayout>
+</LinearLayout>

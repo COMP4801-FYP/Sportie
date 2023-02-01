@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.activities.RegisterActivity
 import hk.hkucs.sportieapplication.activities.SignInActivity
 import hk.hkucs.sportieapplication.activities.UserProfileActivity
@@ -83,6 +84,8 @@ class FirestoreClass {
                     user.email
                 )
                 editor.apply()
+
+                Common.currentUser = user
 
                 // START Pass the result to the Login Activity.
                 when (activity) {

@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
+import hk.hkucs.sportieapplication.Common.Common
+import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.models.SportCentre
@@ -60,12 +62,18 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
 
         holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
             override fun onItemSelectedListener(view: View, pos: Int) {
+
                 // set white background for all card not be selected
                 for(cardview in cardViewList){
                     cardview.setCardBackgroundColor(context.getColor(R.color.white))
                 }
                 // set selected background for only selected item
                 holder.card_court.setCardBackgroundColor(context.getColor(R.color.holo_orange_dark))
+
+                // if no district selected, save the district chosen to global variable
+                if (Common.district == ALL_DISTRICT){
+                    Common.district = courtList[pos].District_en
+                }
 
                 // send broadcast to tell Booking Activity enable button next
                 val intent = Intent("ENABLE_BUTTON_NEXT")
@@ -78,5 +86,10 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
 
     override fun getItemCount(): Int {
         return courtList.size
+    }
+
+    fun setFilteredList(filteredList:ArrayList<SportCentre>){
+        this.courtList = filteredList
+        notifyDataSetChanged()
     }
 }

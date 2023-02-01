@@ -26,7 +26,7 @@
             android:id="@+id/txt_court_name"
             android:text="Court #1"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:fontFamily="@font/bellerose"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"

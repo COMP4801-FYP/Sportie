@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="8dp"
     android:layout_width="match_parent"
@@ -12,8 +12,20 @@
         android:layout_width="match_parent"
         android:hint="Group"
         android:paddingHorizontal="5dp"
+        android:background="@drawable/spinner_bq"
         />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:queryHint="Search here"
+        android:background="@drawable/search_view_bq"
+        app:iconifiedByDefault="false"
+        />
+    
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_court"
         android:layout_marginTop="4dp"

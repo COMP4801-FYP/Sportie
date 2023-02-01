@@ -46,7 +46,6 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
     private lateinit var localBroadcastManager: LocalBroadcastManager
     lateinit var iTimeSlotLoadListener: ITimeSlotListener
     lateinit var dialog: AlertDialog
-    lateinit var selected_date: Calendar
 
     lateinit var courtRef:DocumentReference
 
@@ -54,6 +53,7 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
     lateinit var calendarView: HorizontalCalendarView
     lateinit var simpleDateFromat: SimpleDateFormat
     private lateinit var sportctrname: TextView
+    private lateinit var sportcourtno: TextView
 
 
     private val displayTimeSlot: BroadcastReceiver = object : BroadcastReceiver() {
@@ -63,6 +63,7 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
             date.add(Calendar.DATE, 0) // Add current date
             loadAvailableTimeSlotOfCourt(Common.currentCourt!!.getCourtId(),simpleDateFromat.format(date.time))
             sportctrname.text = Common.currentSportCentre!!.getName()
+            sportcourtno.text = Common.currentCourt!!.getName()
         }
     }
 
@@ -76,12 +77,10 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
             .collection("Court")
             .document(Common.currentCourt!!.getCourtId())
 
-        println("halod1yz ${Common.district}    ${Common.currentSportCentre!!.getCourtId()},   ${Common.currentCourt!!.getCourtId()}")
         // get info of the court
         courtRef.get().addOnSuccessListener() {
-                // if court available
+            // if court available
             documents ->
-            println("halod1b")
                 if (documents.exists()) {
                     // get info of booking, return empty if not created
                     var date = FirebaseFirestore.getInstance().collection("AllCourt")
@@ -91,7 +90,7 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
                         .collection("Court")
                         .document(Common.currentCourt!!.getCourtId())
                         .collection(bookDate)
-                    println("halod1y")
+
                     date.get().addOnSuccessListener {
                         documents ->
                             // no booking
@@ -126,8 +125,6 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
 
         dialog = SpotsDialog.Builder().setContext(requireContext()).setCancelable(false).build()
 
-        selected_date = Calendar.getInstance()
-        selected_date.add(Calendar.DATE,0) // init current date
     }
 
     override fun onDestroy() {
@@ -149,6 +146,8 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
 
         sportctrname =  binding.sportCtrName
 
+        sportcourtno = binding.sportCourtNo
+
         init(binding.root)
 
         return binding.root
@@ -165,6 +164,9 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
         var endDate = Calendar.getInstance()
         endDate.add(Calendar.DATE, 2) // 2 day left
 
+        println("startdate + " + startDate)
+        println("enddate + " + endDate)
+
         var horizontalCalendarView = HorizontalCalendar.Builder(itemView, R.id.calendarView)
             .range(startDate,endDate)
             .datesNumberOnScreen(1)
@@ -174,9 +176,9 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
 
         horizontalCalendarView.calendarListener = object :HorizontalCalendarListener(){
             override fun onDateSelected(date: Calendar?, position: Int) {
-                if(selected_date.timeInMillis != date!!.timeInMillis){
+                if(Common.currentDate.timeInMillis != date!!.timeInMillis){
                     // code wont run again if select new day same with selected day
-                    selected_date = date
+                    Common.currentDate = date
                     loadAvailableTimeSlotOfCourt(Common.currentCourt!!.getCourtId(),simpleDateFromat.format(date.time))
                 }
             }
