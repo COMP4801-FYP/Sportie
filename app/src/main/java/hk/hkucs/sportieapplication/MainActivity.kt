@@ -24,32 +24,36 @@ import org.w3c.dom.Text
 class MainActivity : AppCompatActivity() {
 
     private lateinit var functions: FirebaseFunctions;
+    private lateinit var db: FirebaseFirestore;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        functions = Firebase.functions // initialize Firebase functions
-//
 //        val inputFirstName = findViewById<EditText>(R.id.inputFirstName);
 //        val inputLastName = findViewById<EditText>(R.id.inputLastName);
 
+        functions = Firebase.functions // initialize Firebase functions
+        db = FirebaseFirestore.getInstance();
+//        db = Firebase.firestore
+        val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
 
         val saveButton = findViewById<Button>(R.id.saveButton);
         saveButton.setOnClickListener{
-            Log.d("TAG", "saveButton pressed")
-//            countPlayersImages();
-            Log.d("TAG", "1");
-            val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
-            Log.d("TAG", "2");
-            val playerCount: Task<String> = countPlayersImages();
-            Log.d("TAG", "3");
-            playerCount.addOnSuccessListener {
-                Log.d("TAG","Counting player succeed")
-                val count = playerCount.getResult()
-                Log.d("TAG",count)
-                numOfPlayersTextView.text = count;
-            }
+
+            val docRef = db.collection("testVenueCollection").document("testVenue")
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                        numOfPlayersTextView.text = document.data!!.get("player_count").toString();
+                    } else {
+                        Log.d(TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+
         }
 //        saveButton.setOnClickListener{
 ////            val temp: Task<String> = addMessage(inputFirstName.text.toString());
@@ -57,7 +61,6 @@ class MainActivity : AppCompatActivity() {
 ////                Log.d("TAG",temp.getResult())
 ////            }
 //            Log.d("TAG","Save Button pressed")
-//
 //            val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
 //            val playerCount: Task<String> = countPlayers();
 //            playerCount.addOnSuccessListener {
@@ -66,8 +69,6 @@ class MainActivity : AppCompatActivity() {
 //                Log.d("TAG",count)
 //                numOfPlayersTextView.text = count;
 //            }
-//
-//
 //        }
     }
 

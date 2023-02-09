@@ -162,7 +162,6 @@ const inputImageUriArray = ['gs://sportie-a3ce0.appspot.com/1.png',
   'gs://sportie-a3ce0.appspot.com/5.png']
 
 exports.countPlayersImages = functions.https.onCall(async(data,context)=>{
-//  const inputImageUri = 'gs://sportie-a3ce0.appspot.com/Screenshot 2023-01-12 at 4.59.01 PM.png';
 
   var countArray = [];
   const client = new ImageAnnotatorClient();
