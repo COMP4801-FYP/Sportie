@@ -161,6 +161,35 @@ const inputImageUriArray = ['gs://sportie-a3ce0.appspot.com/1.png',
   'gs://sportie-a3ce0.appspot.com/4.png',
   'gs://sportie-a3ce0.appspot.com/5.png']
 
+//exports.countPlayersImagesScheduled = functions.pubsub.schedule('every 5 minutes').onRun(async(context)=>{
+//
+//  var countArray = [];
+//  const client = new ImageAnnotatorClient();
+//
+//  for (var i = 0; i < inputImageUriArray.length; i++){
+//    const [result] = await client.objectLocalization(inputImageUriArray[i]);
+//    const objects = result.localizedObjectAnnotations;
+//
+//    var count = 0;
+//    objects.forEach(object => {
+//      console.log(object)
+//      if (object.name == 'Person' && object.score >= 0.8){
+//        count += 1;
+//      }
+//    });
+//    countArray.push(count)
+//  }
+//  console.log('countArray: ');
+//  console.log(countArray);
+//  countAvg = Math.ceil(countArray.reduce((a,b) => a + b, 0) / countArray.length);
+//  console.log('countAvg: ');
+//  console.log(countAvg);
+//  const db = getFirestore();
+//  await db.collection('testVenueCollection').doc('testVenue').update({player_count: countAvg});
+//  console.log('finisheedddd!!');
+//  return countAvg.toString();
+//})
+
 exports.countPlayersImages = functions.https.onCall(async(data,context)=>{
 
   var countArray = [];
