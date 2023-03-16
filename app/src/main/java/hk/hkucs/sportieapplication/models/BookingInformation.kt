@@ -6,18 +6,19 @@ import java.sql.Timestamp
 
 @Parcelize
 class BookingInformation(
-    private var username: String,
-    private var userphone: Long,
-    private var time: String,
-    private var sportcentreId: String,
-    private var sportcentrename: String,
-    private var courtId: String,
-    private var courtname: String,
-    private var address: String,
-    private var district: String,
-    private var slot: Long,
-    private var done: Boolean,
-    private var timestamp:Timestamp
+    private var username: String = "",
+    private var userphone: Long = 0,
+    private var time: String = "",
+    private var sportcentreId: String = "",
+    private var sportcentrename: String = "",
+    private var courtId: String= "",
+    private var courtname: String= "",
+    private var address: String ="",
+    private var district: String="",
+    private var slot: Long = 0,
+    private var done: Boolean = false,
+    private var timestamp:com.google.firebase.Timestamp,
+    private var bookingid: String = ""
 ): Parcelable {
     fun getUsername(): String {
         return username
@@ -51,11 +52,15 @@ class BookingInformation(
         return sportcentrename
     }
 
-    fun isDone(): Boolean {
-        return done
+    fun getBookingid(): String {
+        return bookingid
     }
 
-    fun getTimestamp(): Timestamp {
-        return timestamp
-    }
+//    fun isDone(): Boolean {
+//        return done
+//    }
+
+//    fun getTimestamp(): Timestamp {
+//        return timestamp
+//    }
 }

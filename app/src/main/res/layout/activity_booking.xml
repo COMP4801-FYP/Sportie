@@ -42,7 +42,7 @@
         android:layout_above="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_previous_step"
             android:text="Previous"
             android:enabled="false"
@@ -55,7 +55,7 @@
             android:textColor="@android:color/white"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next_step"
             android:text="Next"
             android:enabled="false"

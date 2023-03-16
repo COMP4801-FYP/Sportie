@@ -2,6 +2,7 @@ package hk.hkucs.sportieapplication.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.models.Court
 import hk.hkucs.sportieapplication.models.TimeSlot
+import java.sql.Time
 
 class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlot>) : RecyclerView.Adapter<TimeSlotAdapter.MyViewHolder>() {
     constructor(requireActivity: Context) : this(requireActivity, ArrayList())
@@ -55,11 +57,15 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
         return MyViewHolder(itemView)
     }
 
+    @Suppress("RecyclerView")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.txt_time_slot.text = java.lang.StringBuilder(Common.convertTimeSlotToString(position))
 
         // if all position is available, just show list
         if(timeSlotList.size == 0) {
+            // if all time slot is empy, all card is enable
+            holder.card_time_slot.isEnabled = true
+
             holder.txt_time_slot_description.text = "Available"
             holder.txt_time_slot_description.setTextColor(context.getColor(R.color.black))
             holder.txt_time_slot.setTextColor(context.getColor(R.color.black))
@@ -75,6 +81,8 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
                     // set tag for all time slot is full
                     holder.card_time_slot.tag = "DISABLE"
 
+                    holder.card_time_slot.isEnabled = false
+
                     holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))
                     holder.txt_time_slot_description.text = "Full"
                     holder.txt_time_slot_description.setTextColor(context.getColor(R.color.white))
@@ -88,29 +96,34 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
             cardViewList.add(holder.card_time_slot)
         }
 
-        // check if card time_slot is available
-        holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
-            override fun onItemSelectedListener(view: View, pos: Int) {
-                // loop all card in card list
-                for (cardview in cardViewList){
+//        Log.d("hlaoob", timeSlotList)
+        var timeslotpos = TimeSlot()
+        timeslotpos.setSlot(position.toLong())
+        if (!timeSlotList.contains(timeslotpos)){
+            // check if card time_slot is available
+            holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
+                override fun onItemSelectedListener(view: View, pos: Int) {
+                    // loop all card in card list
+                    for (cardview in cardViewList){
 
-                    // only available card time slot will be changed
-                    if(cardview.tag == null){
-                        cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
+                        // only available card time slot will be changed
+                        if(cardview.tag == null){
+                            cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
+                        }
                     }
+
+                    // selected card will change color
+                    holder.card_time_slot.setCardBackgroundColor(context.resources.getColor(android.R.color.holo_orange_dark))
+
+                    // then send broadcast to enable NEXT button
+                    val intent = Intent("ENABLE_BUTTON_NEXT")
+                    intent.putExtra("TIME_SLOT", position)
+                    intent.putExtra("STEP", 3)
+                    localBroadcastManager.sendBroadcast(intent)
+
                 }
-
-                // selected card will change color
-                holder.card_time_slot.setCardBackgroundColor(context.resources.getColor(android.R.color.holo_orange_dark))
-
-                // then send broadcast to enable NEXT button
-                val intent = Intent("ENABLE_BUTTON_NEXT")
-                intent.putExtra("TIME_SLOT", position)
-                intent.putExtra("STEP", 3)
-                localBroadcastManager.sendBroadcast(intent)
-
-            }
-        })
+            })
+        }
     }
 
     override fun getItemCount(): Int {

@@ -27,4 +27,6 @@
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="darker_gray">#777b7e</color>
 
+    <color name="transparent">#7F000000</color>
+
 </resources>

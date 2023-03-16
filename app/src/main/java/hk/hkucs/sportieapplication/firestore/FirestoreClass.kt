@@ -6,17 +6,26 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import hk.hkucs.sportieapplication.Common.Common
+import hk.hkucs.sportieapplication.activities.BookingListActivity
 import hk.hkucs.sportieapplication.activities.RegisterActivity
 import hk.hkucs.sportieapplication.activities.SignInActivity
 import hk.hkucs.sportieapplication.activities.UserProfileActivity
+import hk.hkucs.sportieapplication.models.BookingInformation
 import hk.hkucs.sportieapplication.models.User
 import hk.hkucs.sportieapplication.utils.Constants
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -104,7 +113,7 @@ class FirestoreClass {
     }
 
     fun updateUserDetails(activity: Activity, userHashMap: HashMap<String,Any>) {
-        mFirestore.collection(("users"))
+        mFirestore.collection(("user"))
             .document(getCurrentUserID())
             .update(userHashMap)
             .addOnSuccessListener {
@@ -164,6 +173,48 @@ class FirestoreClass {
                     exception.message,
                     exception
                 )
+            }
+    }
+
+    fun getBookingList(bookingListActivity: BookingListActivity) {
+        mFirestore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .collection("Booking")
+            .get()
+            .addOnSuccessListener { booking_doc ->
+                if (!booking_doc.isEmpty) {
+                    var bookings = ArrayList<BookingInformation>()
+                    for (document in booking_doc) {
+                        println(document.data)
+                        var b = document.data
+
+                        var t = 1438910477
+                        var ts = Timestamp(t.toLong(), 0)
+
+                        val formatter = SimpleDateFormat("dd/MM/yyyy")
+                        val date = Date()
+                        val curdate = formatter.format(date)
+                        var chosendate = b["time"].toString().takeLast(10)
+
+                        if (chosendate.compareTo(curdate) >= 0){
+                            bookings.add(BookingInformation(
+                                sportcentrename = b["sportcentreName"].toString(),
+                                address = b["address"].toString(),
+                                district = b["district"].toString(),
+                                courtname = b["courtName"].toString(),
+                                time = b["time"].toString(),
+                                timestamp = ts,
+                                bookingid = b["bookingid"].toString(),
+                                courtId = b["courtId"].toString()
+                            ))
+                        }
+                    }
+                    when (bookingListActivity) {
+                        is BookingListActivity -> {
+                            bookingListActivity.retrieveBookingSuccess(bookings)
+                        }
+                    }
+                }
             }
     }
 

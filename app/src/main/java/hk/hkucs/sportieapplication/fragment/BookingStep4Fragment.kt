@@ -1,8 +1,10 @@
 package hk.hkucs.sportieapplication.fragment
 
+import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
@@ -11,11 +13,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
+import dmax.dialog.SpotsDialog
 import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.R
+import hk.hkucs.sportieapplication.activities.BookingListActivity
+import hk.hkucs.sportieapplication.activities.SignInActivity
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepFourBinding
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepThreeBinding
 import hk.hkucs.sportieapplication.models.BookingInformation
@@ -33,6 +41,7 @@ class BookingStep4Fragment:Fragment() {
     lateinit var txt_sportctr_name:TextView
     lateinit var txt_sportctr_phone:TextView
     lateinit var txt_sportctr_open_hours:TextView
+    lateinit var dialog: AlertDialog
 
     private val confirmBookingReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -41,7 +50,7 @@ class BookingStep4Fragment:Fragment() {
             txt_booking_court_text.setText(Common.currentCourt!!.getName())
             txt_booking_time_text.setText(java.lang.StringBuilder(Common.convertTimeSlotToString(Common.currentTimeSlot))
                 .append(" at ")
-                .append(simpleDateFormat.format(Common.currentDate.getTime())))
+                .append(simpleDateFormat.format(Common.bookingDate.getTime())))
 
 
             txt_sportctr_address.text = Common.currentSportCentre!!.Address_en
@@ -60,6 +69,8 @@ class BookingStep4Fragment:Fragment() {
 
         localBroadcastManager = LocalBroadcastManager.getInstance(requireContext())
         localBroadcastManager.registerReceiver(confirmBookingReceiver, IntentFilter("CONFIRM_BOOKING"))
+
+        dialog = SpotsDialog.Builder().setContext(context).setCancelable(false).build()
     }
 
     override fun onDestroy() {
@@ -90,17 +101,117 @@ class BookingStep4Fragment:Fragment() {
         txt_sportctr_open_hours = binding.txtSportctrOpenHours
 
         binding.btnConfirm.setOnClickListener{
-//            var bookInfo = BookingInformation(
-//                sportcentreId = Common.currentSportCentre!!.court_id,
-//                sportcentrename = Common.currentSportCentre!!.Name_en,
-//                username = Common.currentUser!!.lastName + Common.currentUser!!.firstName,
-//                userphone = Common.currentUser!!.mobile
-//
-//            )
+            dialog.show()
+
+            // Process timestamp to display future booking only
+            var startTime = Common.convertTimeSlotToString(Common.currentTimeSlot)
+            var convertTime = startTime.split("-") // ex: 9:00 - 10:00
+
+
+            var startTimeConvert = convertTime[0].split(":")
+            var startHourInt = Integer.parseInt(startTimeConvert[0].trim())
+            var startMinInt = Integer.parseInt(startTimeConvert[1].trim())
+
+            var bookingDateWithoutHour = Calendar.getInstance()
+            bookingDateWithoutHour.timeInMillis = Common.bookingDate.timeInMillis
+            bookingDateWithoutHour.set(Calendar.HOUR_OF_DAY,startHourInt)
+            bookingDateWithoutHour.set(Calendar.MINUTE,startMinInt)
+
+            // create timestamp object and apply to bookinginformation
+            var timestamp = Timestamp(bookingDateWithoutHour.time)
+
+            var bookInfo = BookingInformation(
+                timestamp = timestamp,
+                done = false,
+                sportcentreId = Common.currentSportCentre!!.court_id,
+                sportcentrename = Common.currentSportCentre!!.Name_en,
+                username = Common.currentUser!!.lastName + Common.currentUser!!.firstName,
+                userphone = Common.currentUser!!.mobile,
+                courtId = Common.currentCourt!!.getCourtId(),
+                courtname = Common.currentCourt!!.getName(),
+                address = Common.currentSportCentre!!.getAddress(),
+                district = Common.district!!,
+                time = java.lang.StringBuilder(Common.convertTimeSlotToString(Common.currentTimeSlot))
+                    .append(" at ")
+                    .append(simpleDateFormat.format(bookingDateWithoutHour.getTime())).toString(),
+                slot = Common.currentTimeSlot.toLong(),
+                bookingid = Common.currentCourt!!.getCourtId() + "_" + Common.simpleDateFormat.format(Common.bookingDate.time) + "_" + Common.currentTimeSlot.toString()
+            )
+
+            // submit
+            var date = FirebaseFirestore.getInstance().collection("AllCourt")
+                .document(Common.district!!)
+                .collection("SportCentre")
+                .document(Common.currentSportCentre!!.getCourtId())
+                .collection("Court")
+                .document(Common.currentCourt!!.getCourtId())
+                .collection(Common.simpleDateFormat.format(Common.bookingDate.time))
+                .document(Common.currentTimeSlot.toString())
+
+            // write data
+            date.set(bookInfo)
+                .addOnSuccessListener{
+                    // check if a booking exists, to prevent new booking
+                    addToUserBooking(bookInfo)
+                }
+                .addOnFailureListener{e->
+                    Toast.makeText(context, e.message ,Toast.LENGTH_SHORT).show()
+                }
         }
 
 //        init(binding.root)
 
         return binding.root
+    }
+
+    private fun addToUserBooking(bookInfo: BookingInformation) {
+        // Create new collection, if not exists
+        var userBookingRef = FirebaseFirestore.getInstance()
+            .collection("user")
+            .document(Common.currentUser!!.userid)
+            .collection("Booking")
+
+        // check if document exists in this collection
+        userBookingRef.whereEqualTo("done", false)
+            .get()
+            .addOnCompleteListener{
+                if (it.isSuccessful){
+                    // set data
+                    userBookingRef.document(bookInfo.getBookingid())
+                        .set(bookInfo)
+                        .addOnSuccessListener {
+                            if(dialog.isShowing){
+                                dialog.dismiss()
+                            }
+
+                            resetStaticData()
+                            requireActivity().finish()
+                            Toast.makeText(context, "Booking success!",Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(requireView().context, BookingListActivity::class.java))
+                        }
+                        .addOnFailureListener{
+                            if(dialog.isShowing){
+                                dialog.dismiss()
+                            }
+                            Toast.makeText(context, it.message,Toast.LENGTH_SHORT).show()
+                        }
+                }
+                else{
+                    if(dialog.isShowing){
+                        dialog.dismiss()
+                    }
+                    resetStaticData()
+                    requireActivity().finish()
+                    Toast.makeText(context, "Booking success!",Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun resetStaticData(){
+        Common.step = 0
+        Common.currentTimeSlot = -1
+        Common.currentCourt = null
+        Common.currentSportCentre = null
+        Common.bookingDate.add(Calendar.DATE, 0) // Curent date
     }
 }

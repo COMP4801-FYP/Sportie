@@ -48,7 +48,7 @@ class UserProfileActivity : AppCompatActivity() {
         bottomNav?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.booking -> {
-                    startActivity(Intent(applicationContext, BookingActivity::class.java))
+                    startActivity(Intent(applicationContext, BookingListActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
@@ -57,11 +57,11 @@ class UserProfileActivity : AppCompatActivity() {
 //                    overridePendingTransition(0, 0)
 //                    return@setOnItemSelectedListener true
 //                }
-//                R.id.home -> {
-//                    startActivity(Intent(applicationContext, MainActivity::class.java))
-//                    overridePendingTransition(0, 0)
-//                    return@setOnItemSelectedListener true
-//                }
+                R.id.home -> {
+                    startActivity(Intent(applicationContext, BookingActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@setOnItemSelectedListener true
+                }
 //                R.id.friends -> {
 //                    startActivity(Intent(applicationContext, FriendsActivity::class.java))
 //                    overridePendingTransition(0, 0)
@@ -83,8 +83,20 @@ class UserProfileActivity : AppCompatActivity() {
         if (mobileNumber.isNotEmpty()) {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
+        else{
+            Toast.makeText(
+                this, "Insert mobile number",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         if (mUserProfileImageURL.isNotEmpty()) {
             userHashMap[Constants.IMAGE] = mUserProfileImageURL
+        }
+        else{
+            Toast.makeText(
+                this, "Insert picture?",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         userHashMap[Constants.COMPLETE_PROFILE] = 1
@@ -159,8 +171,8 @@ class UserProfileActivity : AppCompatActivity() {
             Toast.LENGTH_SHORT
         ).show()
 
-//        startActivity((Intent(this@UserProfileActivity, BillsActivity::class.java)))
-//        finish()
+        finish()
+        startActivity((Intent(this@UserProfileActivity, UserProfileActivity::class.java)))
     }
 
     // function for successfully uploading image
@@ -197,6 +209,7 @@ class UserProfileActivity : AppCompatActivity() {
             binding.etMobileNumber.setText(mUserDetails.mobile.toString())
             binding.etMobileNumber.isEnabled = false
             binding.btnSubmit.visibility = View.GONE
+            binding.rgGender.isClickable = false
         }
 
         // The uri of selected image from phone storage.
@@ -206,6 +219,9 @@ class UserProfileActivity : AppCompatActivity() {
 
         binding.ivUserPhoto.setOnClickListener() {
             if (it != null) {
+                if(binding.btnSubmit.visibility == View.GONE){
+                    binding.btnSubmit.visibility = View.VISIBLE
+                }
                 when (it.id) {
                     R.id.iv_user_photo -> {
                         // Here we will check if the permission is already allowed or we need to request for it.

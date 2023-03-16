@@ -1,10 +1,13 @@
 package hk.hkucs.sportieapplication.Common
 
+import com.google.firebase.Timestamp
 import hk.hkucs.sportieapplication.models.Court
 import hk.hkucs.sportieapplication.models.SportCentre
 import hk.hkucs.sportieapplication.models.TimeSlot
 import hk.hkucs.sportieapplication.models.User
-import java.util.Calendar
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Common {
     companion object {
@@ -25,7 +28,13 @@ class Common {
             }
         }
 
-        var currentDate: Calendar = Calendar.getInstance()
+        fun convertTimeStampToStringKey(timestamp: Timestamp):String{
+            var data: Date = timestamp.toDate()
+            var simpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd_MM_yyyy")
+            return simpleDateFormat.format((data))
+        }
+
+//        var currentDate: Calendar = Calendar.getInstance()
         var bookingDate:Calendar = Calendar.getInstance()
         val TIME_SLOT_TOTAL: Int = 11
         var district: String? = null
@@ -34,6 +43,7 @@ class Common {
         var currentSportCentre: SportCentre? = null
         var currentCourt: Court? = null
         var step:Int = 0 // first step is 0
+        var simpleDateFormat = SimpleDateFormat("dd_MM_yyyy")
 
         var ALL_DISTRICT:String = "Please choose district"
 

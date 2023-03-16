@@ -176,9 +176,9 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
 
         horizontalCalendarView.calendarListener = object :HorizontalCalendarListener(){
             override fun onDateSelected(date: Calendar?, position: Int) {
-                if(Common.currentDate.timeInMillis != date!!.timeInMillis){
+                if(Common.bookingDate.timeInMillis != date!!.timeInMillis){
                     // code wont run again if select new day same with selected day
-                    Common.currentDate = date
+                    Common.bookingDate = date
                     loadAvailableTimeSlotOfCourt(Common.currentCourt!!.getCourtId(),simpleDateFromat.format(date.time))
                 }
             }

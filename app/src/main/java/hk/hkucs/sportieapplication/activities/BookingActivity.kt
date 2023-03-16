@@ -67,13 +67,20 @@ class BookingActivity : AppCompatActivity() {
 
         binding.viewPager.adapter = MyViewPagerAdapter(this)
 
+        // previous step
         binding.btnPreviousStep.setOnClickListener(){
             if(Common.step == 3 || Common.step > 0){
                 Common.step--
                 binding.viewPager.currentItem = Common.step
+
+                if(Common.step < 3){
+                    binding.btnNextStep.isEnabled = true
+                    setColorButton()
+                }
             }
         }
 
+        // next step
         binding.btnNextStep.setOnClickListener(){
             if(Common.step < 3 || Common.step == 0){
                 Common.step++
@@ -124,11 +131,13 @@ class BookingActivity : AppCompatActivity() {
 
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.booking
+        bottomNav.selectedItemId = R.id.home
 
         bottomNav?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.booking -> {
+                    startActivity(Intent(applicationContext, BookingListActivity::class.java))
+                    overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
 //                R.id.groups -> {
@@ -136,11 +145,9 @@ class BookingActivity : AppCompatActivity() {
 //                    overridePendingTransition(0, 0)
 //                    return@setOnItemSelectedListener true
 //                }
-//                R.id.home -> {
-//                    startActivity(Intent(applicationContext, MainActivity::class.java))
-//                    overridePendingTransition(0, 0)
-//                    return@setOnItemSelectedListener true
-//                }
+                R.id.home -> {
+                    return@setOnItemSelectedListener true
+                }
 //                R.id.friends -> {
 //                    startActivity(Intent(applicationContext, FriendsActivity::class.java))
 //                    overridePendingTransition(0, 0)
@@ -208,16 +215,16 @@ class BookingActivity : AppCompatActivity() {
 
     private fun setColorButton() {
         if (binding.btnNextStep.isEnabled){
-            binding.btnNextStep.setBackgroundResource(R.color.colorPrimaryText)
+            binding.btnNextStep.setBackgroundResource(R.color.purple_500)
         }
         else{
-            binding.btnNextStep.setBackgroundResource(R.color.light_grey)
+            binding.btnNextStep.setBackgroundResource(R.color.transparent)
         }
         if (binding.btnPreviousStep.isEnabled){
-            binding.btnPreviousStep.setBackgroundResource(R.color.colorPrimaryText)
+            binding.btnPreviousStep.setBackgroundResource(R.color.purple_500)
         }
         else{
-            binding.btnPreviousStep.setBackgroundResource(R.color.light_grey)
+            binding.btnPreviousStep.setBackgroundResource(R.color.transparent)
         }
     }
 

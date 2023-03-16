@@ -48,8 +48,6 @@ class SignInActivity : AppCompatActivity() {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             FirestoreClass().getUserDetails(this@SignInActivity)
-                            val intent = Intent(this, UserProfileActivity::class.java)
-                            startActivity(intent)
                         } else {
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
@@ -69,7 +67,7 @@ class SignInActivity : AppCompatActivity() {
         }
         else {
             // Redirect the user to Main Screen after log in.
-            startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+            startActivity(Intent(this@SignInActivity, BookingListActivity::class.java))
         }
         finish()
     }
