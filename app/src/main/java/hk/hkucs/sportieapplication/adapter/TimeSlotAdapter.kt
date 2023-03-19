@@ -63,7 +63,7 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
         // if all position is available, just show list
         if(timeSlotList.size == 0) {
-            // if all time slot is empy, all card is enable
+            // if all time slot is empty, all card is enable
             holder.card_time_slot.isEnabled = true
 
             holder.txt_time_slot_description.text = "Available"
@@ -96,9 +96,9 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
             cardViewList.add(holder.card_time_slot)
         }
 
-//        Log.d("hlaoob", timeSlotList)
         var timeslotpos = TimeSlot()
         timeslotpos.setSlot(position.toLong())
+        println("obj $timeslotpos")
         if (!timeSlotList.contains(timeslotpos)){
             // check if card time_slot is available
             holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
@@ -110,6 +110,7 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
                         if(cardview.tag == null){
                             cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
                         }
+                        cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
                     }
 
                     // selected card will change color
