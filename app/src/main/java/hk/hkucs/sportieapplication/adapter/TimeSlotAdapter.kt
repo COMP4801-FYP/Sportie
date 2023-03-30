@@ -114,7 +114,7 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
                     }
 
                     // selected card will change color
-                    holder.card_time_slot.setCardBackgroundColor(context.resources.getColor(android.R.color.holo_orange_dark))
+                    holder.card_time_slot.setCardBackgroundColor(context.resources.getColor(R.color.green2))
 
                     // then send broadcast to enable NEXT button
                     val intent = Intent("ENABLE_BUTTON_NEXT")

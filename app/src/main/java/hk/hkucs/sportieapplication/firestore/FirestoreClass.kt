@@ -176,7 +176,7 @@ class FirestoreClass {
             }
     }
 
-    fun getBookingList(bookingListActivity: BookingListActivity) {
+    fun getBookingList(bookingListActivity: BookingListActivity, whentime: String) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .collection("Booking")
@@ -196,26 +196,43 @@ class FirestoreClass {
                         val curdate = formatter.format(date)
                         var chosendate = b["time"].toString().takeLast(10)
 
-                        if (chosendate.compareTo(curdate) >= 0){
-                            bookings.add(BookingInformation(
-                                sportcentrename = b["sportcentreName"].toString(),
-                                address = b["address"].toString(),
-                                district = b["district"].toString(),
-                                courtname = b["courtName"].toString(),
-                                time = b["time"].toString(),
-                                timestamp = ts,
-                                bookingid = b["bookingid"].toString(),
-                                courtId = b["courtId"].toString()
-                            ))
+                        if (whentime == "FUTURE"){
+                            if (chosendate.compareTo(curdate) >= 0){
+                                bookings.add(BookingInformation(
+                                    sportcentrename = b["sportcentreName"].toString(),
+                                    address = b["address"].toString(),
+                                    district = b["district"].toString(),
+                                    courtname = b["courtName"].toString(),
+                                    time = b["time"].toString(),
+                                    timestamp = ts,
+                                    bookingid = b["bookingid"].toString(),
+                                    courtId = b["courtId"].toString()
+                                ))
+                            }
+                        }
+                        else if (whentime == "PAST"){
+                            if (chosendate.compareTo(curdate) < 0){
+                                bookings.add(BookingInformation(
+                                    sportcentrename = b["sportcentreName"].toString(),
+                                    address = b["address"].toString(),
+                                    district = b["district"].toString(),
+                                    courtname = b["courtName"].toString(),
+                                    time = b["time"].toString(),
+                                    timestamp = ts,
+                                    bookingid = b["bookingid"].toString(),
+                                    courtId = b["courtId"].toString()
+                                ))
+                            }
                         }
                     }
                     when (bookingListActivity) {
                         is BookingListActivity -> {
-                            bookingListActivity.retrieveBookingSuccess(bookings)
+                            bookingListActivity.retrieveBookingSuccess(bookings, whentime)
                         }
                     }
                 }
             }
     }
+
 
 }

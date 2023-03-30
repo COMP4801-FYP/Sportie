@@ -1,9 +1,12 @@
 package hk.hkucs.sportieapplication.adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -20,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class BookingListAdapter(context: Context, val bookingList: ArrayList<BookingInformation>): ArrayAdapter<BookingInformation>(context, R.layout.layout_list_booking_item, bookingList)  {
+class BookingListAdapter(context: Context, val bookingList: ArrayList<BookingInformation>, val whentime:String): ArrayAdapter<BookingInformation>(context, R.layout.layout_list_booking_item, bookingList)  {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.layout_list_booking_item, null)
@@ -45,9 +48,24 @@ class BookingListAdapter(context: Context, val bookingList: ArrayList<BookingInf
         val delbtn: Button = view.findViewById(R.id.delBtn)
         val modifybtn: Button = view.findViewById(R.id.modifyBtn)
 
+        if (whentime == "PAST"){
+            delbtn.visibility = GONE
+            modifybtn.visibility = GONE
+        }
+
         delbtn.setOnClickListener{
-            println("yo" + bookingList[position].getCourtName())
-            deleteBookingFromCourt(bookingList[position])
+            var builder = AlertDialog.Builder(context)
+            builder.setTitle("Confirm Delete")
+            builder.setMessage("Are you sure you want to cancel this booking? This action cannot be undone.")
+            builder.setPositiveButton("Yes",DialogInterface.OnClickListener{ dialog, id ->
+                deleteBookingFromCourt(bookingList[position])
+                dialog.cancel()
+            })
+            builder.setNegativeButton("No", DialogInterface.OnClickListener{ dialog, id ->
+                dialog.cancel()
+            })
+            var alert = builder.create()
+            alert.show()
         }
 
         modifybtn.setOnClickListener{

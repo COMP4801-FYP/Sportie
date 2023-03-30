@@ -2,7 +2,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:padding="8dp">
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:text="Thank you for the booking!"
             android:textAllCaps="true"
             android:textSize="18sp"
-            android:fontFamily="@font/bellerose"
+            android:fontFamily="@font/montserrat_bold"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             />
@@ -43,7 +44,7 @@
             android:text="The Booking details are as follows:"
             android:textAllCaps="true"
             android:textSize="18sp"
-            android:fontFamily="@font/bellerose"
+            android:fontFamily="@font/montserrat_bold"
             android:textStyle="bold"
             />
 
@@ -66,7 +67,7 @@
                 android:textSize="14sp"
                 android:text="11:00 at 25/01/2023"
                 android:layout_marginLeft="4dp"
-                android:fontFamily="@font/bellerose"/>
+                android:fontFamily="@font/montserrat_regular"/>
 
 
         </LinearLayout>
@@ -90,7 +91,7 @@
                 android:textSize="14sp"
                 android:text="Username"
                 android:layout_marginLeft="4dp"
-                android:fontFamily="@font/bellerose"/>
+                android:fontFamily="@font/montserrat_regular"/>
 
         </LinearLayout>
 
@@ -113,7 +114,7 @@
                 android:textSize="14sp"
                 android:text="Court #1"
                 android:layout_marginLeft="4dp"
-                android:fontFamily="@font/bellerose"/>
+                android:fontFamily="@font/montserrat_regular"/>
 
         </LinearLayout>
 
@@ -130,7 +131,7 @@
             android:layout_height="wrap_content"
             android:textAllCaps="true"
             android:text="Pokfulam Field"
-            android:fontFamily="@font/bellerose"
+            android:fontFamily="@font/montserrat_regular"
             android:textStyle="bold"/>
 
         <LinearLayout
@@ -152,7 +153,7 @@
                 android:textSize="14sp"
                 android:text="+852 8123521"
                 android:layout_marginLeft="4dp"
-                android:fontFamily="@font/bellerose"/>
+                android:fontFamily="@font/montserrat_regular"/>
 
         </LinearLayout>
 
@@ -175,7 +176,7 @@
                 android:textSize="14sp"
                 android:text="09:00 - 19:00"
                 android:layout_marginLeft="4dp"
-                android:fontFamily="@font/bellerose"/>
+                android:fontFamily="@font/montserrat_regular"/>
 
         </LinearLayout>
 
@@ -198,7 +199,7 @@
                 android:textSize="14sp"
                 android:text="Address of Sport Centre"
                 android:layout_marginLeft="4dp"
-                android:fontFamily="@font/bellerose"/>
+                android:fontFamily="@font/montserrat_regular"/>
 
         </LinearLayout>
 
