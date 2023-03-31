@@ -176,6 +176,42 @@ class FirestoreClass {
             }
     }
 
+    fun dateComparison(chosendate: String, curdate:String):Boolean{
+//        println(chosendate.slice(6..9))
+//        println(chosendate.slice(3..4))
+//        println(chosendate.slice(0..1))
+        // check year
+        if (chosendate.slice(6..9).toInt() > curdate.slice(6..9).toInt() ){
+            // month
+            if (chosendate.slice(3..4).toInt() > curdate.slice(3..4).toInt() ) {
+                return true
+            }
+            else if (chosendate.slice(3..4).toInt() == curdate.slice(3..4).toInt()){
+                // day
+                if (chosendate.slice(0..1).toInt() >= curdate.slice(0..1).toInt() ){
+                    return true
+                }
+            }
+        }
+        else if (chosendate.slice(6..9).toInt() == curdate.slice(6..9).toInt()){
+            // month
+            if (chosendate.slice(3..4).toInt() > curdate.slice(3..4).toInt() ) {
+                return true
+            }
+            else{
+                // day
+                if (chosendate.slice(0..1).toInt() >= curdate.slice(0..1).toInt() ){
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun sortBooking(){
+
+    }
+
     fun getBookingList(bookingListActivity: BookingListActivity, whentime: String) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserID())
@@ -196,8 +232,11 @@ class FirestoreClass {
                         val curdate = formatter.format(date)
                         var chosendate = b["time"].toString().takeLast(10)
 
+//                        var test = chosendate.compareTo(curdate)
+//                        println("Halo$chosendate halo $curdate halo $test ")
+//                        println(dateComparison(chosendate, curdate))
                         if (whentime == "FUTURE"){
-                            if (chosendate.compareTo(curdate) >= 0){
+                            if (dateComparison(chosendate, curdate)){
                                 bookings.add(BookingInformation(
                                     sportcentrename = b["sportcentreName"].toString(),
                                     address = b["address"].toString(),
@@ -211,7 +250,7 @@ class FirestoreClass {
                             }
                         }
                         else if (whentime == "PAST"){
-                            if (chosendate.compareTo(curdate) < 0){
+                            if (!dateComparison(chosendate, curdate)){
                                 bookings.add(BookingInformation(
                                     sportcentrename = b["sportcentreName"].toString(),
                                     address = b["address"].toString(),
@@ -225,6 +264,7 @@ class FirestoreClass {
                             }
                         }
                     }
+                    bookings.sortWith(compareBy<BookingInformation> { it.getTime().toString().takeLast(10).slice(6..9) }.thenBy { it.getTime().toString().takeLast(10).slice(3..4)}.thenBy { it.getTime().toString().takeLast(10).slice(0..1)})
                     when (bookingListActivity) {
                         is BookingListActivity -> {
                             bookingListActivity.retrieveBookingSuccess(bookings, whentime)

@@ -60,7 +60,7 @@
                 android:checked="true"
                 android:gravity="center"
                 android:onClick="onRadioButtonClicked"
-                android:text="FUTURE"
+                android:text="UPCOMING"
                 android:textStyle="bold"
                 android:textColor="@android:color/white" />
 
@@ -74,7 +74,7 @@
                 android:checked="false"
                 android:gravity="center"
                 android:onClick="onRadioButtonClicked"
-                android:text="PAST"
+                android:text="HISTORY"
                 android:textStyle="bold"
                 android:textColor="@color/green3" />
 

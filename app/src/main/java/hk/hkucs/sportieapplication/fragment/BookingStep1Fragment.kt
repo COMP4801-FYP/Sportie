@@ -44,7 +44,7 @@ class BookingStep1Fragment:Fragment() {
 
     private fun initView() {
         recycler_court.setHasFixedSize(true)
-        recycler_court.layoutManager = GridLayoutManager(requireActivity(), 2)
+        recycler_court.layoutManager = GridLayoutManager(requireActivity(), 1)
         recycler_court.addItemDecoration(SpacesItemDecoration(4))
     }
 

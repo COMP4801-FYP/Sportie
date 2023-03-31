@@ -48,11 +48,11 @@ class BookingListActivity : AppCompatActivity() {
                 R.id.booking -> {
                     return@setOnItemSelectedListener true
                 }
-//                R.id.groups -> {
-//                    startActivity(Intent(applicationContext, GroupsActivity::class.java))
-//                    overridePendingTransition(0, 0)
-//                    return@setOnItemSelectedListener true
-//                }
+                R.id.groups -> {
+                    startActivity(Intent(applicationContext, PlayerCountActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@setOnItemSelectedListener true
+                }
                 R.id.home -> {
                     startActivity(Intent(applicationContext, BookingActivity::class.java))
                     overridePendingTransition(0, 0)

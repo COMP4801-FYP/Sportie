@@ -9,23 +9,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import dmax.dialog.SpotsDialog
 import hk.hkucs.sportieapplication.Common.Common
-import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.R
-import hk.hkucs.sportieapplication.databinding.ActivityBookingBinding
 import hk.hkucs.sportieapplication.adapter.MyViewPagerAdapter
+import hk.hkucs.sportieapplication.databinding.ActivityBookingBinding
+import hk.hkucs.sportieapplication.databinding.ActivityPlayerCountBinding
 import hk.hkucs.sportieapplication.models.Court
 
-class BookingActivity : AppCompatActivity() {
+class PlayerCountActivity : AppCompatActivity() {
     lateinit var dialog: AlertDialog
-    private lateinit var binding:ActivityBookingBinding
-    private lateinit var localBroadcastManager:LocalBroadcastManager
+    private lateinit var binding: ActivityPlayerCountBinding
+    private lateinit var localBroadcastManager: LocalBroadcastManager
 
 
     private val buttonNextReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -54,7 +53,7 @@ class BookingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityBookingBinding.inflate(layoutInflater)
+        binding = ActivityPlayerCountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         dialog = SpotsDialog.Builder().setContext(this).setCancelable(false).build()
@@ -131,7 +130,7 @@ class BookingActivity : AppCompatActivity() {
 
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.home
+        bottomNav.selectedItemId = R.id.groups
 
         bottomNav?.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -141,11 +140,11 @@ class BookingActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.groups -> {
-                    startActivity(Intent(applicationContext, PlayerCountActivity::class.java))
-                    overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
                 R.id.home -> {
+                    startActivity(Intent(applicationContext, BookingActivity::class.java))
+                    overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
 //                R.id.friends -> {
@@ -229,7 +228,7 @@ class BookingActivity : AppCompatActivity() {
     }
 
     private fun setupStepView(){
-        val stepList = listOf("Sport Centre","Court", "Time", "Confirm")
+        val stepList = listOf("Sport Centre","Court")
         binding.stepView.setSteps(stepList)
     }
 }
