@@ -38,38 +38,60 @@ class MainActivity : AppCompatActivity() {
         val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
 
         val saveButton = findViewById<Button>(R.id.saveButton);
-        saveButton.setOnClickListener{
-
-            val docRef = db.collection("testVenueCollection").document("testVenue")
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                        numOfPlayersTextView.text = document.data!!.get("player_count").toString();
-                    } else {
-                        Log.d(TAG, "No such document")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
-                }
-
-        }
 //        saveButton.setOnClickListener{
-////            val temp: Task<String> = addMessage(inputFirstName.text.toString());
-////            temp.addOnSuccessListener {
-////                Log.d("TAG",temp.getResult())
-////            }
-//            Log.d("TAG","Save Button pressed")
-//            val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
-//            val playerCount: Task<String> = countPlayers();
-//            playerCount.addOnSuccessListener {
+//
+//            val docRef = db.collection("testVenueCollection").document("testVenue")
+//            docRef.get()
+//                .addOnSuccessListener { document ->
+//                    if (document != null) {
+//                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+//                        numOfPlayersTextView.text = document.data!!.get("player_count").toString();
+//                    } else {
+//                        Log.d(TAG, "No such document")
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.d(TAG, "get failed with ", exception)
+//                }
+//
+//        }
+        saveButton.setOnClickListener{
+//            val temp: Task<String> = addMessage(inputFirstName.text.toString());
+//            temp.addOnSuccessListener {
+//                Log.d("TAG",temp.getResult())
+//            }
+            Log.d("TAG","Save Button pressed")
+            val numOfPlayersTextView: TextView = findViewById(R.id.numOfPlayersTextView)
+            var playerCount: Task<String> = countPlayersImagesTESTTT("Lurus5");
+            playerCount.addOnSuccessListener {
 //                Log.d("TAG","Counting player succeed")
 //                val count = playerCount.getResult()
 //                Log.d("TAG",count)
 //                numOfPlayersTextView.text = count;
-//            }
-//        }
+            }
+            countPlayersImagesTESTTT("3-29 Angled1");
+            countPlayersImagesTESTTT("3-29 Angled2");
+            countPlayersImagesTESTTT("3-29 Angled3");
+            countPlayersImagesTESTTT("3-29 Angled4");
+            countPlayersImagesTESTTT("3-29 Angled5");
+            countPlayersImagesTESTTT("3-29 Angled6");
+//            playerCount = countPlayersImagesTESTTT("Miring1");
+//            playerCount.addOnSuccessListener {  }
+
+        }
+    }
+    private fun countPlayersImagesTESTTT(text: String): Task<String>{
+        val data = hashMapOf(
+            "text" to text,
+            "push" to true
+        )
+        return functions
+            .getHttpsCallable("countPlayersImagesTESTTT")
+            .call(data)
+            .continueWith{task->
+                val result = task.result?.data as String
+                result
+            }
     }
 
     private fun countPlayersImages(): Task<String>{

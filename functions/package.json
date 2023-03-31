@@ -17,7 +17,7 @@
     "@google-cloud/video-intelligence": "^4.1.0",
     "@google-cloud/vision": "^3.0.1",
     "firebase-admin": "^10.3.0",
-    "firebase-functions": "^4.1.1"
+    "firebase-functions": "^4.2.1"
   },
   "devDependencies": {
     "eslint": "^8.9.0",
