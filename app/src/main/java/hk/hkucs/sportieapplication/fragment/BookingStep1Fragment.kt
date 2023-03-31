@@ -27,6 +27,7 @@ import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.Common.SpacesItemDecoration
 import hk.hkucs.sportieapplication.adapter.SportCentreAdapter
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepOneBinding
+import hk.hkucs.sportieapplication.models.BookingInformation
 import hk.hkucs.sportieapplication.models.SportCentre
 
 class BookingStep1Fragment:Fragment() {
@@ -91,6 +92,7 @@ class BookingStep1Fragment:Fragment() {
             recycler_court.visibility = View.GONE
         }
         else{
+            filteredList.sortWith(compareBy<SportCentre> { it.getName()})
             var adapter = SportCentreAdapter(requireActivity(), filteredList)
             recycler_court.adapter = adapter
             recycler_court.visibility = View.VISIBLE
@@ -130,6 +132,7 @@ class BookingStep1Fragment:Fragment() {
                                                 )
                                             )
                                         }
+                                        Common.allCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
                                     } else {
                                         Log.e(
                                             activity?.javaClass?.simpleName,
@@ -199,6 +202,7 @@ class BookingStep1Fragment:Fragment() {
                                     Phone = document.data["phone"].toString(),
                                     Opening_hours_en = document.data["opening_hours"].toString(),))
                         }
+                        sportCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
                         var adapter = SportCentreAdapter(requireActivity(), sportCentreArray)
                         recycler_court.adapter = adapter
                         recycler_court.visibility = View.VISIBLE

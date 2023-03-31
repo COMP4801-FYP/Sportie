@@ -11,6 +11,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.common.io.Files.append
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -32,6 +33,10 @@ class GeodataActivity : AppCompatActivity() {
         var btn_add = findViewById<Button>(R.id.btn_add)
         btn_add!!.setOnClickListener {
 //            sendMessage()
+
+            var tmptime = mutableListOf<String>()
+            var tmpcourt = mutableListOf<String>()
+            var tmpaddr = mutableListOf<String>()
 
             val jsonFileString = getJsonDataFromAsset(applicationContext, "facility-bkbc.json")
             val gson = Gson()
@@ -69,21 +74,85 @@ class GeodataActivity : AppCompatActivity() {
                 val facilities = sportcentre.Ancillary_facilities_en
 
                 val geodatas: MutableMap<String, Any> = HashMap()
+
+
+                if (openHour !in tmptime){
+                    tmptime.add(openHour)
+                }
+
+                if (courtno !in tmpcourt){
+                    tmpcourt.add(courtno)
+                }
+                if (address !in tmpaddr){
+                    tmpaddr.add(address)
+                }
+
+                // Extract time using regex
+                val (openTime, closeTime) = extractTime(openHour)
+                println("$openHour")
+                println("Start time: $openTime, Close time: $closeTime")
+
+                if (openTime == ""){
+                    print("bgst $openHour")
+                }
+
+                // remove all HTML tags
                 geodatas["ID"] = id
-                geodatas["address"] = address
-                geodatas["district"] = district
-                geodatas["facility_name"] = facName
-                geodatas["opening_hours"] = openHour
-                geodatas["facility_details"] = details
-                geodatas["phone"] = phone
+                geodatas["address"] = if (address != null) {
+                    address.replace(Regex("<.*?>"), "").replace(Regex("\\s+"), " ").trim()
+                } else {
+                    // handle the case where details is null
+                    ""
+                }
+                geodatas["district"] = if (district != null) {
+                    district.replace(Regex("<.*?>"), "").replace(Regex("\\s+"), " ").trim()
+                } else {
+                    // handle the case where details is null
+                    ""
+                }
+                geodatas["facility_name"] = if (facName != null) {
+                    facName.replace(Regex("<.*?>"), "").replace(Regex("\\s+"), " ").trim()
+                } else {
+                    // handle the case where details is null
+                    ""
+                }
+                geodatas["opening_hours"] = "$openTime - $closeTime"
+                geodatas["facility_details"] = if (details != null) {
+                    details.replace(Regex("<.*?>"), "").replace(Regex("\\s+"), " ").trim()
+                } else {
+                    // handle the case where details is null
+                    ""
+                }
+                geodatas["phone"] = if (phone != null) {
+                    phone.replace(Regex("<.*?>"), "").replace(Regex("\\s+"), " ").trim()
+                } else {
+                    // handle the case where details is null
+                    ""
+                }
                 geodatas["latitude"] = lat
                 geodatas["longitude"] = long
-                geodatas["facilities"] = facilities
-                geodatas["courtno"] = courtno
+                geodatas["facilities"] = if (facilities != null) {
+                    facilities.replace(Regex("<.*?>"), "").replace(Regex("\\s+"), " ").trim()
+                } else {
+                    // handle the case where details is null
+                    ""
+                }
+                geodatas["courtno"] = extractCourtNumber(courtno)
+
+                var cno = geodatas["courtno"]
+                println("courtno $cno $courtno")
+                var dis = geodatas["district"]
+                println("district $dis")
 
                 saveFireStore2(geodatas)
 
             }
+
+            print("time")
+            println(tmptime)
+            print("addr")
+            println(tmpcourt)
+            println(tmpaddr)
         }
     }
 
@@ -102,6 +171,7 @@ class GeodataActivity : AppCompatActivity() {
     }
     fun switchActivity(jsonObj: JSONObject) {
         val jsonArray: JSONArray = jsonObj.getJSONArray("features")
+
 
         for (i in 0 until jsonArray.length()) {
             val prop = jsonArray.getJSONObject(i).getJSONObject("properties")
@@ -258,4 +328,82 @@ class GeodataActivity : AppCompatActivity() {
     } catch (x: NumberFormatException) {
         false
     }
+
+    fun extractTime(input: String): Pair<String, String> {
+        val timeRegex = Regex("""\b(\d{1,2}(?::\d{2})?\s*(?:a|p)\.?m\.?)\b""")
+        val timeMatches = timeRegex.findAll(input).toList().map { it.value }
+        val cleanedInput = input.replace("&ndash;", "-")
+            .replace("&lt;br&gt;", "")
+            .replace("No provision of floodlight", "")
+            .replace("to", "-")
+            .replace("daily", "")
+            .replace("－", "-")
+            .trim()
+
+        return when {
+            timeMatches.size >= 2 -> {
+                val openTime = formatTime(timeMatches[0])
+                val closeTime = formatTime(timeMatches[1])
+                Pair(openTime, closeTime)
+            }
+            cleanedInput.contains("24 hours", ignoreCase = true) -> {
+                Pair("00:00", "23:59")
+            }
+            cleanedInput.contains("closed", ignoreCase = true) -> {
+                Pair("", "")
+            }
+            cleanedInput.matches("""\d{1,2}\s*a\.?m\.?\s*-+\s*\d{1,2}\s*p\.?m\.?\s*daily""".toRegex(RegexOption.IGNORE_CASE)) -> {
+                val openTime = formatTime(cleanedInput.substringBefore("-").trim() + " am")
+                val closeTime = formatTime(cleanedInput.substringAfter("-").substringBefore("daily").trim() + " pm")
+                Pair(openTime, closeTime)
+            }
+            else -> {
+                val timeRegex2 = Regex("""\b(\d{1,2}(?::\d{2})?\s*(?:a|p)\.?m\.?)\b\s*-+\s*\b(\d{1,2}(?::\d{2})?\s*(?:a|p)\.?m\.?)\b""")
+                val timeMatches2 = timeRegex2.find(cleanedInput)?.groupValues ?: listOf("", "", "")
+                val openTime = formatTime(timeMatches2[1])
+                val closeTime = formatTime(timeMatches2[2])
+                Pair(openTime, closeTime)
+            }
+        }
+    }
+
+    fun formatTime(time: String): String {
+        val timeRegex = Regex("""\d{1,2}""")
+        val hours = timeRegex.find(time)?.value?.toIntOrNull() ?: return ""
+        val minutes = Regex("""(?<=:)\d{2}""").find(time)?.value?.toIntOrNull() ?: 0
+        val amPm = if (time.contains("am", ignoreCase = true)) "am" else "pm"
+        return if (hours == 12 && amPm == "am") {
+            "00:${minutes.toString().padStart(2, '0')}"
+        } else if (hours < 12 && amPm == "pm") {
+            "${hours + 12}:${minutes.toString().padStart(2, '0')}"
+        } else {
+            "${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
+        }
+    }
+
+    fun extractCourtNumber(string: String): Int {
+        return when {
+            string.isEmpty() -> 1
+            string.matches(Regex("\\d+")) -> string.toInt()
+            else -> {
+                val words = string.split(" ")
+                for (word in words) {
+                    if (word.matches(Regex("\\d+"))) {
+                        return Math.round(word.toFloat())
+                    }
+                }
+                1
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
