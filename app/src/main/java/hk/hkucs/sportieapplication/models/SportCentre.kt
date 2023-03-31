@@ -45,4 +45,7 @@ class SportCentre(
     fun setCourtId(courtId: String){
         this.court_id = courtId
     }
+    fun getopenhour(): String {
+        return Opening_hours_en
+    }
 }

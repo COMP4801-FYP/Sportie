@@ -128,7 +128,9 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
     }
 
     override fun getItemCount(): Int {
-        return Common.TIME_SLOT_TOTAL
+//        return Common.TIME_SLOT_TOTAL
+        return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()
     }
+
 
 }
