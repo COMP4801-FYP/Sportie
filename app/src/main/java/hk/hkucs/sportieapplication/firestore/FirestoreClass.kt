@@ -264,7 +264,11 @@ class FirestoreClass {
                             }
                         }
                     }
-                    bookings.sortWith(compareBy<BookingInformation> { it.getTime().toString().takeLast(10).slice(6..9) }.thenBy { it.getTime().toString().takeLast(10).slice(3..4)}.thenBy { it.getTime().toString().takeLast(10).slice(0..1)})
+                    bookings.sortWith(compareBy<BookingInformation> { it.getTime().toString()
+                        .takeLast(10).slice(6..9) }
+                        .thenBy { it.getTime().toString().takeLast(10).slice(3..4)}
+                        .thenBy { it.getTime().toString().takeLast(10).slice(0..1)}
+                        .thenBy { it.getTime().toString().split(" at ")[0].split(" - ")[0].split(":")[0].toInt() })
                     when (bookingListActivity) {
                         is BookingListActivity -> {
                             bookingListActivity.retrieveBookingSuccess(bookings, whentime)
