@@ -17,6 +17,7 @@ import dmax.dialog.SpotsDialog
 import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.adapter.MyViewPagerAdapter
+import hk.hkucs.sportieapplication.adapter.MyViewPagerPlayerCountAdapter
 import hk.hkucs.sportieapplication.databinding.ActivityBookingBinding
 import hk.hkucs.sportieapplication.databinding.ActivityPlayerCountBinding
 import hk.hkucs.sportieapplication.models.Court
@@ -64,7 +65,7 @@ class PlayerCountActivity : AppCompatActivity() {
         setupStepView()
         setColorButton()
 
-        binding.viewPager.adapter = MyViewPagerAdapter(this)
+        binding.viewPager.adapter = MyViewPagerPlayerCountAdapter(this)
 
         // previous step
         binding.btnPreviousStep.setOnClickListener(){
@@ -190,7 +191,7 @@ class PlayerCountActivity : AppCompatActivity() {
                     if (!documents.isEmpty) {
                         var courtArray = ArrayList<Court>()
                         for (document in documents) {
-                            courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id))
+                            courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
                         }
                         // send broadcast to BookingStep2Fragment to load Recycler
                         val intent = Intent("COURT_LOAD_DONE")

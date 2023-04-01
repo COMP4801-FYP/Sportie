@@ -21,6 +21,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileReader
 import java.io.IOException
+import kotlin.random.Random
 
 //import com.example.parsejsonexample.Cell
 
@@ -93,7 +94,7 @@ class GeodataActivity : AppCompatActivity() {
                 println("Start time: $openTime, Close time: $closeTime")
 
                 if (openTime == ""){
-                    print("bgst $openHour")
+                    print("bgst $openHour $id $facName")
                 }
 
                 // remove all HTML tags
@@ -312,7 +313,9 @@ class GeodataActivity : AppCompatActivity() {
                             .set(hashMapOf(
                                 "name" to "Court #$i",
                                 "address" to geodatas["address"],
-                                "courtId" to it.id + "_No"+ (i).toString()
+                                "courtId" to it.id + "_No"+ (i).toString(),
+                                "playercount_a" to Random.nextInt(0, 12),
+                                "playercount_b" to Random.nextInt(0, 12)
                             ))
                     }
                 }

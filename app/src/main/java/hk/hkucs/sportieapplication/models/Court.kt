@@ -7,7 +7,10 @@ import kotlinx.parcelize.Parcelize
 class Court (
     private var name: String,
     private var address: String,
-    private var courtId: String
+    private var courtId: String,
+    private var playercountA: Int,
+    private var playercountB: Int
+
 
 ):Parcelable {
     fun getName(): String {
@@ -29,5 +32,11 @@ class Court (
     }
     fun setCourtId(courtId: String){
         this.courtId = courtId
+    }
+        fun getCourtA(): Int {
+        return playercountA
+    }
+    fun getCourtB(): Int {
+        return playercountB
     }
 }

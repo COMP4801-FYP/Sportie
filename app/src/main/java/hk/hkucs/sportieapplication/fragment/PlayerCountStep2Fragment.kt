@@ -22,7 +22,7 @@ import hk.hkucs.sportieapplication.adapter.PlayerCountCourtAdapter
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepTwoBinding
 import hk.hkucs.sportieapplication.models.Court
 
-class BookingStep2Fragment:Fragment() {
+class PlayerCountStep2Fragment:Fragment() {
     private lateinit var binding: FragmentBookingStepTwoBinding
     private lateinit var localBroadcastManager: LocalBroadcastManager
     private lateinit var recycler_court: RecyclerView
@@ -32,8 +32,17 @@ class BookingStep2Fragment:Fragment() {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onReceive(context: Context, intent: Intent){
             var courtArrayList = intent.getParcelableArrayListExtra<Court>("COURT_LOAD_DONE")
+            var newcourtArrayList = ArrayList<Court>()
+            if (courtArrayList != null) {
+                for (i in courtArrayList){
+                    var i_a =  Court(name = i.getName() + " A", courtId = i.getCourtId(), address = i.getAddress(), playercountA = i.getCourtA().toInt(), playercountB = i.getCourtB().toInt())
+                    var i_b=  Court(name = i.getName() + " B", courtId = i.getCourtId(), address = i.getAddress(),playercountA = i.getCourtA().toInt(), playercountB = i.getCourtB().toInt())
 
-            var adapter = CourtAdapter(requireActivity(), courtArrayList!!)
+                    newcourtArrayList.add(i_a)
+                    newcourtArrayList.add(i_b)
+                }
+            }
+            var adapter = PlayerCountCourtAdapter(requireActivity(), newcourtArrayList!!)
             recycler_court.adapter = adapter
             sportctrname.text = Common.currentSportCentre!!.getName()
         }
@@ -71,7 +80,7 @@ class BookingStep2Fragment:Fragment() {
 
     private fun initView() {
         recycler_court.setHasFixedSize(true)
-        recycler_court.layoutManager = GridLayoutManager(requireActivity(), 2)
+        recycler_court.layoutManager = GridLayoutManager(requireActivity(), 1)
         recycler_court.addItemDecoration(SpacesItemDecoration(4))
     }
 }

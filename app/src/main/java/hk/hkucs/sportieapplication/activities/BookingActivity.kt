@@ -191,7 +191,7 @@ class BookingActivity : AppCompatActivity() {
                     if (!documents.isEmpty) {
                         var courtArray = ArrayList<Court>()
                         for (document in documents) {
-                            courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id))
+                            courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
                         }
                         // send broadcast to BookingStep2Fragment to load Recycler
                         val intent = Intent("COURT_LOAD_DONE")
