@@ -102,72 +102,97 @@ class BookingStep1Fragment:Fragment() {
 
     private fun loadAllCourt() {
         dialog.show()
-        FirebaseFirestore.getInstance().collection("AllCourt")
-            .get()
-            .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot?> {
-                override fun onComplete(task: Task<QuerySnapshot?>) {
-                    if (task.isSuccessful) {
-                        district_array = ArrayList()
-                        district_array.add(ALL_DISTRICT)
-                        sportCentreArray = ArrayList()
+        if (Common.allCentreArray.isEmpty()){
+            FirebaseFirestore.getInstance().collection("AllCourt")
+                .get()
+                .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot?> {
+                    override fun onComplete(task: Task<QuerySnapshot?>) {
+                        if (task.isSuccessful) {
+                            district_array = ArrayList()
+                            district_array.add(ALL_DISTRICT)
+                            sportCentreArray = ArrayList()
 
-                        for (document in task.result!!) {
-                            district_array.add(document.id)
+                            for (document in task.result!!) {
+                                district_array.add(document.id)
 
-                            FirebaseFirestore.getInstance().collection("AllCourt")
-                                .document(document.id)
-                                .collection("SportCentre")
-                                .get()
-                                .addOnSuccessListener { documents ->
-                                    if (!documents.isEmpty) {
-                                        for (doc in documents) {
-                                            Common.allCentreArray.add(
-                                                SportCentre(
-                                                    Name_en = doc.data["facility_name"].toString(),
-                                                    Address_en = doc.data["address"].toString(),
-                                                    court_id = doc.id,
-                                                    District_en = document.id,
-                                                    Phone = doc.data["phone"].toString(),
-                                                    Opening_hours_en = doc.data["opening_hours"].toString(),
+                                FirebaseFirestore.getInstance().collection("AllCourt")
+                                    .document(document.id)
+                                    .collection("SportCentre")
+                                    .get()
+                                    .addOnSuccessListener { documents ->
+                                        if (!documents.isEmpty) {
+                                            for (doc in documents) {
+                                                Common.allCentreArray.add(
+                                                    SportCentre(
+                                                        Name_en = doc.data["facility_name"].toString(),
+                                                        Address_en = doc.data["address"].toString(),
+                                                        court_id = doc.id,
+                                                        District_en = document.id,
+                                                        Phone = doc.data["phone"].toString(),
+                                                        Opening_hours_en = doc.data["opening_hours"].toString(),
+                                                    )
                                                 )
+                                            }
+                                            Common.allCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
+                                        } else {
+                                            Log.e(
+                                                activity?.javaClass?.simpleName,
+                                                "Error while loading court in district ${document.id}."
                                             )
+                                            dialog.dismiss();
                                         }
-                                        Common.allCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
-                                    } else {
-                                        Log.e(
-                                            activity?.javaClass?.simpleName,
-                                            "Error while loading court in district ${document.id}."
-                                        )
-                                        dialog.dismiss();
                                     }
+                            }
+
+                            Thread.sleep(2000)
+                            
+
+                            Common.allDistrictArray = district_array
+
+                            var adapter = SportCentreAdapter(requireActivity(), Common.allCentreArray)
+                            recycler_court.adapter = adapter
+                            recycler_court.visibility = View.VISIBLE
+
+                            spinner.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item, district_array)
+                            spinner.onItemSelectedListener = object :
+                                AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                                    dialog.dismiss()
+                                    sportCentreArray = ArrayList()
+                                    loadBranchOfDistrict(district_array[position])
                                 }
-                        }
 
-                        Thread.sleep(2000)
-
-                        var adapter = SportCentreAdapter(requireActivity(), Common.allCentreArray)
-                        recycler_court.adapter = adapter
-                        recycler_court.visibility = View.VISIBLE
-
-                        spinner.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item, district_array)
-                        spinner.onItemSelectedListener = object :
-                            AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                                dialog.dismiss()
-                                sportCentreArray = ArrayList()
-                                loadBranchOfDistrict(district_array[position])
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    TODO("Not yet implemented")
+                                }
                             }
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.exception)
+                            dialog.dismiss()
                         }
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.exception)
-                        dialog.dismiss()
                     }
+                })
+        }
+        else{
+            var adapter = SportCentreAdapter(requireActivity(), Common.allCentreArray)
+            recycler_court.adapter = adapter
+            recycler_court.visibility = View.VISIBLE
+
+            spinner.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item, Common.allDistrictArray)
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    dialog.dismiss()
+                    sportCentreArray = ArrayList()
+                    loadBranchOfDistrict(Common.allDistrictArray[position])
                 }
-            })
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+            }
+        }
+
     }
 
     private fun loadBranchOfDistrict(districtName: String) {

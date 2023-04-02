@@ -70,6 +70,11 @@ class BookingActivity : AppCompatActivity() {
         // previous step
         binding.btnPreviousStep.setOnClickListener(){
             if(Common.step == 3 || Common.step > 0){
+//                if (Common.step == 1){
+//                    Common.currentSportCentre = null
+//                    Common.currentCourt = null
+//                    Common.currentTimeSlot = -1
+//                }
                 Common.step--
                 binding.viewPager.currentItem = Common.step
 

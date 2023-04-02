@@ -14,7 +14,7 @@ import hk.hkucs.sportieapplication.fragment.*
 
 class MyViewPagerPlayerCountAdapter(fa:FragmentActivity) : FragmentStateAdapter(fa)  {
     override fun getItemCount(): Int {
-        return 4
+        return 2
     }
 
     override fun createFragment(position: Int): Fragment {
