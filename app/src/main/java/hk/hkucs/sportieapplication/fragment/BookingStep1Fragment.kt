@@ -210,7 +210,6 @@ class BookingStep1Fragment:Fragment() {
             dialog.dismiss()
         }
         else{
-
             FirebaseFirestore.getInstance().collection("AllCourt")
                 .document(districtName)
                 .collection("SportCentre")
@@ -223,7 +222,7 @@ class BookingStep1Fragment:Fragment() {
                                     Name_en = document.data["facility_name"].toString(),
                                     Address_en = document.data["address"].toString(),
                                     court_id = document.id,
-                                    District_en = document.id,
+                                    District_en = document.data["district"].toString(),
                                     Phone = document.data["phone"].toString(),
                                     Opening_hours_en = document.data["opening_hours"].toString(),))
                         }

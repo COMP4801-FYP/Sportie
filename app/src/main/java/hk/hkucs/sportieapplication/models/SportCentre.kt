@@ -48,4 +48,8 @@ class SportCentre(
     fun getopenhour(): String {
         return Opening_hours_en
     }
+
+    fun getDistrict():String{
+        return District_en
+    }
 }

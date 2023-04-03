@@ -100,7 +100,7 @@ class BookingActivity : AppCompatActivity() {
                 // pick time slot
                 else if(Common.step == 2){
                     if (Common.currentCourt != null){
-                        loadTimeSlotOfBarber(Common.currentCourt!!.getCourtId())
+                        loadTimeSlotOfCourt(Common.currentCourt!!.getCourtId())
                     }
                 }
 
@@ -141,11 +141,15 @@ class BookingActivity : AppCompatActivity() {
         bottomNav?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.booking -> {
+                    clearcommonvar()
+                    finish()
                     startActivity(Intent(applicationContext, BookingListActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
                 R.id.groups -> {
+                    clearcommonvar()
+                    finish()
                     startActivity(Intent(applicationContext, PlayerCountActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
@@ -159,6 +163,8 @@ class BookingActivity : AppCompatActivity() {
 //                    return@setOnItemSelectedListener true
 //                }
                 R.id.profile -> {
+                    clearcommonvar()
+                    finish()
                     startActivity(Intent(applicationContext, UserProfileActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
@@ -174,7 +180,7 @@ class BookingActivity : AppCompatActivity() {
         localBroadcastManager.sendBroadcast(intent)
     }
 
-    private fun loadTimeSlotOfBarber(courtId: String) {
+    private fun loadTimeSlotOfCourt(courtId: String) {
         // send local broadcast to Fragment step 3
         val intent = Intent("DISPLAY_TIME_SLOT")
         localBroadcastManager.sendBroadcast(intent)
@@ -183,39 +189,34 @@ class BookingActivity : AppCompatActivity() {
     private fun loadCourtBySportCentre(courtId: String) {
         dialog.show()
         // Select all court of the Sport centre
-        if(!TextUtils.isEmpty(Common.district)){
-
-            FirebaseFirestore.getInstance()
-                .collection("AllCourt")
-                .document(Common.district!!)
-                .collection("SportCentre")
-                .document(courtId)
-                .collection("Court")
-                .get()
-                .addOnSuccessListener{ documents ->
-                    if (!documents.isEmpty) {
-                        var courtArray = ArrayList<Court>()
-                        for (document in documents) {
-                            courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
-                        }
-                        // send broadcast to BookingStep2Fragment to load Recycler
-                        val intent = Intent("COURT_LOAD_DONE")
-                        intent.putParcelableArrayListExtra("COURT_LOAD_DONE", courtArray)
-                        localBroadcastManager.sendBroadcast(intent)
-                        dialog.dismiss()
+        // Select all court of the Sport centre
+        FirebaseFirestore.getInstance()
+            .collection("AllCourt")
+            .document(Common.currentSportCentre!!.getDistrict())
+            .collection("SportCentre")
+            .document(courtId)
+            .collection("Court")
+            .get()
+            .addOnSuccessListener{ documents ->
+                if (!documents.isEmpty) {
+                    var courtArray = ArrayList<Court>()
+                    for (document in documents) {
+                        courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
                     }
+                    // send broadcast to BookingStep2Fragment to load Recycler
+                    val intent = Intent("COURT_LOAD_DONE")
+                    intent.putParcelableArrayListExtra("COURT_LOAD_DONE", courtArray)
+                    localBroadcastManager.sendBroadcast(intent)
+                    dialog.dismiss()
                 }
-                .addOnFailureListener { e ->
-                    Log.e(
-                        this.javaClass?.simpleName,
-                        "Error while loading court in SPORTCENTRE.", e
-                    )
-                    dialog.dismiss();
-                }
-        }
-        else{
-            dialog.dismiss();
-        }
+            }
+            .addOnFailureListener { e ->
+                Log.e(
+                    this.javaClass?.simpleName,
+                    "Error while loading court in SPORTCENTRE.", e
+                )
+                dialog.dismiss();
+            }
     }
 
     private fun setColorButton() {
@@ -236,5 +237,12 @@ class BookingActivity : AppCompatActivity() {
     private fun setupStepView(){
         val stepList = listOf("Sport Centre","Court", "Time", "Confirm")
         binding.stepView.setSteps(stepList)
+    }
+
+    fun clearcommonvar(){
+        Common.currentCourt = null
+        Common.currentSportCentre = null
+        Common.currentTimeSlot = -1
+        Common.step = 0
     }
 }

@@ -89,8 +89,8 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
         return courtList.size
     }
 
-    fun setFilteredList(filteredList:ArrayList<SportCentre>){
-        this.courtList = filteredList
-        notifyDataSetChanged()
-    }
+//    fun setFilteredList(filteredList:ArrayList<SportCentre>){
+//        this.courtList = filteredList
+//        notifyDataSetChanged()
+//    }
 }
