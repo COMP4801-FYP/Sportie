@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:text="LOG IN"
-                    android:textColor="@color/green3"
+                    android:textColor="@color/themeRed"
                     android:textSize="30sp"
                     android:layout_gravity="center"/>
 
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:boxStrokeColor="@color/green1"
+                    app:boxStrokeColor="@color/themeYellow"
                     app:hintTextColor="@color/darkgreen3"
                     android:layout_gravity="center">
 
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    app:boxStrokeColor="@color/green1"
+                    app:boxStrokeColor="@color/themeYellow"
                     app:hintTextColor="@color/darkgreen3"
                     android:layout_gravity="center"
                     app:passwordToggleEnabled="true" >
@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="75dp"
-                    android:background="@color/green3"
+                    android:background="@color/themeRed"
                     android:text="SIGN IN"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/clickable_text_view_padding"
                         android:text="Register now!"
-                        android:textColor="@color/green3"
+                        android:textColor="@color/themeRed"
                         android:textSize="@dimen/lbl_text_view_textSize" />
                 </LinearLayout>
             </LinearLayout>

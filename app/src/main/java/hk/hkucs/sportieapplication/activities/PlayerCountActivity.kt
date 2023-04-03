@@ -220,21 +220,21 @@ class PlayerCountActivity : AppCompatActivity() {
 
     private fun setColorButton() {
         if (binding.btnNextStep.isEnabled){
-            binding.btnNextStep.setBackgroundResource(R.color.purple_500)
+            binding.btnNextStep.setBackgroundResource(R.color.themeRed)
         }
         else{
-            binding.btnNextStep.setBackgroundResource(R.color.transparent)
+            binding.btnNextStep.setBackgroundResource(R.color.themeGrey)
         }
         if (binding.btnPreviousStep.isEnabled){
-            binding.btnPreviousStep.setBackgroundResource(R.color.purple_500)
+            binding.btnPreviousStep.setBackgroundResource(R.color.themeRed)
         }
         else{
-            binding.btnPreviousStep.setBackgroundResource(R.color.transparent)
+            binding.btnPreviousStep.setBackgroundResource(R.color.themeGrey)
         }
     }
 
     private fun setupStepView(){
-        val stepList = listOf("Sport Centre","Court")
+        val stepList = listOf("Sport Centre","Court Occupancy")
         binding.stepView.setSteps(stepList)
     }
     fun clearcommonvar(){

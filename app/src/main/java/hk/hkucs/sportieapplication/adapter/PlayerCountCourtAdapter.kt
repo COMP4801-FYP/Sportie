@@ -74,7 +74,7 @@ class PlayerCountCourtAdapter(requireActivity: Context, courtArray: ArrayList<Co
                 }
 
                 // set background for choice
-                holder.card_court.setCardBackgroundColor(context.getColor(R.color.green2))
+                holder.card_court.setCardBackgroundColor(context.getColor(R.color.themeRed))
 
                 // send broadcast to tell Booking Activity enable button next
                 val intent = Intent("ENABLE_BUTTON_NEXT")

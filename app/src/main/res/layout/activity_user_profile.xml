@@ -13,7 +13,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="35dp"
         android:text="@string/title_profile"
-        android:textColor="@color/green3"
+        android:textColor="@color/themeRed"
         android:textSize="35sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -174,7 +174,7 @@
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/green3"
+            android:background="@color/themeRed"
             app:layout_constraintTop_toBottomOf="@+id/rg_gender" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -183,7 +183,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:itemBackground="@color/green3"
+        app:itemBackground="@color/themeRed"
         app:itemIconTint="@drawable/bottom_nav_selector"
         app:itemTextColor="@drawable/bottom_nav_selector"
         app:layout_constraintBottom_toBottomOf="parent"

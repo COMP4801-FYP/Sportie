@@ -194,7 +194,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="25dp"
                 android:text="Modify"
-                android:background="@drawable/button_round_corner"
+                android:background="@drawable/button_round_corner2"
                 android:textSize="15sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat_bold" />
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Delete"
-                android:background="@drawable/button_round_corner2"
+                android:background="@drawable/button_round_corner"
                 android:textColor="@color/white"
 
                 android:textSize="15sp"

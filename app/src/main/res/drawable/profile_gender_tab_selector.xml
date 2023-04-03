@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/green3"/>
+            <solid android:color="@color/themeRed"/>
             <corners
                 android:bottomLeftRadius="@dimen/gender_radio_button_radius"
                 android:bottomRightRadius="@dimen/gender_radio_button_radius"
