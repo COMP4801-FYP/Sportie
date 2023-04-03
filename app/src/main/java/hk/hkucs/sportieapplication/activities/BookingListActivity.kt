@@ -83,14 +83,14 @@ class BookingListActivity : AppCompatActivity() {
                 if (isSelected) {
                     FirestoreClass().getBookingList(this, "FUTURE")
                     rbLeft.setTextColor(Color.WHITE)
-                    rbRight.setTextColor(getColor(R.color.green3))
+                    rbRight.setTextColor(getColor(R.color.themeRed))
                 }
             }
             R.id.rbRight -> {
                 if (isSelected) {
                     FirestoreClass().getBookingList(this, "PAST")
                     rbRight.setTextColor(Color.WHITE)
-                    rbLeft.setTextColor(getColor(R.color.green3))
+                    rbLeft.setTextColor(getColor(R.color.themeRed))
                 }
             }
         }

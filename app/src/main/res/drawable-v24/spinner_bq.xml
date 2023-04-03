@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="8dp"/>
+<!--    <corners android:radius="8dp"/>-->
     <stroke
-        android:color="@color/holo_orange_light"
+        android:color="@color/themeYellow"
         android:width="1dp"
         >
+        <item android:drawable="@drawable/ic_baseline_keyboard_arrow_down_24" android:gravity="center_vertical|right" android:right="5dp"/>
     </stroke>
     <solid android:color="@color/white"/>
 </shape>

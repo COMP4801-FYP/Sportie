@@ -27,7 +27,7 @@
             android:text="Court #1"
             android:textSize="20sp"
             android:textStyle="bold|italic"
-            android:fontFamily="@font/bellerose"
+            android:fontFamily="@font/montserrat_regular"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

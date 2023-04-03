@@ -14,7 +14,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="35dp"
         android:text="Booking Info"
-        android:textColor="@color/green3"
+        android:textColor="@color/themeRed"
         android:textSize="35sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +76,7 @@
                 android:onClick="onRadioButtonClicked"
                 android:text="HISTORY"
                 android:textStyle="bold"
-                android:textColor="@color/green3" />
+                android:textColor="@color/themeRed" />
 
         </RadioGroup>
     </LinearLayout>
@@ -97,7 +97,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:itemBackground="@color/green3"
+        app:itemBackground="@color/themeRed"
         app:itemIconTint="@drawable/bottom_nav_selector"
         app:itemTextColor="@drawable/bottom_nav_selector"
         app:menu="@menu/menu_navigation"
