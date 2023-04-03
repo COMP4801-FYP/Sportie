@@ -70,11 +70,6 @@ class BookingActivity : AppCompatActivity() {
         // previous step
         binding.btnPreviousStep.setOnClickListener(){
             if(Common.step == 3 || Common.step > 0){
-//                if (Common.step == 1){
-//                    Common.currentSportCentre = null
-//                    Common.currentCourt = null
-//                    Common.currentTimeSlot = -1
-//                }
                 Common.step--
                 binding.viewPager.currentItem = Common.step
 
@@ -135,6 +130,15 @@ class BookingActivity : AppCompatActivity() {
         binding.viewPager.offscreenPageLimit = 4
 
 
+        var isfrombookmark = intent.getIntExtra("FROM_BOOKMARK",-1)
+        if (isfrombookmark == 1){
+            binding.viewPager.post{
+                binding.viewPager.setCurrentItem(1,true)
+                loadCourtBySportCentre(Common.currentSportCentre!!.getCourtId())
+            }
+        }
+
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.home
 
@@ -188,7 +192,6 @@ class BookingActivity : AppCompatActivity() {
 
     private fun loadCourtBySportCentre(courtId: String) {
         dialog.show()
-        // Select all court of the Sport centre
         // Select all court of the Sport centre
         FirebaseFirestore.getInstance()
             .collection("AllCourt")
