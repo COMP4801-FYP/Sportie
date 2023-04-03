@@ -64,14 +64,14 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
             loadAvailableTimeSlotOfCourt(Common.currentCourt!!.getCourtId(),simpleDateFromat.format(date.time))
             sportctrname.text = Common.currentSportCentre!!.getName()
             sportcourtno.text = Common.currentCourt!!.getName()
+
         }
     }
 
     private fun loadAvailableTimeSlotOfCourt(courtId: String, bookDate: String) {
         dialog.show()
-
         courtRef = FirebaseFirestore.getInstance().collection("AllCourt")
-            .document(Common.district!!)
+            .document(Common.currentSportCentre!!.getDistrict())
             .collection("SportCentre")
             .document(Common.currentSportCentre!!.getCourtId())
             .collection("Court")

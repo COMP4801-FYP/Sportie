@@ -278,7 +278,7 @@ class FirestoreClass {
             }
     }
 
-    fun addBookmark(sportctr: SportCentre){
+    fun addBookmark(sportctr: SportCentre, activity: Activity){
         // Create new collection, if not exists
         var userBookmarkRef = mFirestore.collection(Constants.USERS)
             .document(getCurrentUserID())
@@ -291,7 +291,12 @@ class FirestoreClass {
                 userBookmarkRef.document(sportctr.getCourtId())
                     .set(sportctr)
                     .addOnSuccessListener {
-                        Common.bookmarkArray.add(sportctr)
+                        when(activity){
+                            is BookingActivity -> {
+                                Common.bookmarkArray.add(sportctr)
+                                activity.addBookmarkSuccess()
+                            }
+                        }
                     }
             }
         }

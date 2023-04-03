@@ -30,15 +30,12 @@ class BookingListActivity : AppCompatActivity() {
         rbLeft = binding.rbLeft
         rbRight = binding.rbRight
 
-//        binding.addBookingBtn.setOnClickListener {
-//            val intent = Intent(this, BookingActivity::class.java)
-//            startActivity(intent)
-//        }
-
         binding.bookingListView.isClickable = true
+
+        // get booking list
         FirestoreClass().getBookingList(this, "FUTURE")
-
-
+        // get bookmark list
+        FirestoreClass().getBookmark(this)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.booking

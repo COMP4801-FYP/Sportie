@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
@@ -130,6 +131,7 @@ class BookingActivity : AppCompatActivity() {
         binding.viewPager.offscreenPageLimit = 4
 
 
+        // check if this booking page is directed from bookmark page, directly jump to court no selection page
         var isfrombookmark = intent.getIntExtra("FROM_BOOKMARK",-1)
         if (isfrombookmark == 1){
             binding.viewPager.post{
@@ -247,5 +249,11 @@ class BookingActivity : AppCompatActivity() {
         Common.currentSportCentre = null
         Common.currentTimeSlot = -1
         Common.step = 0
+    }
+
+    fun addBookmarkSuccess(){
+        Toast.makeText(this, "Success added bookmark!", Toast.LENGTH_SHORT).show()
+        finish()
+        startActivity(intent)
     }
 }

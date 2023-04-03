@@ -62,13 +62,8 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bookmarkbtn.setOnClickListener {
-            var tmp = Common.bookmarkArray.size
-            FirestoreClass().addBookmark(courtList[position])
+            FirestoreClass().addBookmark(courtList[position], context as Activity)
 
-            Thread.sleep(500)
-            if (Common.bookmarkArray.size > tmp){
-                Toast.makeText(context, "Success added bookmark!", Toast.LENGTH_SHORT).show()
-            }
         }
 
         // change bookmark logo to bookmarked if user already bookmarked the sport centre

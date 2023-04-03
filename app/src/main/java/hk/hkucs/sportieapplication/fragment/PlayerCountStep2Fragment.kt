@@ -45,6 +45,7 @@ class PlayerCountStep2Fragment:Fragment() {
             var adapter = PlayerCountCourtAdapter(requireActivity(), newcourtArrayList!!)
             recycler_court.adapter = adapter
             sportctrname.text = Common.currentSportCentre!!.getName()
+            binding.colorlegend.visibility = View.VISIBLE
         }
     }
 
