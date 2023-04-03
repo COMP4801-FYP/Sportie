@@ -18,15 +18,16 @@
             android:text="Court #1"
             android:textSize="20sp"
             android:textStyle="bold|italic"
-            android:fontFamily="@font/bellerose"
+            android:fontFamily="@font/montserrat_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
+            android:textColor="@color/themeBlue"
             />
        <androidx.appcompat.widget.AppCompatButton
            android:id="@+id/colorshape"
-           android:layout_width="25dp"
-           android:layout_height="25dp"
+           android:layout_width="20dp"
+           android:layout_height="20dp"
            android:background="@drawable/count_shape2"
            />
 

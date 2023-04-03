@@ -10,7 +10,7 @@
         android:id="@+id/sport_ctr_name"
         android:text="Pokfulam Field"
         android:textSize="30sp"
-        android:textColor="@color/darker_gray"
+        android:textColor="@color/themeBlue"
         android:paddingBottom="10dp"
         android:textStyle="bold"
         android:fontFamily="@font/montserrat_bold"
@@ -22,13 +22,14 @@
     <TextView
         android:id="@+id/sport_court_no"
         android:text="Court #1"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:paddingBottom="20dp"
         android:textStyle="italic"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/themeBlue"
         />
 
     <devs.mulham.horizontalcalendar.HorizontalCalendarView
@@ -36,7 +37,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendarView"
         android:background="@color/colorButton"
-        app:textColorSelected="#FFFF"/>
+        app:textColorNormal="@color/white"
+        app:textColorSelected="@color/themeBlue"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_time_slot"

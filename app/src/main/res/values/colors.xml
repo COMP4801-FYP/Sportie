@@ -20,13 +20,18 @@
 
     <color name="light_grey">#F1F1F1</color>
     <color name="colorPrimaryText">#222934</color>
-    <color name="colorSecondaryText">#989898</color>
-    <color name="colorButton">#34a0a4</color>
+    <color name="colorSecondaryText">#19204E</color>
+    <color name="colorButton">#DF1B3F</color>
 
     <color name="holo_orange_dark">#ffff8800</color>
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="darker_gray">#777b7e</color>
 
     <color name="transparent">#7F000000</color>
+
+    <color name="themeRed">#DF1B3F</color>
+    <color name="themeYellow">#FCB300</color>
+    <color name="themeBlue">#19204E</color>
+    <color name="themeGrey">#D6D6D6</color>
 
 </resources>

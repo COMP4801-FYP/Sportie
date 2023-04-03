@@ -22,15 +22,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
+            android:textColor="@color/themeBlue"
             />
         <TextView
             android:id="@+id/txt_court_address"
             android:text="Address of Court #1"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textStyle="italic|bold"
-            android:fontFamily="@font/bellerose"
+            android:fontFamily="@font/montserrat_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/themeBlue"
             />
     </LinearLayout>
 

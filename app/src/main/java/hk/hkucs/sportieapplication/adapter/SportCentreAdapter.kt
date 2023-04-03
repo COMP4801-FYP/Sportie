@@ -69,7 +69,7 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
                 }
                 // set selected background for only selected item
 //                holder.card_court.setCardBackgroundColor(context.getColor(R.color.holo_orange_dark))
-                holder.card_court.setCardBackgroundColor(context.getColor(R.color.green2))
+                holder.card_court.setCardBackgroundColor(context.getColor(R.color.themeYellow))
 
                 // if no district selected, save the district chosen to global variable
                 if (Common.district == ALL_DISTRICT){
