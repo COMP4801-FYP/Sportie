@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.BookmarkRecomActivity"
+    >
+
+    <hk.hkucs.sportieapplication.utils.STextViewBold
+        android:id="@+id/billsTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="35dp"
+        android:text="Bookmarks"
+        android:textColor="@color/green3"
+        android:textSize="35sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addBookingBtn"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="New Booking"
+            android:background="@drawable/button_round_corner"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/billsTitleText" />
+
+
+    <ListView
+        android:id="@+id/bookingListView"
+        android:layout_width="match_parent"
+        android:layout_height="470dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/addBookingBtn"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        tools:listitem="@layout/layout_list_bookmark_item"
+        android:divider="@null"
+        android:dividerHeight="20px"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:itemBackground="@color/green3"
+        app:itemIconTint="@drawable/bottom_nav_selector"
+        app:itemTextColor="@drawable/bottom_nav_selector"
+        app:menu="@menu/menu_navigation"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

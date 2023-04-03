@@ -62,11 +62,11 @@ class UserProfileActivity : AppCompatActivity() {
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
-//                R.id.friends -> {
-//                    startActivity(Intent(applicationContext, FriendsActivity::class.java))
-//                    overridePendingTransition(0, 0)
-//                    return@setOnItemSelectedListener true
-//                }
+                R.id.friends -> {
+                    startActivity(Intent(applicationContext, BookmarkRecomActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@setOnItemSelectedListener true
+                }
                 R.id.profile -> return@setOnItemSelectedListener true
             }
             false

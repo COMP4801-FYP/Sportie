@@ -77,6 +77,8 @@ class Common {
         var step:Int = 0 // first step is 0
         var simpleDateFormat = SimpleDateFormat("dd_MM_yyyy")
 
+        var bookmarkArray: ArrayList<SportCentre> = ArrayList()
+
         var ALL_DISTRICT:String = "Please choose district"
 
         var allCentreArray: ArrayList<SportCentre> = ArrayList()

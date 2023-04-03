@@ -3,9 +3,11 @@ package hk.hkucs.sportieapplication.firestore
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,11 +15,9 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import hk.hkucs.sportieapplication.Common.Common
-import hk.hkucs.sportieapplication.activities.BookingListActivity
-import hk.hkucs.sportieapplication.activities.RegisterActivity
-import hk.hkucs.sportieapplication.activities.SignInActivity
-import hk.hkucs.sportieapplication.activities.UserProfileActivity
+import hk.hkucs.sportieapplication.activities.*
 import hk.hkucs.sportieapplication.models.BookingInformation
+import hk.hkucs.sportieapplication.models.SportCentre
 import hk.hkucs.sportieapplication.models.User
 import hk.hkucs.sportieapplication.utils.Constants
 import java.sql.Time
@@ -273,6 +273,57 @@ class FirestoreClass {
                         is BookingListActivity -> {
                             bookingListActivity.retrieveBookingSuccess(bookings, whentime)
                         }
+                    }
+                }
+            }
+    }
+
+    fun addBookmark(sportctr: SportCentre){
+        // Create new collection, if not exists
+        var userBookmarkRef = mFirestore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .collection("Bookmark")
+
+        // check if document exists in this collection
+        userBookmarkRef.whereEqualTo("done", false).get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                // set data
+                userBookmarkRef.document(sportctr.getCourtId())
+                    .set(sportctr)
+                    .addOnSuccessListener {
+                        Common.bookmarkArray.add(sportctr)
+                    }
+            }
+        }
+    }
+
+    fun getBookmark(bookmactivity: Activity){
+        mFirestore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .collection("Bookmark")
+            .get()
+            .addOnSuccessListener { bookmark_doc ->
+                if (!bookmark_doc.isEmpty) {
+                    var bookmarks = ArrayList<SportCentre>()
+                    for (doc in bookmark_doc) {
+                        bookmarks.add(
+                            SportCentre(
+                                Name_en = doc.data["name"].toString(),
+                                Address_en = doc.data["address"].toString(),
+                                court_id = doc.id,
+                                District_en = doc.data["district"].toString(),
+                                Phone = doc.data["phone"].toString(),
+                                Opening_hours_en = doc.data["opening_hours_en"].toString(),
+                                Ancillary_facilities_en = doc.data["facility"].toString()
+                            )
+                        )
+                    }
+                    Common.bookmarkArray = bookmarks
+
+                }
+                when (bookmactivity) {
+                    is BookmarkRecomActivity -> {
+                        bookmactivity.retrieveBookmarkSuccess()
                     }
                 }
             }

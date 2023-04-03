@@ -127,9 +127,10 @@ class BookingStep1Fragment:Fragment() {
                                                         Name_en = doc.data["facility_name"].toString(),
                                                         Address_en = doc.data["address"].toString(),
                                                         court_id = doc.id,
-                                                        District_en = document.id,
+                                                        District_en = doc.data["district"].toString(),
                                                         Phone = doc.data["phone"].toString(),
                                                         Opening_hours_en = doc.data["opening_hours"].toString(),
+                                                        Ancillary_facilities_en = doc.data["facilities"].toString()
                                                     )
                                                 )
                                             }
@@ -224,7 +225,8 @@ class BookingStep1Fragment:Fragment() {
                                     court_id = document.id,
                                     District_en = document.data["district"].toString(),
                                     Phone = document.data["phone"].toString(),
-                                    Opening_hours_en = document.data["opening_hours"].toString(),))
+                                    Opening_hours_en = document.data["opening_hours"].toString(),
+                                Ancillary_facilities_en = document.data["facilities"].toString()))
                         }
                         sportCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
                         var adapter = SportCentreAdapter(requireActivity(), sportCentreArray)

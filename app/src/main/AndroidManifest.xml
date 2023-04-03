@@ -16,13 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportie">
         <activity
-            android:name=".activities.PlayerCountActivity"
+            android:name=".activities.BookmarkRecomActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <!-- <activity -->
+        <activity
+            android:name=".activities.PlayerCountActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- <activity -->
         <!-- android:name=".HomeActivity" -->
         <!-- android:exported="false"> -->
         <!-- <meta-data -->

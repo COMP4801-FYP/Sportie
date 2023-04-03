@@ -52,4 +52,11 @@ class SportCentre(
     fun getDistrict():String{
         return District_en
     }
+
+    fun getFacility():String{
+        return Ancillary_facilities_en
+    }
+    fun getCourtNo():String{
+        return Court_no_en
+    }
 }

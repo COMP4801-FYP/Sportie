@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="15dp"
+    android:paddingHorizontal="20dp"
+    android:layout_marginEnd="15dp"
+    android:orientation="horizontal"
+    android:background="@drawable/bookinglistitemshape">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="0.9"
+                android:id="@+id/txt_booking_sportctr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="SPORT CENTRE NAME "
+                android:textSize="16sp" />
+            <ImageButton
+                android:id="@+id/bookmarkremove"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_baseline_bookmark_remove_24">
+
+            </ImageButton>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="- Address"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <TextView
+                android:id="@+id/txt_booking_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Address of sport venue"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_regular"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="- District"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <TextView
+                android:id="@+id/txt_booking_district"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="KennedyTown"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_regular"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="- Facilities"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <TextView
+                android:id="@+id/txt_booking_facility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Sitting benches and arboursBarrier Free Facilities: Accessible Toilet, Tactile Guide Path, Braille Directory Map/Floor Plan"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_regular"/>
+        </LinearLayout>
+
+
+<!--        <LinearLayout-->
+<!--            android:padding="5dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="14sp"-->
+<!--                android:text="- Court No"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:fontFamily="@font/montserrat_bold"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txt_booking_court"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="12sp"-->
+<!--                android:text="Court No"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:fontFamily="@font/montserrat_regular"/>-->
+<!--        </LinearLayout>-->
+
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="- Open Hour"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <TextView
+                android:id="@+id/txt_booking_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="12:00 - 22:00"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/montserrat_regular"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bookBtn"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"
+                android:text="Book"
+                android:background="@drawable/button_round_corner"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat_bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/billPendingAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>

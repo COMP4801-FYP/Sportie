@@ -155,11 +155,11 @@ class PlayerCountActivity : AppCompatActivity() {
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
                 }
-//                R.id.friends -> {
-//                    startActivity(Intent(applicationContext, FriendsActivity::class.java))
-//                    overridePendingTransition(0, 0)
-//                    return@setOnItemSelectedListener true
-//                }
+                R.id.friends -> {
+                    startActivity(Intent(applicationContext, BookmarkRecomActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@setOnItemSelectedListener true
+                }
                 R.id.profile -> {
                     clearcommonvar()
                     finish()
@@ -206,11 +206,6 @@ class PlayerCountActivity : AppCompatActivity() {
                     intent.putParcelableArrayListExtra("COURT_LOAD_DONE", courtArray)
                     localBroadcastManager.sendBroadcast(intent)
                     dialog.dismiss()
-                }
-                else{
-                    println("spospo ${Common.currentSportCentre!!}")
-                    println("disdis ${Common.currentSportCentre!!.getDistrict()}")
-                    println("coucou ${courtId}")
                 }
             }
             .addOnFailureListener { e ->
