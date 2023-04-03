@@ -3,9 +3,9 @@
 
     <string name="title_profile">Profile</string>
 
-    <string name="nav_booking">Booking</string>
-    <string name="nav_groups">Groups</string>
-    <string name="nav_home">Add</string>
+    <string name="nav_booking">Bookings</string>
+    <string name="nav_groups">Court Occupancy</string>
+    <string name="nav_home">Book Venue</string>
     <string name="nav_friends">Bookmark</string>
     <string name="nav_profile">Profile</string>
 </resources>
