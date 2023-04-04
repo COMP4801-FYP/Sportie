@@ -32,6 +32,7 @@
                 android:layout_marginLeft="4dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Booking "
+                android:textColor="@color/themeBlue"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -47,6 +48,7 @@
                 android:textSize="14sp"
                 android:text="- Sport Centre"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <TextView
@@ -56,6 +58,7 @@
                 android:textSize="12sp"
                 android:text="Name"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
@@ -71,6 +74,7 @@
                 android:textSize="14sp"
                 android:text="- Court No"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <TextView
@@ -80,6 +84,7 @@
                 android:textSize="12sp"
                 android:text="Court No"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
@@ -95,6 +100,7 @@
                 android:textSize="14sp"
                 android:text="- Address"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <TextView
@@ -104,6 +110,7 @@
                 android:textSize="12sp"
                 android:text="Address of sport venue"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
@@ -119,6 +126,7 @@
                 android:textSize="14sp"
                 android:text="- District"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <TextView
@@ -128,6 +136,8 @@
                 android:textSize="12sp"
                 android:text="KennedyTown"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
+
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
@@ -144,6 +154,7 @@
                 android:textSize="14sp"
                 android:text="- Date"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <TextView
@@ -153,6 +164,7 @@
                 android:textSize="12sp"
                 android:text="15/03/2023"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
@@ -168,6 +180,7 @@
                 android:textSize="14sp"
                 android:text="- Time"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_bold"/>
 
             <TextView
@@ -177,6 +190,7 @@
                 android:textSize="12sp"
                 android:text="12:00"
                 android:layout_marginLeft="4dp"
+                android:textColor="@color/themeBlue"
                 android:fontFamily="@font/montserrat_regular"/>
         </LinearLayout>
 
