@@ -109,5 +109,9 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
         return courtList.size
     }
 
+    // to prevent unstable selected item position
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
 }

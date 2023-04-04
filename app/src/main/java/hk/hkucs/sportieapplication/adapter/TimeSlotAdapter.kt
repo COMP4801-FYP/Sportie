@@ -2,33 +2,31 @@ package hk.hkucs.sportieapplication.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
-import hk.hkucs.sportieapplication.models.Court
 import hk.hkucs.sportieapplication.models.TimeSlot
-import java.sql.Time
 
 class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlot>) : RecyclerView.Adapter<TimeSlotAdapter.MyViewHolder>() {
     constructor(requireActivity: Context) : this(requireActivity, ArrayList())
 
     var context:Context = requireActivity
     var timeSlotList: ArrayList<TimeSlot> = timeSlotArray
+    private var lastSelectedCardView: CardView? = null
 
     private lateinit var cardViewList: ArrayList<CardView>
     private lateinit var localBroadcastManager: LocalBroadcastManager
 
 
     inner class MyViewHolder: RecyclerView.ViewHolder {
+        // Keep track of the previously selected card view
         var txt_time_slot: TextView
         var txt_time_slot_description: TextView
         var card_time_slot: CardView
@@ -98,9 +96,11 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
         var timeslotpos = TimeSlot()
         timeslotpos.setSlot(position.toLong())
-        println("obj $timeslotpos")
+        for (i in timeSlotList){
+            println("halom ${i.getSlot()}")
+        }
         if (!timeSlotList.contains(timeslotpos)){
-            // check if card time_slot is available
+//             check if card time_slot is available
             holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
                 override fun onItemSelectedListener(view: View, pos: Int) {
                     // loop all card in card list
@@ -110,8 +110,10 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
                         if(cardview.tag == null){
                             cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
                         }
-                        cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
+//                        cardview.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
                     }
+                    // Reset the color of the previously selected card view, if any
+                    lastSelectedCardView?.setCardBackgroundColor(context.resources.getColor(android.R.color.white))
 
                     // selected card will change color
                     holder.card_time_slot.setCardBackgroundColor(context.resources.getColor(R.color.themeYellow))
@@ -122,6 +124,8 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
                     intent.putExtra("STEP", 3)
                     localBroadcastManager.sendBroadcast(intent)
 
+                    // Update the last selected card view
+                    lastSelectedCardView = holder.card_time_slot
                 }
             })
         }
@@ -130,6 +134,11 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
     override fun getItemCount(): Int {
 //        return Common.TIME_SLOT_TOTAL
         return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()
+    }
+
+    // to prevent unstable selected item position
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
 
