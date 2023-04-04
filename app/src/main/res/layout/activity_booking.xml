@@ -16,7 +16,7 @@
         android:layout_marginTop="35dp"
         android:text="Book Venue"
         android:textColor="@color/themeRed"
-        android:textSize="35sp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +60,7 @@
             android:id="@+id/btn_previous_step"
             android:text="Previous"
             android:enabled="false"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:fontFamily="@font/montserrat_regular"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/txt_skip"
@@ -74,7 +74,7 @@
             android:id="@+id/btn_next_step"
             android:text="Next"
             android:enabled="false"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:layout_marginLeft="4dp"
             android:background="@color/themeGrey"
             android:textColor="@android:color/white"

@@ -17,7 +17,7 @@
         android:layout_marginTop="35dp"
         android:text="Court Occupancy"
         android:textColor="@color/themeRed"
-        android:textSize="35sp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
