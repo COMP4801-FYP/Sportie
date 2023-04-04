@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/txt_court_name"
             android:text="Court #1"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold|italic"
             android:fontFamily="@font/montserrat_regular"
             android:gravity="center_horizontal"

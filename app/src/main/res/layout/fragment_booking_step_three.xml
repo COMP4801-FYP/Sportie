@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/sport_ctr_name"
         android:text="Pokfulam Field"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textColor="@color/themeBlue"
         android:paddingBottom="10dp"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/sport_court_no"
         android:text="Court #1"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:paddingBottom="20dp"
         android:textStyle="italic"
         android:fontFamily="@font/montserrat_bold"

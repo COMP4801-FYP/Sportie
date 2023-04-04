@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
 //                                firebaseAuth.signOut()
                                 finish()
                             } else {
-                                Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Account with this email already exists!", Toast.LENGTH_SHORT).show()
                             }
                         }
                 } else {

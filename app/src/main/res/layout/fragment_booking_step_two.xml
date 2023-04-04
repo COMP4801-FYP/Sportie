@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/sport_ctr_name"
         android:text="Pokfulam Field"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center_horizontal"

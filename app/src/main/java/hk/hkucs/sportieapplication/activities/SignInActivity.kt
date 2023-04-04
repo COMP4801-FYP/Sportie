@@ -49,7 +49,7 @@ class SignInActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             FirestoreClass().getUserDetails(this@SignInActivity)
                         } else {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Email address or password not found! Please try again!", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
