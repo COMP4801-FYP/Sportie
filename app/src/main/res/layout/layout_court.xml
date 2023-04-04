@@ -51,6 +51,7 @@
                 android:layout_height="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_baseline_bookmark_add_24" />
             <TextView
                 android:layout_width="25dp"

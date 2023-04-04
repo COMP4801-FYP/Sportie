@@ -33,5 +33,5 @@
     <color name="themeYellow">#FCB300</color>
     <color name="themeBlue">#19204E</color>
     <color name="themeGrey">#D6D6D6</color>
-
+    <color name="unselectedColor">#e9a5b2</color>
 </resources>

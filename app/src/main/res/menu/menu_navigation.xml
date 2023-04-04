@@ -3,15 +3,15 @@
     <item
         android:id="@+id/booking"
         android:title="@string/nav_booking"
-        android:icon="@drawable/booking"/>
+        android:icon="@drawable/booking_icon"/>
     <item
         android:id="@+id/groups"
         android:title="@string/nav_groups"
-        android:icon="@drawable/groups"/>
+        android:icon="@drawable/occupancy_icon"/>
     <item
         android:id="@+id/home"
         android:title="@string/nav_home"
-        android:icon="@drawable/ic_baseline_add_circle_outline_24"/>
+        android:icon="@drawable/add_booking_icon"/>
     <item
         android:id="@+id/friends"
         android:title="@string/nav_friends"
@@ -19,5 +19,5 @@
     <item
         android:id="@+id/profile"
         android:title="@string/nav_profile"
-        android:icon="@drawable/profile"/>
+        android:icon="@drawable/profile_icon"/>
 </menu>

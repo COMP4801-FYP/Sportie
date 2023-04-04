@@ -21,19 +21,19 @@
         android:orientation="horizontal">
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:queryHint="Search here"
+            app:queryHint="Search Venue"
             android:background="@drawable/search_view_bq"
             app:iconifiedByDefault="false"
             />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_filter_list_24"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/ic_baseline_filter_list_24"-->
+<!--            />-->
 
     </LinearLayout>
 

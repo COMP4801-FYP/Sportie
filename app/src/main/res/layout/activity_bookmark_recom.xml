@@ -11,7 +11,7 @@
         android:id="@+id/billsTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:text="Bookmarks"
         android:textColor="@color/themeRed"

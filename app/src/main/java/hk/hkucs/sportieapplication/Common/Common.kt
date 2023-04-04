@@ -79,7 +79,7 @@ class Common {
 
         var bookmarkArray: ArrayList<SportCentre> = ArrayList()
 
-        var ALL_DISTRICT:String = "Please choose district"
+        var ALL_DISTRICT:String = "Select District"
 
         var allCentreArray: ArrayList<SportCentre> = ArrayList()
         var allDistrictArray: ArrayList<String> = ArrayList()

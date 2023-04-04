@@ -33,6 +33,8 @@
             <ImageButton
                 android:id="@+id/bookmarkremove"
                 android:layout_width="25dp"
+                android:background="@android:color/transparent"
+
                 android:layout_height="25dp"
                 android:src="@drawable/ic_baseline_bookmark_remove_24">
 
