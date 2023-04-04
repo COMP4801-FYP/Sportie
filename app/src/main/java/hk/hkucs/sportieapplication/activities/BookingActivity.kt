@@ -21,6 +21,7 @@ import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.databinding.ActivityBookingBinding
 import hk.hkucs.sportieapplication.adapter.MyViewPagerAdapter
+import hk.hkucs.sportieapplication.firestore.FirestoreClass
 import hk.hkucs.sportieapplication.models.Court
 
 class BookingActivity : AppCompatActivity() {
@@ -130,6 +131,8 @@ class BookingActivity : AppCompatActivity() {
         // 4 fragments, keep state of this 4 screen page, if not will lose state of all view when press previous
         binding.viewPager.offscreenPageLimit = 4
 
+        // get bookmark list
+        FirestoreClass().getBookmark(this)
 
         // check if this booking page is directed from bookmark page, directly jump to court no selection page
         var isfrombookmark = intent.getIntExtra("FROM_BOOKMARK",-1)
@@ -253,6 +256,11 @@ class BookingActivity : AppCompatActivity() {
 
     fun addBookmarkSuccess(){
         Toast.makeText(this, "Success added bookmark!", Toast.LENGTH_SHORT).show()
+        finish()
+        startActivity(intent)
+    }
+
+    fun removeBookmarkSuccess() {
         finish()
         startActivity(intent)
     }

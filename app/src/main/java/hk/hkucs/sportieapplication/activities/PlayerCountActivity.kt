@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,6 +21,7 @@ import hk.hkucs.sportieapplication.adapter.MyViewPagerAdapter
 import hk.hkucs.sportieapplication.adapter.MyViewPagerPlayerCountAdapter
 import hk.hkucs.sportieapplication.databinding.ActivityBookingBinding
 import hk.hkucs.sportieapplication.databinding.ActivityPlayerCountBinding
+import hk.hkucs.sportieapplication.firestore.FirestoreClass
 import hk.hkucs.sportieapplication.models.Court
 
 class PlayerCountActivity : AppCompatActivity() {
@@ -133,6 +135,9 @@ class PlayerCountActivity : AppCompatActivity() {
         binding.viewPager.offscreenPageLimit = 4
 
 
+        // get bookmark list
+        FirestoreClass().getBookmark(this)
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.groups
 
@@ -156,6 +161,8 @@ class PlayerCountActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.friends -> {
+                    clearcommonvar()
+                    finish()
                     startActivity(Intent(applicationContext, BookmarkRecomActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@setOnItemSelectedListener true
@@ -242,5 +249,14 @@ class PlayerCountActivity : AppCompatActivity() {
         Common.currentSportCentre = null
         Common.currentTimeSlot = -1
         Common.step = 0
+    }
+    fun addBookmarkSuccess(){
+        Toast.makeText(this, "Success added bookmark!", Toast.LENGTH_SHORT).show()
+        finish()
+        startActivity(intent)
+    }
+    fun removeBookmarkSuccess() {
+        finish()
+        startActivity(intent)
     }
 }

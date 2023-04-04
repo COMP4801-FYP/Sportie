@@ -65,7 +65,7 @@ class BookmarkAdapter(context: Context, val bookmarkList: ArrayList<SportCentre>
             builder.setTitle("Confirm Delete")
             builder.setMessage("Are you sure you want to remove this sport centre from your bookmark? This action cannot be undone.")
             builder.setPositiveButton("Yes",DialogInterface.OnClickListener{ dialog, id ->
-                deleteBookmark(bookmarkList[position])
+                FirestoreClass().deleteBookmark(bookmarkList[position],context as Activity)
                 dialog.cancel()
             })
             builder.setNegativeButton("No", DialogInterface.OnClickListener{ dialog, id ->
@@ -79,23 +79,23 @@ class BookmarkAdapter(context: Context, val bookmarkList: ArrayList<SportCentre>
         return view
     }
 
-    private fun deleteBookmark(sportCentre: SportCentre) {
-        FirebaseFirestore.getInstance().collection(Constants.USERS)
-            .document(FirestoreClass().getCurrentUserID())
-            .collection("Bookmark")
-            .document(sportCentre.getCourtId())
-            .delete()
-            .addOnFailureListener { e ->
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-
-            }
-            .addOnSuccessListener {
-                Common.bookmarkArray.remove(sportCentre)
-                Toast.makeText(context, "Success delete from bookmark!", Toast.LENGTH_SHORT)
-                    .show()
-                context.startActivity(Intent(context, BookmarkRecomActivity::class.java))
-            }
-    }
+//    private fun deleteBookmark(sportCentre: SportCentre) {
+//        FirebaseFirestore.getInstance().collection(Constants.USERS)
+//            .document(FirestoreClass().getCurrentUserID())
+//            .collection("Bookmark")
+//            .document(sportCentre.getCourtId())
+//            .delete()
+//            .addOnFailureListener { e ->
+//                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+//
+//            }
+//            .addOnSuccessListener {
+//                Common.bookmarkArray.remove(sportCentre)
+//                Toast.makeText(context, "Success delete from bookmark!", Toast.LENGTH_SHORT)
+//                    .show()
+//                context.startActivity(Intent(context, BookmarkRecomActivity::class.java))
+//            }
+//    }
 
 }
 

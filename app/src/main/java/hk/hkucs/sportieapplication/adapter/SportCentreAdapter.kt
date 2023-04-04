@@ -63,13 +63,15 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bookmarkbtn.setOnClickListener {
             FirestoreClass().addBookmark(courtList[position], context as Activity)
-
         }
 
         // change bookmark logo to bookmarked if user already bookmarked the sport centre
         if (bookmarkArray.any{ it.getName() == courtList[position].getName() }){
-            holder.bookmarkbtn.isEnabled = false
+//            holder.bookmarkbtn.isEnabled = false
             holder.bookmarkbtn.setImageResource(R.drawable.ic_baseline_bookmark_added_24)
+            holder.bookmarkbtn.setOnClickListener {
+                FirestoreClass().deleteBookmark(courtList[position], context as Activity)
+            }
         }
 
         holder.txtCourtName.text = courtList[position].getName()
@@ -108,8 +110,4 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
     }
 
 
-//    fun setFilteredList(filteredList:ArrayList<SportCentre>){
-//        this.courtList = filteredList
-//        notifyDataSetChanged()
-//    }
 }

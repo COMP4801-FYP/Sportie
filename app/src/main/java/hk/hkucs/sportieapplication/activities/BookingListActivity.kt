@@ -32,6 +32,12 @@ class BookingListActivity : AppCompatActivity() {
 
         binding.bookingListView.isClickable = true
 
+        binding.addBookingBtn.setOnClickListener {
+            finish()
+            val intent = Intent(this, BookingActivity::class.java)
+            startActivity(intent)
+        }
+
         // get booking list
         FirestoreClass().getBookingList(this, "FUTURE")
         // get bookmark list
@@ -70,6 +76,8 @@ class BookingListActivity : AppCompatActivity() {
         }
     }
     fun retrieveBookingSuccess(bookingListInput: ArrayList<BookingInformation>, whentime:String) {
+        binding.addBookingBtn.visibility = View.GONE
+        binding.bookingListView.visibility = View.VISIBLE
         binding.bookingListView.adapter = BookingListAdapter(this, bookingListInput, whentime)
     }
 
@@ -91,6 +99,16 @@ class BookingListActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun noFutureBooking() {
+        binding.addBookingBtn.visibility = View.VISIBLE
+        binding.bookingListView.visibility = View.GONE
+    }
+
+    fun noPastBooking() {
+        binding.addBookingBtn.visibility = View.VISIBLE
+        binding.bookingListView.visibility = View.GONE
     }
 }
 

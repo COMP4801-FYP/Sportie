@@ -208,10 +208,6 @@ class FirestoreClass {
         return false
     }
 
-    fun sortBooking(){
-
-    }
-
     fun getBookingList(bookingListActivity: BookingListActivity, whentime: String) {
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserID())
@@ -232,9 +228,6 @@ class FirestoreClass {
                         val curdate = formatter.format(date)
                         var chosendate = b["time"].toString().takeLast(10)
 
-//                        var test = chosendate.compareTo(curdate)
-//                        println("Halo$chosendate halo $curdate halo $test ")
-//                        println(dateComparison(chosendate, curdate))
                         if (whentime == "FUTURE"){
                             if (dateComparison(chosendate, curdate)){
                                 bookings.add(BookingInformation(
@@ -271,10 +264,21 @@ class FirestoreClass {
                         .thenBy { it.getTime().toString().split(" at ")[0].split(" - ")[0].split(":")[0].toInt() })
                     when (bookingListActivity) {
                         is BookingListActivity -> {
-                            bookingListActivity.retrieveBookingSuccess(bookings, whentime)
+                            // if no future booking
+                            if (whentime == "FUTURE" && bookings.size == 0){
+                                bookingListActivity.noFutureBooking()
+                            }
+                            // if no past booking
+                            else if (whentime == "PAST" && bookings.size == 0){
+                                bookingListActivity.noPastBooking()
+                            }
+                            else{
+                                bookingListActivity.retrieveBookingSuccess(bookings, whentime)
+                            }
                         }
                     }
                 }
+
             }
     }
 
@@ -287,6 +291,7 @@ class FirestoreClass {
         // check if document exists in this collection
         userBookmarkRef.whereEqualTo("done", false).get().addOnCompleteListener {
             if (it.isSuccessful) {
+                println("yoyoyo")
                 // set data
                 userBookmarkRef.document(sportctr.getCourtId())
                     .set(sportctr)
@@ -296,8 +301,15 @@ class FirestoreClass {
                                 Common.bookmarkArray.add(sportctr)
                                 activity.addBookmarkSuccess()
                             }
+                            is PlayerCountActivity -> {
+                                Common.bookmarkArray.add(sportctr)
+                                activity.addBookmarkSuccess()
+                            }
                         }
                     }
+            }
+            else{
+                println("ababab")
             }
         }
     }
@@ -329,6 +341,34 @@ class FirestoreClass {
                 when (bookmactivity) {
                     is BookmarkRecomActivity -> {
                         bookmactivity.retrieveBookmarkSuccess()
+                    }
+                }
+            }
+    }
+
+    fun deleteBookmark(sportCentre: SportCentre, activity: Activity) {
+        FirebaseFirestore.getInstance().collection(Constants.USERS)
+            .document(FirestoreClass().getCurrentUserID())
+            .collection("Bookmark")
+            .document(sportCentre.getCourtId())
+            .delete()
+            .addOnFailureListener { e ->
+                Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnSuccessListener {
+                Common.bookmarkArray.remove(sportCentre)
+                Toast.makeText(activity, "Success delete from bookmark!", Toast.LENGTH_SHORT)
+                    .show()
+                when(activity){
+                    is BookingActivity -> {
+                        activity.removeBookmarkSuccess()
+                    }
+                    is PlayerCountActivity -> {
+                        activity.removeBookmarkSuccess()
+                    }
+                    is BookmarkRecomActivity -> {
+                        activity.startActivity(Intent(activity, BookmarkRecomActivity::class.java))
                     }
                 }
             }

@@ -19,19 +19,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-<!--        android:id="@+id/addBookingBtn"-->
-<!--        android:layout_width="175dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="25dp"-->
-<!--        android:text="New Booking"-->
-<!--        android:background="@drawable/button_round_corner"-->
-<!--        android:textSize="15sp"-->
-<!--        android:fontFamily="@font/montserrat_bold"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        android:textColor="@color/white"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/billsTitleText" />-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addBookingBtn"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="New Booking"
+        android:background="@drawable/button_round_corner"
+        android:textSize="15sp"
+        android:fontFamily="@font/montserrat_bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/groupbtn"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/groupbtn"
