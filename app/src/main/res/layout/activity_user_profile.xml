@@ -52,6 +52,7 @@
             android:id="@+id/til_first_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
+            android:textColorHint="@color/themeBlue"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop= "20dp"
@@ -64,12 +65,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:padding="15dp"
-                android:textColor="@color/black" />
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/themeBlue" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_last_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:textColorHint="@color/themeBlue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
@@ -82,13 +85,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:fontFamily="@font/montserrat_regular"
                 android:padding="15dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/themeBlue" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:textColorHint="@color/themeBlue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
@@ -102,13 +107,15 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:padding="15dp"
-                android:textColor="@color/black" />
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/themeBlue" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_mobile_number"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
+            android:textColorHint="@color/themeBlue"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop= "10dp"
@@ -121,7 +128,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:padding="15dp"
-                android:textColor="@color/black" />
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/themeBlue" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup

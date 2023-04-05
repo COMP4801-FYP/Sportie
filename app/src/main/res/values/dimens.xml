@@ -16,7 +16,7 @@
     <dimen name= "toolbar_title_paddingStart">-25dp</dimen>
     <dimen name="toolbar_title_text_size">18sp</dimen>
 
-    <dimen name="user_image_background_stroke">4dp</dimen>
+    <dimen name="user_image_background_stroke">2dp</dimen>
     <dimen name="user_image_background_corner_radius">10dp</dimen>
     <dimen name="profile_user_image_size">150dp</dimen>
     <dimen name="profile_user_image_marginTop">50dp</dimen>
