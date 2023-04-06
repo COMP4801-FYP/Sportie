@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/themeBlue"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.15"
                     />
                 <TextView
                     android:id="@+id/distance"
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/themeGrey"
-                    android:layout_weight="0.9"
+                    android:layout_weight="0.85"
                     />
             </LinearLayout>
         </LinearLayout>
