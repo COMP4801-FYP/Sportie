@@ -28,16 +28,33 @@
                 android:paddingBottom="8dp"
                 android:textColor="@color/themeBlue"
                 />
-            <TextView
-                android:id="@+id/txt_court_address"
-                android:text="Address of Court #1"
-                android:textSize="12sp"
-                android:textStyle="italic|bold"
-                android:fontFamily="@font/montserrat_regular"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/themeBlue"
-                />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txt_court_address"
+                    android:text="Address of Court #1"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/themeBlue"
+                    android:layout_weight="0.1"
+                    />
+                <TextView
+                    android:id="@+id/distance"
+                    android:text="50m"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/themeGrey"
+                    android:layout_weight="0.9"
+                    />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

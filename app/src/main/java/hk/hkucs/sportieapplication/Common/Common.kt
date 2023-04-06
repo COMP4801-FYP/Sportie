@@ -1,10 +1,12 @@
 package hk.hkucs.sportieapplication.Common
 
+import android.location.Location
 import com.google.firebase.Timestamp
 import hk.hkucs.sportieapplication.models.Court
 import hk.hkucs.sportieapplication.models.SportCentre
 import hk.hkucs.sportieapplication.models.TimeSlot
 import hk.hkucs.sportieapplication.models.User
+import java.lang.Math.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -83,5 +85,51 @@ class Common {
 
         var allCentreArray: ArrayList<SportCentre> = ArrayList()
         var allDistrictArray: ArrayList<String> = ArrayList()
+
+        var curlatitude = 0.0
+        var curlongitude = 00.0
+
+        fun dmsToDd(dms: String): Double {
+            val (degrees, minutes, seconds) = dms.split('-').map { it.toDouble() }
+            val dd = degrees + minutes / 60 + seconds / 3600
+            return dd
+        }
+
+        fun distance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+            println("lat1 $lat1")
+            println("long1 $lon1")
+            println("lat2 $lat2")
+            println("long2 $lon2")
+            val R = 6371 // Earth's radius in km
+            val dLat = (lat2 - lat1).toRadians()
+            val dLon = (lon2 - lon1).toRadians()
+            val a = kotlin.math.sin(dLat / 2) * kotlin.math.sin(dLat / 2) + kotlin.math.cos(lat1.toRadians()) * kotlin.math.cos(
+                lat2.toRadians()
+            ) * kotlin.math.sin(
+                dLon / 2
+            ) * kotlin.math.sin(
+                dLon / 2
+            )
+            val c = 2 * kotlin.math.atan2(sqrt(a), sqrt(1 - a))
+            val d = R * c
+            return d
+        }
+
+        fun Double.toRadians(): Double {
+            return this * PI / 180
+        }
+
+        fun distance2(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Float {
+            val location1 = Location("")
+            location1.latitude = lat1
+            location1.longitude = lon1
+
+            val location2 = Location("")
+            location2.latitude = lat2
+            location2.longitude = lon2
+
+            return location1.distanceTo(location2)
+        }
+
     }
 }

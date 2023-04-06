@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.Common.Common.Companion.bookmarkArray
+import hk.hkucs.sportieapplication.Common.Common.Companion.district
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.firestore.FirestoreClass
@@ -31,6 +32,7 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
         var txtCourtAddress: TextView
         var card_court: CardView
         lateinit var bookmarkbtn: ImageButton
+        var distance: TextView
         lateinit var iRecyclerItemSelectedListener: IRecyclerItemSelectedListener
 
         fun setiRecyclerItemSelectedListener(iRecyclerItemSelectedListener: IRecyclerItemSelectedListener){
@@ -42,6 +44,7 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
             txtCourtAddress = itemView.findViewById(R.id.txt_court_address)
             card_court = itemView.findViewById(R.id.card_court)
             bookmarkbtn = itemView.findViewById(R.id.bookmark)
+            distance = itemView.findViewById(R.id.distance)
 
             itemView.setOnClickListener(){
                 iRecyclerItemSelectedListener.onItemSelectedListener(itemView, absoluteAdapterPosition)
@@ -79,6 +82,11 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
         if (!cardViewList.contains(holder.card_court)){
             cardViewList.add(holder.card_court)
         }
+
+        // calculate distance and set distance
+        var lat1 = Common.dmsToDd(courtList[position].Latitude)
+        var long1 = Common.dmsToDd(courtList[position].Longitude)
+        holder.distance.text = "/ " + Common.distance2(lat1,long1, Common.curlatitude, Common.curlongitude).toInt().toString() + "m"
 
         holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
             override fun onItemSelectedListener(view: View, pos: Int) {
