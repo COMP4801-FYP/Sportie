@@ -86,8 +86,9 @@ class Common {
         var allCentreArray: ArrayList<SportCentre> = ArrayList()
         var allDistrictArray: ArrayList<String> = ArrayList()
 
-        var curlatitude = 0.0
-        var curlongitude = 00.0
+        var curlatitude = 22.283141
+        var curlongitude = 114.137676
+
 
         fun dmsToDd(dms: String): Double {
             val (degrees, minutes, seconds) = dms.split('-').map { it.toDouble() }
