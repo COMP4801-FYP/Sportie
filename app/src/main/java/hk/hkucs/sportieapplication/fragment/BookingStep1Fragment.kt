@@ -88,7 +88,8 @@ class BookingStep1Fragment:Fragment() {
     }
 
     private fun filterList(newText: String?) {
-        var sportCtrArray = Common.allCentreArray
+//        var sportCtrArray = Common.allCentreArray
+        var sportCtrArray = Common.tmpCentreForFilter
         var filteredList = ArrayList<SportCentre>()
 
         for(item in sportCtrArray){
@@ -161,6 +162,7 @@ class BookingStep1Fragment:Fragment() {
                             
 
                             Common.allDistrictArray = district_array
+                            Common.tmpCentreForFilter = Common.allCentreArray
 
                             var adapter = SportCentreAdapter(requireActivity(), Common.allCentreArray)
                             recycler_court.adapter = adapter
@@ -184,18 +186,6 @@ class BookingStep1Fragment:Fragment() {
                                 AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                                     dialog.dismiss()
-//                                    if (Common.getsorterlist()[position].getName() == "Occupancy"){
-//
-//                                    }
-//                                    else if (Common.getsorterlist()[position].getName() == "Distance"){
-//
-//                                    }
-//                                    else if (Common.getsorterlist()[position].getName() == "Bookmark"){
-//                                        loadByBookmarks(Common.district!!)
-//                                    }
-//                                    else if (Common.getsorterlist()[position].getName() == "A-Z"){
-//                                        loadBranchOfDistrict(Common.district!!)
-//                                    }
                                     loadBranchOfDistrict(Common.district!!)
                                 }
 
@@ -235,18 +225,6 @@ class BookingStep1Fragment:Fragment() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     dialog.dismiss()
-//                    if (Common.getsorterlist()[position].getName() == "Occupancy"){
-//
-//                    }
-//                    else if (Common.getsorterlist()[position].getName() == "Distance"){
-//
-//                    }
-//                    else if (Common.getsorterlist()[position].getName() == "Bookmark"){
-//                        loadByBookmarks(Common.district!!)
-//                    }
-//                    else if (Common.getsorterlist()[position].getName() == "A-Z"){
-//                        loadBranchOfDistrict(Common.district!!)
-//                    }
                     loadBranchOfDistrict(Common.district!!)
                 }
 
@@ -304,6 +282,8 @@ class BookingStep1Fragment:Fragment() {
         } else {
             sortedSportCentreArray
         }
+
+        Common.tmpCentreForFilter = ArrayList(filteredSportCentreArray)
 
         var adapter = SportCentreAdapter(requireActivity(), ArrayList(filteredSportCentreArray))
         recycler_court.adapter = adapter

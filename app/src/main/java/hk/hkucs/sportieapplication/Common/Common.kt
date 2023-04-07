@@ -84,6 +84,8 @@ class Common {
         var allCentreArray: ArrayList<SportCentre> = ArrayList()
         var allDistrictArray: ArrayList<String> = ArrayList()
 
+        var tmpCentreForFilter: ArrayList<SportCentre> = ArrayList()
+
         var curlatitude = 22.283141
         var curlongitude = 114.137676
 
