@@ -250,65 +250,6 @@ class BookingStep4Fragment:Fragment() {
         binding.btnConfirm.setOnClickListener{
             launchRecaptcha()
         }
-//            dialog.show()
-
-        // Process timestamp to display future booking only
-//            var startTime = Common.convertTimeSlotToString(Common.currentTimeSlot)
-//            var convertTime = startTime.split("-") // ex: 9:00 - 10:00
-//
-//
-//            var startTimeConvert = convertTime[0].split(":")
-//            var startHourInt = Integer.parseInt(startTimeConvert[0].trim())
-//            var startMinInt = Integer.parseInt(startTimeConvert[1].trim())
-//
-//            var bookingDateWithoutHour = Calendar.getInstance()
-//            bookingDateWithoutHour.timeInMillis = Common.bookingDate.timeInMillis
-//            bookingDateWithoutHour.set(Calendar.HOUR_OF_DAY,startHourInt)
-//            bookingDateWithoutHour.set(Calendar.MINUTE,startMinInt)
-//
-//            // create timestamp object and apply to bookinginformation
-//            var timestamp = Timestamp(bookingDateWithoutHour.time)
-//
-//            var bookInfo = BookingInformation(
-//                timestamp = timestamp,
-//                done = false,
-//                sportcentreId = Common.currentSportCentre!!.court_id,
-//                sportcentrename = Common.currentSportCentre!!.Name_en,
-//                username = Common.currentUser!!.lastName + Common.currentUser!!.firstName,
-//                userphone = Common.currentUser!!.mobile,
-//                courtId = Common.currentCourt!!.getCourtId(),
-//                courtname = Common.currentCourt!!.getName(),
-//                address = Common.currentSportCentre!!.getAddress(),
-//                district = Common.district!!,
-//                time = java.lang.StringBuilder(Common.convertTimeSlotToString(Common.currentTimeSlot))
-//                    .append(" at ")
-//                    .append(simpleDateFormat.format(bookingDateWithoutHour.getTime())).toString(),
-//                slot = Common.currentTimeSlot.toLong(),
-//                bookingid = Common.currentCourt!!.getCourtId() + "_" + Common.simpleDateFormat.format(Common.bookingDate.time) + "_" + Common.currentTimeSlot.toString()
-//            )
-//
-//            // submit
-//            var date = FirebaseFirestore.getInstance().collection("AllCourt")
-//                .document(Common.district!!)
-//                .collection("SportCentre")
-//                .document(Common.currentSportCentre!!.getCourtId())
-//                .collection("Court")
-//                .document(Common.currentCourt!!.getCourtId())
-//                .collection(Common.simpleDateFormat.format(Common.bookingDate.time))
-//                .document(Common.currentTimeSlot.toString())
-//
-//            // write data
-//            date.set(bookInfo)
-//                .addOnSuccessListener{
-//                    // check if a booking exists, to prevent new booking
-//                    addToUserBooking(bookInfo)
-//                }
-//                .addOnFailureListener{e->
-//                    Toast.makeText(context, e.message ,Toast.LENGTH_SHORT).show()
-//                }
-//        }
-
-//        init(binding.root)
 
         return binding.root
     }

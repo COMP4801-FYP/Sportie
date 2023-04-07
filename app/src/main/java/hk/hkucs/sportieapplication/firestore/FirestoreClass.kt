@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -291,30 +292,39 @@ class FirestoreClass {
         // check if document exists in this collection
         userBookmarkRef.whereEqualTo("done", false).get().addOnCompleteListener {
             if (it.isSuccessful) {
-                println("yoyoyo")
                 // set data
                 userBookmarkRef.document(sportctr.getCourtId())
                     .set(sportctr)
                     .addOnSuccessListener {
-                        when(activity){
-                            is BookingActivity -> {
-                                Common.bookmarkArray.add(sportctr)
-                                activity.addBookmarkSuccess()
+                        // increment bookmark value in sportvenue
+                        FirebaseFirestore.getInstance().collection("AllCourt")
+                            .document(sportctr.getDistrict())
+                            .collection("SportCentre")
+                            .document(sportctr.getCourtId())
+                            .update("bookmarks" , FieldValue.increment(1))
+                            .addOnSuccessListener {
+                                when(activity){
+                                    is BookingActivity -> {
+                                        Common.bookmarkArray.add(sportctr)
+                                        activity.addBookmarkSuccess()
+                                    }
+                                    is PlayerCountActivity -> {
+                                        Common.bookmarkArray.add(sportctr)
+                                        activity.addBookmarkSuccess()
+                                    }
+                                }
                             }
-                            is PlayerCountActivity -> {
-                                Common.bookmarkArray.add(sportctr)
-                                activity.addBookmarkSuccess()
-                            }
-                        }
+
                     }
-            }
-            else{
-                println("ababab")
             }
         }
     }
 
-    fun getBookmark(bookmactivity: Activity){
+    fun addBookmarkToCourt(){
+
+    }
+
+    fun getAllBookmark(bookmactivity: Activity){
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .collection("Bookmark")
@@ -357,22 +367,40 @@ class FirestoreClass {
 
             }
             .addOnSuccessListener {
-                Common.bookmarkArray.remove(sportCentre)
-                Toast.makeText(activity, "Success delete from bookmark!", Toast.LENGTH_SHORT)
-                    .show()
-                when(activity){
-                    is BookingActivity -> {
-                        activity.removeBookmarkSuccess()
+                // decrement bookmarks value in sportcentre
+                FirebaseFirestore.getInstance().collection("AllCourt")
+                    .document(sportCentre.getDistrict())
+                    .collection("SportCentre")
+                    .document(sportCentre.getCourtId())
+                    .update("bookmarks" , FieldValue.increment(-1))
+                    .addOnSuccessListener {
+                        Common.bookmarkArray.remove(sportCentre)
+                        Toast.makeText(activity, "Success delete from bookmark!", Toast.LENGTH_SHORT)
+                            .show()
+                        when(activity){
+                            is BookingActivity -> {
+                                activity.removeBookmarkSuccess()
+                            }
+                            is PlayerCountActivity -> {
+                                activity.removeBookmarkSuccess()
+                            }
+                            is BookmarkRecomActivity -> {
+                                activity.startActivity(Intent(activity, BookmarkRecomActivity::class.java))
+                            }
+                        }
                     }
-                    is PlayerCountActivity -> {
-                        activity.removeBookmarkSuccess()
-                    }
-                    is BookmarkRecomActivity -> {
-                        activity.startActivity(Intent(activity, BookmarkRecomActivity::class.java))
-                    }
-                }
+
             }
     }
+
+//    fun getBookmark(sportCentre: SportCentre){
+//        FirebaseFirestore.getInstance()
+//            .collection("AllCourt")
+//            .document(sportCentre.getDistrict())
+//            .collection("SportCentre")
+//            .document(sportCentre.getCourtId().get()
+//
+//    }
 
 
 }

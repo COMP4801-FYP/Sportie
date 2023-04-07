@@ -25,15 +25,28 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
             app:queryHint="Search Venue"
             android:background="@drawable/search_view_bq"
             app:iconifiedByDefault="false"
+            android:layout_weight="0.2"
             />
 <!--        <ImageView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
 <!--            android:src="@drawable/ic_baseline_filter_list_24"-->
 <!--            />-->
+        <Spinner
+            android:id="@+id/spinner_sort"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:hint="Group"
+            android:paddingHorizontal="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_bq"
+            android:layout_weight="0.8"
+            />
 
     </LinearLayout>
 

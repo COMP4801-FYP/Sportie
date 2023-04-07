@@ -41,7 +41,7 @@ class BookingListActivity : AppCompatActivity() {
         // get booking list
         FirestoreClass().getBookingList(this, "FUTURE")
         // get bookmark list
-        FirestoreClass().getBookmark(this)
+        FirestoreClass().getAllBookmark(this)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.booking

@@ -30,7 +30,7 @@ class BookmarkRecomActivity : AppCompatActivity() {
         }
 
         binding.bookingListView.isClickable = true
-        FirestoreClass().getBookmark(this)
+        FirestoreClass().getAllBookmark(this)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.friends

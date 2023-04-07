@@ -2,10 +2,8 @@ package hk.hkucs.sportieapplication.Common
 
 import android.location.Location
 import com.google.firebase.Timestamp
-import hk.hkucs.sportieapplication.models.Court
-import hk.hkucs.sportieapplication.models.SportCentre
-import hk.hkucs.sportieapplication.models.TimeSlot
-import hk.hkucs.sportieapplication.models.User
+import hk.hkucs.sportieapplication.R
+import hk.hkucs.sportieapplication.models.*
 import java.lang.Math.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -131,6 +129,25 @@ class Common {
 
             return location1.distanceTo(location2)
         }
+
+        fun getsorterlist():ArrayList<Sorter>{
+            var sorterlist = ArrayList<Sorter>()
+
+            val azsorter = Sorter(name = "A-Z", image = R.drawable.ic_baseline_sort_by_alpha_24)
+            sorterlist.add(azsorter)
+
+            val occsorter = Sorter(name = "Occupancy", image = R.drawable.occupancy_icon)
+            sorterlist.add(occsorter)
+
+            val distancesorter = Sorter(name = "Distance", image = R.drawable.ic_baseline_location_on_24)
+            sorterlist.add(distancesorter)
+
+            val bookmarksorter = Sorter(name = "Bookmark", image = R.drawable.ic_baseline_bookmarks_24)
+            sorterlist.add(bookmarksorter)
+
+            return sorterlist
+        }
+
 
     }
 }

@@ -44,7 +44,6 @@ class PlayerCountActivity : AppCompatActivity() {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
 
-
     private val buttonNextReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent){
             var step:Int = intent.getIntExtra("STEP", 0)
@@ -154,7 +153,7 @@ class PlayerCountActivity : AppCompatActivity() {
 
 
         // get bookmark list
-        FirestoreClass().getBookmark(this)
+        FirestoreClass().getAllBookmark(this)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.groups
@@ -224,6 +223,10 @@ class PlayerCountActivity : AppCompatActivity() {
                 if (!documents.isEmpty) {
                     var courtArray = ArrayList<Court>()
                     for (document in documents) {
+                        println(document.data["name"].toString())
+                        println(document.data["address"].toString())
+                        println(document.data["playercount_a"].toString())
+                        println(document.data["playercount_b"].toString())
                         courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
                     }
                     // send broadcast to BookingStep2Fragment to load Recycler

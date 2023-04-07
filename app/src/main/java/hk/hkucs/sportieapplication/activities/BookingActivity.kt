@@ -152,7 +152,7 @@ class BookingActivity : AppCompatActivity() {
         binding.viewPager.offscreenPageLimit = 4
 
         // get bookmark list
-        FirestoreClass().getBookmark(this)
+        FirestoreClass().getAllBookmark(this)
 
         // check if this booking page is directed from bookmark page, directly jump to court no selection page
         var isfrombookmark = intent.getIntExtra("FROM_BOOKMARK",-1)
