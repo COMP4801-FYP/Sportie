@@ -357,4 +357,8 @@ class BookingActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun getBookmarkSuccess(bookmarksval: String) {
+
+    }
 }

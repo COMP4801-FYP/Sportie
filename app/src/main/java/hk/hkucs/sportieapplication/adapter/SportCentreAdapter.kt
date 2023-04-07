@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.Common.Common.Companion.ALL_DISTRICT
 import hk.hkucs.sportieapplication.Common.Common.Companion.bookmarkArray
@@ -20,6 +22,7 @@ import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.firestore.FirestoreClass
 import hk.hkucs.sportieapplication.models.SportCentre
+import kotlin.random.Random
 
 class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<SportCentre>) : RecyclerView.Adapter<SportCentreAdapter.MyViewHolder>() {
     var courtList: ArrayList<SportCentre> = sportCentreArray
@@ -33,6 +36,7 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
         var card_court: CardView
         lateinit var bookmarkbtn: ImageButton
         var distance: TextView
+        lateinit var bookmarkCount: TextView
         lateinit var iRecyclerItemSelectedListener: IRecyclerItemSelectedListener
 
         fun setiRecyclerItemSelectedListener(iRecyclerItemSelectedListener: IRecyclerItemSelectedListener){
@@ -45,6 +49,7 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
             card_court = itemView.findViewById(R.id.card_court)
             bookmarkbtn = itemView.findViewById(R.id.bookmark)
             distance = itemView.findViewById(R.id.distance)
+            bookmarkCount = itemView.findViewById(R.id.bookmark_count)
 
             itemView.setOnClickListener(){
                 iRecyclerItemSelectedListener.onItemSelectedListener(itemView, absoluteAdapterPosition)
@@ -66,6 +71,11 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bookmarkbtn.setOnClickListener {
             FirestoreClass().addBookmark(courtList[position], context as Activity)
+        }
+
+        // get the bookmark count
+        getBookmark(courtList[position]){ bookmarksval ->
+            holder.bookmarkCount.text = bookmarksval
         }
 
         // change bookmark logo to bookmarked if user already bookmarked the sport centre
@@ -120,6 +130,27 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
     // to prevent unstable selected item position
     override fun getItemViewType(position: Int): Int {
         return position
+    }
+
+    fun getBookmark(sportCentre: SportCentre,  successGotBookmark: (String) -> Unit){
+        val docref = FirebaseFirestore.getInstance()
+            .collection("AllCourt")
+            .document(sportCentre.getDistrict())
+            .collection("SportCentre")
+            .document(sportCentre.getCourtId())
+
+        var bookmarksval = ""
+        docref.get().addOnSuccessListener { document ->
+            if (document != null) {
+//                if (document.get("bookmarks") == null){
+//                    val newBookmark = Random.nextInt(0, 800)
+//                    docref.set(mapOf("bookmarks" to newBookmark), SetOptions.merge())
+//                    bookmarksval = newBookmark.toString()
+//                }
+                bookmarksval = document.get("bookmarks").toString()
+            }
+            successGotBookmark(bookmarksval)
+        }
     }
 
 }

@@ -71,6 +71,7 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_baseline_bookmark_add_24" />
             <TextView
+                android:id="@+id/bookmark_count"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:text="100"

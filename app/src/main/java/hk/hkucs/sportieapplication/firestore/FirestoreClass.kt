@@ -320,9 +320,6 @@ class FirestoreClass {
         }
     }
 
-    fun addBookmarkToCourt(){
-
-    }
 
     fun getAllBookmark(bookmactivity: Activity){
         mFirestore.collection(Constants.USERS)
@@ -393,14 +390,6 @@ class FirestoreClass {
             }
     }
 
-//    fun getBookmark(sportCentre: SportCentre){
-//        FirebaseFirestore.getInstance()
-//            .collection("AllCourt")
-//            .document(sportCentre.getDistrict())
-//            .collection("SportCentre")
-//            .document(sportCentre.getCourtId().get()
-//
-//    }
 
 
 }

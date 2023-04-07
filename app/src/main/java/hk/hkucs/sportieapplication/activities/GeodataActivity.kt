@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.common.io.Files.append
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import hk.hkucs.sportieapplication.R
@@ -21,6 +22,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileReader
 import java.io.IOException
+import java.lang.Math.min
 import kotlin.random.Random
 
 //import com.example.parsejsonexample.Cell
@@ -140,6 +142,8 @@ class GeodataActivity : AppCompatActivity() {
                 }
                 geodatas["courtno"] = extractCourtNumber(courtno)
 
+                geodatas["bookmarks"] = Random.nextInt(0, 800)
+
                 var cno = geodatas["courtno"]
                 println("courtno $cno $courtno")
                 var dis = geodatas["district"]
@@ -149,11 +153,21 @@ class GeodataActivity : AppCompatActivity() {
 
             }
 
-            print("time")
-            println(tmptime)
-            print("addr")
-            println(tmpcourt)
-            println(tmpaddr)
+            // add dummy field
+            val geodatas: MutableMap<String, Any> = HashMap()
+            geodatas["ID"] = "dummy"
+            geodatas["address"] = "Classroom"
+            geodatas["bookmarks"] = 10
+            geodatas["courtno"] = "2"
+            geodatas["district"] = "Central & Western"
+            geodatas["facilities"] = "Table and chairs"
+            geodatas["facility_details"] = ""
+            geodatas["facility_name"] = "Demo Field"
+            geodatas["latitude"] = "22-17-24"
+            geodatas["longitude"] = "114-8-40"
+            geodatas["opening_hours"] = "07:00-23:00"
+            geodatas["phone"] = "1232131"
+            saveFireStore2(geodatas)
         }
     }
 
@@ -303,7 +317,12 @@ class GeodataActivity : AppCompatActivity() {
                 // create courts based on court_no
                 if (geodatas["courtno"].toString().isValidInt()){
                     var cno = Integer.parseInt(geodatas["courtno"].toString())
+
+                    var minplayercount = 10000
                     for(i in 1 ..cno){
+                        var rand_a = Random.nextInt(0, 12)
+                        var rand_b = Random.nextInt(0, 12)
+                        minplayercount = minOf(minplayercount,rand_a, rand_b)
                         db.collection("AllCourt")
                             .document(geodatas["district"].toString())
                             .collection("SportCentre")
@@ -314,10 +333,18 @@ class GeodataActivity : AppCompatActivity() {
                                 "name" to "Court #$i",
                                 "address" to geodatas["address"],
                                 "courtId" to it.id + "_No"+ (i).toString(),
-                                "playercount_a" to Random.nextInt(0, 12),
-                                "playercount_b" to Random.nextInt(0, 12)
+                                "playercount_a" to rand_a,
+                                "playercount_b" to rand_b
                             ))
                     }
+
+
+                    // set the occupancy
+                    db.collection("AllCourt")
+                        .document(geodatas["district"].toString())
+                        .collection("SportCentre")
+                        .document(it.id)
+                        .set(hashMapOf("occupancy" to minplayercount), SetOptions.merge())
                 }
             }
             .addOnFailureListener {

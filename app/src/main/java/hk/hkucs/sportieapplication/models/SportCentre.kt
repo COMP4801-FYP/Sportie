@@ -23,7 +23,10 @@ class SportCentre(
     var Remarks_en: String = "",
     var Remarks_cn: String = "",
     var Longitude: String = "",
-    var Latitude: String = ""
+    var Latitude: String = "",
+    var Bookmarks: Int = 0,
+    var Occupancy: Int = 0
+
 ): Parcelable{
     fun getName(): String {
         return Name_en
