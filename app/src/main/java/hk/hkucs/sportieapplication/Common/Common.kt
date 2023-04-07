@@ -138,7 +138,7 @@ class Common {
             val azsorter = Sorter(name = "A-Z", image = R.drawable.ic_baseline_sort_by_alpha_24)
             sorterlist.add(azsorter)
 
-            val occsorter = Sorter(name = "Occupancy", image = R.drawable.occupancy_icon)
+            val occsorter = Sorter(name = "Occupancy", image = R.drawable.occupancy_icon_yellow)
             sorterlist.add(occsorter)
 
             val distancesorter = Sorter(name = "Distance", image = R.drawable.ic_baseline_location_on_24)

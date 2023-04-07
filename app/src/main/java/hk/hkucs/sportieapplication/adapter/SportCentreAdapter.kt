@@ -22,6 +22,7 @@ import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.firestore.FirestoreClass
 import hk.hkucs.sportieapplication.models.SportCentre
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<SportCentre>) : RecyclerView.Adapter<SportCentreAdapter.MyViewHolder>() {
@@ -96,7 +97,8 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
         // calculate distance and set distance
         var lat1 = Common.dmsToDd(courtList[position].Latitude)
         var long1 = Common.dmsToDd(courtList[position].Longitude)
-        holder.distance.text = "(" + Common.distance(lat1,long1, Common.curlatitude, Common.curlongitude).toInt().toString() + "km)"
+        var distance = (Common.distance(lat1,long1, Common.curlatitude, Common.curlongitude)*10.0).roundToInt() /10.0
+        holder.distance.text = "(" + distance.toString() + "km)"
 
         holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
             override fun onItemSelectedListener(view: View, pos: Int) {
