@@ -34,12 +34,15 @@ import hk.hkucs.sportieapplication.models.SportCentre
 class BookingStep1Fragment:Fragment() {
     lateinit var dialog: AlertDialog
     private lateinit var binding: FragmentBookingStepOneBinding
+
     private lateinit var spinner:Spinner
     private lateinit var sorter:Spinner
+
     private lateinit var recycler_court:RecyclerView
     private lateinit var district_array:ArrayList<String>
+
     lateinit var searchview:SearchView
-    lateinit var sportCentreArray:ArrayList<SportCentre>
+//    lateinit var sportCentreArray:ArrayList<SportCentre>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dialog = SpotsDialog.Builder().setContext(activity).setCancelable(false).build()
@@ -81,14 +84,14 @@ class BookingStep1Fragment:Fragment() {
         initView()
         loadAllCourt()
 
-
-//        return inflater.inflate(R.layout.fragment_booking_step_one, container, false)
         return binding.root
     }
 
     private fun filterList(newText: String?) {
+        var sportCtrArray = Common.allCentreArray
         var filteredList = ArrayList<SportCentre>()
-        for(item in sportCentreArray){
+
+        for(item in sportCtrArray){
             if(item.getName().toLowerCase().contains(newText!!.toLowerCase())){
                 filteredList.add(item)
             }
@@ -116,7 +119,6 @@ class BookingStep1Fragment:Fragment() {
                         if (task.isSuccessful) {
                             district_array = ArrayList()
                             district_array.add(ALL_DISTRICT)
-                            sportCentreArray = ArrayList()
 
                             for (document in task.result!!) {
                                 district_array.add(document.id)
@@ -169,7 +171,6 @@ class BookingStep1Fragment:Fragment() {
                                 AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                                     dialog.dismiss()
-                                    sportCentreArray = ArrayList()
                                     loadBranchOfDistrict(district_array[position])
                                 }
 
@@ -183,18 +184,19 @@ class BookingStep1Fragment:Fragment() {
                                 AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                                     dialog.dismiss()
-                                    if (Common.getsorterlist()[position].getName() == "Occupancy"){
-
-                                    }
-                                    else if (Common.getsorterlist()[position].getName() == "Distance"){
-
-                                    }
-                                    else if (Common.getsorterlist()[position].getName() == "Bookmark"){
-                                        loadByBookmarks(Common.district!!)
-                                    }
-                                    else if (Common.getsorterlist()[position].getName() == "A-Z"){
-                                        loadBranchOfDistrict(Common.district!!)
-                                    }
+//                                    if (Common.getsorterlist()[position].getName() == "Occupancy"){
+//
+//                                    }
+//                                    else if (Common.getsorterlist()[position].getName() == "Distance"){
+//
+//                                    }
+//                                    else if (Common.getsorterlist()[position].getName() == "Bookmark"){
+//                                        loadByBookmarks(Common.district!!)
+//                                    }
+//                                    else if (Common.getsorterlist()[position].getName() == "A-Z"){
+//                                        loadBranchOfDistrict(Common.district!!)
+//                                    }
+                                    loadBranchOfDistrict(Common.district!!)
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -220,7 +222,6 @@ class BookingStep1Fragment:Fragment() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     dialog.dismiss()
-                    sportCentreArray = ArrayList()
                     loadBranchOfDistrict(Common.allDistrictArray[position])
                 }
 
@@ -234,18 +235,19 @@ class BookingStep1Fragment:Fragment() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     dialog.dismiss()
-                    if (Common.getsorterlist()[position].getName() == "Occupancy"){
-
-                    }
-                    else if (Common.getsorterlist()[position].getName() == "Distance"){
-
-                    }
-                    else if (Common.getsorterlist()[position].getName() == "Bookmark"){
-                        loadByBookmarks(Common.district!!)
-                    }
-                    else if (Common.getsorterlist()[position].getName() == "A-Z"){
-                        loadBranchOfDistrict(Common.district!!)
-                    }
+//                    if (Common.getsorterlist()[position].getName() == "Occupancy"){
+//
+//                    }
+//                    else if (Common.getsorterlist()[position].getName() == "Distance"){
+//
+//                    }
+//                    else if (Common.getsorterlist()[position].getName() == "Bookmark"){
+//                        loadByBookmarks(Common.district!!)
+//                    }
+//                    else if (Common.getsorterlist()[position].getName() == "A-Z"){
+//                        loadBranchOfDistrict(Common.district!!)
+//                    }
+                    loadBranchOfDistrict(Common.district!!)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -262,53 +264,51 @@ class BookingStep1Fragment:Fragment() {
         dialog.show()
         Common.district = districtName
 
-        if (districtName == ALL_DISTRICT){
-            println("sizesx ${Common.allCentreArray.size}")
-//            var tmpsportCentreArray = Common.allCentreArray.sortedWith(compareBy(SportCentre::Name_en))
-//            sportCentreArray = Common.allCentreArray.sortedWith(compareBy(SportCentre::Name_en))
-            sportCentreArray = Common.allCentreArray
-            var adapter = SportCentreAdapter(requireActivity(), Common.allCentreArray)
-            recycler_court.adapter = adapter
-            recycler_court.visibility = View.VISIBLE
-            dialog.dismiss()
+        var sportCtrArray = Common.allCentreArray
+
+        var sortertype = Common.getsorterlist()[binding.spinnerSort.selectedItemPosition].getName()
+
+        var sortedSportCentreArray = Common.allCentreArray as List<SportCentre>
+
+        if (sortertype == "A-Z"){
+            sortedSportCentreArray = sportCtrArray.sortedWith(compareBy<SportCentre> {
+                it.Name_en
+            })
         }
-        else{
-            FirebaseFirestore.getInstance().collection("AllCourt")
-                .document(districtName)
-                .collection("SportCentre")
-                .get()
-                .addOnSuccessListener{ documents ->
-                    if (!documents.isEmpty) {
-                        for (document in documents) {
-                            sportCentreArray.add(
-                                SportCentre(
-                                    Name_en = document.data["facility_name"].toString(),
-                                    Address_en = document.data["address"].toString(),
-                                    court_id = document.id,
-                                    District_en = document.data["district"].toString(),
-                                    Phone = document.data["phone"].toString(),
-                                    Opening_hours_en = document.data["opening_hours"].toString(),
-                                    Ancillary_facilities_en = document.data["facilities"].toString(),
-                                    Latitude = document.data["latitude"].toString(),
-                                    Longitude = document.data["longitude"].toString()
-                                )
-                            )
-                        }
-                        sportCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
-                        var adapter = SportCentreAdapter(requireActivity(), sportCentreArray)
-                        recycler_court.adapter = adapter
-                        recycler_court.visibility = View.VISIBLE
-                        dialog.dismiss()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e(
-                        activity?.javaClass?.simpleName,
-                        "Error while loading court in district $districtName.", e
-                    )
-                    dialog.dismiss();
-                }
+        else if (sortertype == "Bookmark"){
+            // in descending order
+            sortedSportCentreArray = sportCtrArray.sortedWith(compareByDescending<SportCentre> {
+                it.Bookmarks
+            })
         }
+        else if (sortertype == "Occupancy"){
+            // in descending order
+            sortedSportCentreArray = sportCtrArray.sortedWith(compareBy<SportCentre> {
+                it.Occupancy
+            })
+            sortedSportCentreArray = sortedSportCentreArray.filter { it.Occupancy < 4}
+        }
+
+        else if (sortertype == "Distance"){
+//            // in descending order
+//            sortedSportCentreArray = sportCtrArray.sortedWith(compareByDescending<SportCentre> {
+//                it.Bookmarks
+//            })
+        }
+
+        // filter based on district
+        val filteredSportCentreArray: List<SportCentre> = if (districtName != ALL_DISTRICT) {
+            sortedSportCentreArray.filter {
+                it.District_en == districtName
+            }
+        } else {
+            sortedSportCentreArray
+        }
+
+        var adapter = SportCentreAdapter(requireActivity(), ArrayList(filteredSportCentreArray))
+        recycler_court.adapter = adapter
+        recycler_court.visibility = View.VISIBLE
+        dialog.dismiss()
     }
 
 
@@ -316,8 +316,10 @@ class BookingStep1Fragment:Fragment() {
         dialog.show()
         Common.district = districtName
 
+        var sportCtrArray = Common.allCentreArray
+
         // in descending order
-        val sortedSportCentreArray = sportCentreArray.sortedWith(compareByDescending<SportCentre> {
+        val sortedSportCentreArray = sportCtrArray.sortedWith(compareByDescending<SportCentre> {
             it.Bookmarks
         })
 
@@ -337,65 +339,5 @@ class BookingStep1Fragment:Fragment() {
 
     }
 
-//    private fun loadByOccupancy(districtName: String) {
-//        dialog.show()
-//        Common.district = districtName
-//
-//        if (districtName == ALL_DISTRICT){
-//            sportCentreArray = Common.allCentreArray
-//
-//            sportCentreArray.sortWith(compareBy<SportCentre> {
-//                it.occupancy
-//            }
-//
-//            )
-//
-//            var adapter = SportCentreAdapter(requireActivity(), Common.allCentreArray)
-//            recycler_court.adapter = adapter
-//            recycler_court.visibility = View.VISIBLE
-//            dialog.dismiss()
-//        }
-//        else{
-//            FirebaseFirestore.getInstance().collection("AllCourt")
-//                .document(districtName)
-//                .collection("SportCentre")
-//                .get()
-//                .addOnSuccessListener{ documents ->
-//                    if (!documents.isEmpty) {
-//                        for (document in documents) {
-//                            sportCentreArray.add(
-//                                SportCentre(
-//                                    Name_en = document.data["facility_name"].toString(),
-//                                    Address_en = document.data["address"].toString(),
-//                                    court_id = document.id,
-//                                    District_en = document.data["district"].toString(),
-//                                    Phone = document.data["phone"].toString(),
-//                                    Opening_hours_en = document.data["opening_hours"].toString(),
-//                                    Ancillary_facilities_en = document.data["facilities"].toString(),
-//                                    Latitude = document.data["latitude"].toString(),
-//                                    Longitude = document.data["longitude"].toString()
-//                                )
-//                            )
-//                        }
-//                        sportCentreArray.sortWith(compareBy<SportCentre> { it.getName()})
-//                        var adapter = SportCentreAdapter(requireActivity(), sportCentreArray)
-//                        recycler_court.adapter = adapter
-//                        recycler_court.visibility = View.VISIBLE
-//                        dialog.dismiss()
-//                    }
-//                }
-//                .addOnFailureListener { e ->
-//                    Log.e(
-//                        activity?.javaClass?.simpleName,
-//                        "Error while loading court in district $districtName.", e
-//                    )
-//                    dialog.dismiss();
-//                }
-//        }
-//    }
-
-    private fun loadByDistance(districtName: String) {
-
-    }
 }
 
