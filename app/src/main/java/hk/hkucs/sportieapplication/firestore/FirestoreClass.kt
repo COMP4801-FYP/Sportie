@@ -1,7 +1,6 @@
 package hk.hkucs.sportieapplication.firestore
 
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -21,9 +20,7 @@ import hk.hkucs.sportieapplication.models.BookingInformation
 import hk.hkucs.sportieapplication.models.SportCentre
 import hk.hkucs.sportieapplication.models.User
 import hk.hkucs.sportieapplication.utils.Constants
-import java.sql.Time
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

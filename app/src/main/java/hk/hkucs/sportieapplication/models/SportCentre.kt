@@ -25,7 +25,8 @@ class SportCentre(
     var Longitude: String = "",
     var Latitude: String = "",
     var Bookmarks: Int = 0,
-    var Occupancy: Int = 0
+    var Occupancy: Int = 0,
+    var CurDistance: Double = 0.0
 
 ): Parcelable{
     fun getName(): String {

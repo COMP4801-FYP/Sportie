@@ -1,10 +1,8 @@
 package hk.hkucs.sportieapplication.fragment
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,8 +25,8 @@ import hk.hkucs.sportieapplication.Common.SpacesItemDecoration
 import hk.hkucs.sportieapplication.adapter.SorterAdapter
 import hk.hkucs.sportieapplication.adapter.SportCentreAdapter
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepOneBinding
-import hk.hkucs.sportieapplication.models.BookingInformation
 import hk.hkucs.sportieapplication.models.SportCentre
+import kotlin.math.roundToInt
 
 class BookingStep1Fragment:Fragment() {
     lateinit var dialog: AlertDialog
@@ -143,7 +140,8 @@ class BookingStep1Fragment:Fragment() {
                                                         Latitude = doc.data["latitude"].toString(),
                                                         Longitude = doc.data["longitude"].toString(),
                                                         Bookmarks = doc.data["bookmarks"].toString().toInt(),
-                                                        Occupancy = doc.data["occupancy"].toString().toInt()
+                                                        Occupancy = doc.data["occupancy"].toString().toInt(),
+                                                        CurDistance = calculate_distance(doc.data["latitude"].toString(),doc.data["longitude"].toString())
                                                     )
                                                 )
                                             }
@@ -268,10 +266,10 @@ class BookingStep1Fragment:Fragment() {
         }
 
         else if (sortertype == "Distance"){
-//            // in descending order
-//            sortedSportCentreArray = sportCtrArray.sortedWith(compareByDescending<SportCentre> {
-//                it.Bookmarks
-//            })
+            // in ascending order
+            sortedSportCentreArray = sportCtrArray.sortedWith(compareBy<SportCentre> {
+                it.CurDistance
+            })
         }
 
         // filter based on district
@@ -317,6 +315,14 @@ class BookingStep1Fragment:Fragment() {
         dialog.dismiss()
 
 
+    }
+
+    fun calculate_distance(latitude:String, longitude: String): Double{
+        // calculate distance and set distance
+        var lat1 = Common.dmsToDd(latitude)
+        var long1 = Common.dmsToDd(longitude)
+        var distance = (Common.distance(lat1,long1, Common.curlatitude, Common.curlongitude)*10.0).roundToInt() /10.0
+        return distance
     }
 
 }

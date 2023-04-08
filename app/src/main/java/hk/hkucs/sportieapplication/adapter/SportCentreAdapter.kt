@@ -94,11 +94,11 @@ class SportCentreAdapter(requireActivity: Context, sportCentreArray: ArrayList<S
             cardViewList.add(holder.card_court)
         }
 
-        // calculate distance and set distance
-        var lat1 = Common.dmsToDd(courtList[position].Latitude)
-        var long1 = Common.dmsToDd(courtList[position].Longitude)
-        var distance = (Common.distance(lat1,long1, Common.curlatitude, Common.curlongitude)*10.0).roundToInt() /10.0
-        holder.distance.text = "(" + distance.toString() + "km)"
+//        // calculate distance and set distance
+//        var lat1 = Common.dmsToDd(courtList[position].Latitude)
+//        var long1 = Common.dmsToDd(courtList[position].Longitude)
+//        var distance = (Common.distance(lat1,long1, Common.curlatitude, Common.curlongitude)*10.0).roundToInt() /10.0
+        holder.distance.text = "(" + courtList[position].CurDistance.toString() + "km)"
 
         holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
             override fun onItemSelectedListener(view: View, pos: Int) {
