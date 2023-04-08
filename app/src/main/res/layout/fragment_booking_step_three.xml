@@ -37,8 +37,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendarView"
         android:background="@color/colorButton"
+        app:selectorColor="@color/themeYellow"
         app:textColorNormal="@color/white"
-        app:textColorSelected="@color/themeBlue"/>
+        app:textColorSelected="@color/themeYellow"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_time_slot"

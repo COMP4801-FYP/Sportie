@@ -162,14 +162,12 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
         var startDate = Calendar.getInstance()
         startDate.add(Calendar.DATE,0)
         var endDate = Calendar.getInstance()
-        endDate.add(Calendar.DATE, 2) // 2 day left
+        endDate.add(Calendar.DATE, 13) // 2 day left
 
-        println("startdate + " + startDate)
-        println("enddate + " + endDate)
 
         var horizontalCalendarView = HorizontalCalendar.Builder(itemView, R.id.calendarView)
             .range(startDate,endDate)
-            .datesNumberOnScreen(1)
+            .datesNumberOnScreen(5)
             .mode(HorizontalCalendar.Mode.DAYS)
             .defaultSelectedDate(startDate)
             .build()
