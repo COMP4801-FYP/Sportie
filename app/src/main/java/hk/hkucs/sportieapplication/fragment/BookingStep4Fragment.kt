@@ -192,7 +192,7 @@ class BookingStep4Fragment:Fragment() {
 
                 // submit
                 var date = FirebaseFirestore.getInstance().collection("AllCourt")
-                    .document(Common.district!!)
+                    .document(Common.currentSportCentre!!.getDistrict())
                     .collection("SportCentre")
                     .document(Common.currentSportCentre!!.getCourtId())
                     .collection("Court")

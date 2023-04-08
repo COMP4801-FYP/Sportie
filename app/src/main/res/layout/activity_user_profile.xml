@@ -7,22 +7,47 @@
     android:background="@color/light_grey"
     tools:context=".activities.UserProfileActivity">
 
-    <hk.hkucs.sportieapplication.utils.STextViewBold
-        android:id="@+id/profileTitleText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="35dp"
-        android:text="@string/title_profile"
-        android:textColor="@color/themeRed"
-        android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <hk.hkucs.sportieapplication.utils.STextViewBold
+            android:id="@+id/profileTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/title_profile"
+            android:textColor="@color/themeRed"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight="1"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_signout"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="30dp"
+            android:text="Sign Out"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="40dp"
+            android:background="@color/themeYellow" />
+
+    </LinearLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/profileTitleText">
+        app:layout_constraintTop_toBottomOf="@+id/topLayout">
 
         <FrameLayout
             android:id="@+id/fl_user_image"
@@ -185,6 +210,9 @@
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/themeRed"
             app:layout_constraintTop_toBottomOf="@+id/rg_gender" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -141,7 +141,7 @@ class Common {
             val occsorter = Sorter(name = "Occupancy", image = R.drawable.occupancy_icon_yellow)
             sorterlist.add(occsorter)
 
-            val distancesorter = Sorter(name = "Distance", image = R.drawable.ic_baseline_location_on_24)
+            val distancesorter = Sorter(name = "Distance", image = R.drawable.ic_baseline_location_on_24_yellow)
             sorterlist.add(distancesorter)
 
             val bookmarksorter = Sorter(name = "Bookmark", image = R.drawable.ic_baseline_bookmarks_24)

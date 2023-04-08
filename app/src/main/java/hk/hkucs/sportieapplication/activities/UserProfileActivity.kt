@@ -21,6 +21,10 @@ import hk.hkucs.sportieapplication.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import hk.hkucs.sportieapplication.utils.SGlideLoader
 import java.io.IOException
+import com.google.firebase.auth.FirebaseAuth
+import android.app.AlertDialog
+import android.content.DialogInterface
+
 
 class UserProfileActivity : AppCompatActivity() {
     private lateinit var mUserDetails: User
@@ -260,6 +264,31 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnSignout.setOnClickListener(){
 
+            val builder = AlertDialog.Builder(this)
+
+            // Set dialog title and message
+            builder.setTitle("Alert")
+                .setMessage("Are you sure you want to sign out?")
+
+            // Set positive button with click listener
+            builder.setPositiveButton("Yes") { dialog, which ->
+                // Do something when user clicks Yes button
+                val auth = FirebaseAuth.getInstance()
+                auth.signOut()
+                startActivity(Intent(applicationContext,SignInActivity::class.java))
+            }
+
+            // Set negative button with click listener
+            builder.setNegativeButton("No") { dialog, which ->
+                // Do something when user clicks No button
+                dialog.cancel()
+            }
+
+            // Create and show the alert dialog
+            val dialog = builder.create()
+            dialog.show()
+        }
     }
 }
