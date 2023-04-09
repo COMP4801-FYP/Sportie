@@ -46,11 +46,11 @@ class BookingListAdapter(context: Context, val bookingList: ArrayList<BookingInf
         bookingDistrict.text = bookingList[position].getDistrict()
 
         val delbtn: Button = view.findViewById(R.id.delBtn)
-        val modifybtn: Button = view.findViewById(R.id.modifyBtn)
+//        val modifybtn: Button = view.findViewById(R.id.modifyBtn)
 
         if (whentime == "PAST"){
             delbtn.visibility = GONE
-            modifybtn.visibility = GONE
+//            modifybtn.visibility = GONE
         }
 
         delbtn.setOnClickListener{
@@ -68,9 +68,9 @@ class BookingListAdapter(context: Context, val bookingList: ArrayList<BookingInf
             alert.show()
         }
 
-        modifybtn.setOnClickListener{
-
-        }
+//        modifybtn.setOnClickListener{
+//
+//        }
 
         return view
     }

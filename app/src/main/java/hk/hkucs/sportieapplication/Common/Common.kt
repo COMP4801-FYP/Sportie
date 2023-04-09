@@ -18,7 +18,6 @@ class Common {
             var ctime = opentime.split(" - ")[1]
             var k = ctime.slice(0..1).toInt() - otime.slice(0..1).toInt() - 1
 
-            println("opentime $opentime")
             var tmplist = mutableListOf<String>()
             for (i in 0..k){
                 var open = otime.slice(0..1).toInt() + i
@@ -41,7 +40,6 @@ class Common {
                 var closestr = "$close:00"
                 tmplist.add("$openstr - $closestr")
             }
-            println("tmplist $tmplist")
 
             return tmplist[slot]
 //            when (slot){
@@ -97,10 +95,6 @@ class Common {
         }
 
         fun distance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-            println("lat1 $lat1")
-            println("long1 $lon1")
-            println("lat2 $lat2")
-            println("long2 $lon2")
             val R = 6371 // Earth's radius in km
             val dLat = (lat2 - lat1).toRadians()
             val dLon = (lon2 - lon1).toRadians()

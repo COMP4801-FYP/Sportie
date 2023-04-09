@@ -202,17 +202,17 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/modifyBtn"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="25dp"
-                android:text="Modify"
-                android:background="@drawable/button_round_corner2"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat_bold" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/modifyBtn"-->
+<!--                android:layout_width="125dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="25dp"-->
+<!--                android:text="Modify"-->
+<!--                android:background="@drawable/button_round_corner2"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:fontFamily="@font/montserrat_bold" />-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/delBtn"
                 android:layout_width="125dp"

@@ -13,6 +13,8 @@ import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.models.TimeSlot
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlot>) : RecyclerView.Adapter<TimeSlotAdapter.MyViewHolder>() {
     constructor(requireActivity: Context) : this(requireActivity, ArrayList())
@@ -57,34 +59,67 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
     @Suppress("RecyclerView")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.txt_time_slot.text = java.lang.StringBuilder(Common.convertTimeSlotToString(position))
+        // slot time
+        var slottime = java.lang.StringBuilder(Common.convertTimeSlotToString(position))
+        holder.txt_time_slot.text = slottime
+
+        val currentTime = Calendar.getInstance()
+        val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+        var slothour: Int
+        if (slottime[1] == ':') {
+            slothour = slottime.substring(0, 1).toInt()
+        } else {
+            slothour = slottime.substring(0, 2).toInt()
+        }
+        println("hour ${currentHour}")
+        println("slottime ${slothour}")
 
         // if all position is available, just show list
         if(timeSlotList.size == 0) {
-            // if all time slot is empty, all card is enable
-            holder.card_time_slot.isEnabled = true
+            if (slothour < currentHour) { // if current time is later than booking slot time
 
-            holder.txt_time_slot_description.text = "Available"
-            holder.txt_time_slot_description.setTextColor(context.getColor(R.color.black))
-            holder.txt_time_slot.setTextColor(context.getColor(R.color.black))
-            holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.white))
+                holder.card_time_slot.isEnabled = false
+                holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))
+                holder.txt_time_slot_description.text = "Time passed"
+                holder.txt_time_slot_description.setTextColor(context.getColor(R.color.white))
+                holder.txt_time_slot.setTextColor(context.getColor(R.color.white))
+            }
+            else{
+                // if all time slot is empty, all card is enable
+                holder.card_time_slot.isEnabled = true
+
+                holder.txt_time_slot_description.text = "Available"
+                holder.txt_time_slot_description.setTextColor(context.getColor(R.color.black))
+                holder.txt_time_slot.setTextColor(context.getColor(R.color.black))
+                holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.white))
+            }
         }
         // if have position booked
         else{
-            for(slotValue in timeSlotList){
-                // loop all time slot from server and set different color
-                var slot = Integer.parseInt(slotValue.getSlot().toString())
-                if(slot == position){
+            if (slothour < currentHour) { // if current time is later than booking slot time
 
-                    // set tag for all time slot is full
-                    holder.card_time_slot.tag = "DISABLE"
+                holder.card_time_slot.isEnabled = false
+                holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))
+                holder.txt_time_slot_description.text = "Time passed"
+                holder.txt_time_slot_description.setTextColor(context.getColor(R.color.white))
+                holder.txt_time_slot.setTextColor(context.getColor(R.color.white))
+            } else {
 
-                    holder.card_time_slot.isEnabled = false
+                for(slotValue in timeSlotList){
+                    // loop all time slot from server and set different color
+                    var slot = Integer.parseInt(slotValue.getSlot().toString())
+                    if(slot == position){
 
-                    holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))
-                    holder.txt_time_slot_description.text = "Full"
-                    holder.txt_time_slot_description.setTextColor(context.getColor(R.color.white))
-                    holder.txt_time_slot.setTextColor(context.getColor(R.color.white))
+                        // set tag for all time slot is full
+                        holder.card_time_slot.tag = "DISABLE"
+
+                        holder.card_time_slot.isEnabled = false
+
+                        holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))
+                        holder.txt_time_slot_description.text = "Booked"
+                        holder.txt_time_slot_description.setTextColor(context.getColor(R.color.white))
+                        holder.txt_time_slot.setTextColor(context.getColor(R.color.white))
+                    }
                 }
             }
         }
@@ -96,9 +131,6 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
         var timeslotpos = TimeSlot()
         timeslotpos.setSlot(position.toLong())
-        for (i in timeSlotList){
-            println("halom ${i.getSlot()}")
-        }
         if (!timeSlotList.contains(timeslotpos)){
 //             check if card time_slot is available
             holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
