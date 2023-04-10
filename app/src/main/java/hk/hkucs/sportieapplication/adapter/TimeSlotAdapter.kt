@@ -13,6 +13,7 @@ import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.IRecyclerItemSelectedListener
 import hk.hkucs.sportieapplication.models.TimeSlot
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -65,6 +66,11 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
         val currentTime = Calendar.getInstance()
         val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+        var currentdate = currentTime.get(Calendar.DATE)
+        var simpleDateFromat = SimpleDateFormat("dd_MM_yyyy")
+        var chosendate = simpleDateFromat.format(Common.bookingDate.time).substring(0,1).toInt()
+        println("curdate ${currentdate}, bookdate ${chosendate}" )
+
         var slothour: Int
         if (slottime[1] == ':') {
             slothour = slottime.substring(0, 1).toInt()
@@ -76,7 +82,7 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
         // if all position is available, just show list
         if(timeSlotList.size == 0) {
-            if (slothour < currentHour) { // if current time is later than booking slot time
+            if (slothour < currentHour && currentdate == chosendate) { // if current time is later than booking slot time
 
                 holder.card_time_slot.isEnabled = false
                 holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))

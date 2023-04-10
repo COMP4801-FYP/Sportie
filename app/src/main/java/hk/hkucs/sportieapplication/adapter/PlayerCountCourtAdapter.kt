@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.cardview.widget.CardView
@@ -25,6 +26,7 @@ class PlayerCountCourtAdapter(requireActivity: Context, courtArray: ArrayList<Co
         var card_court: CardView
         lateinit var colorshape:AppCompatButton
         lateinit var iRecyclerItemSelectedListener: IRecyclerItemSelectedListener
+        lateinit var bookinfotext:LinearLayout
 
         fun setiRecyclerItemSelectedListener(iRecyclerItemSelectedListener: IRecyclerItemSelectedListener){
             this.iRecyclerItemSelectedListener = iRecyclerItemSelectedListener
@@ -34,10 +36,11 @@ class PlayerCountCourtAdapter(requireActivity: Context, courtArray: ArrayList<Co
             txtCourtName = itemView.findViewById(R.id.txt_court_name)
             card_court = itemView.findViewById(R.id.card_court)
             colorshape =itemView.findViewById(R.id.colorshape)
+            bookinfotext = itemView.findViewById(R.id.bookinginfotext)
 
-//            itemView.setOnClickListener(){
-//                iRecyclerItemSelectedListener.onItemSelectedListener(itemView, absoluteAdapterPosition)
-//            }
+            itemView.setOnClickListener(){
+                iRecyclerItemSelectedListener.onItemSelectedListener(itemView, absoluteAdapterPosition)
+            }
         }
     }
 
@@ -66,21 +69,31 @@ class PlayerCountCourtAdapter(requireActivity: Context, courtArray: ArrayList<Co
             cardViewList.add(holder.card_court)
         }
 
+        var currentSelectedCard: CardView? = null // add this variable to keep track of currently selected card
         holder.setiRecyclerItemSelectedListener(object : IRecyclerItemSelectedListener {
             override fun onItemSelectedListener(view: View, pos: Int) {
-                // set white background for all card not be selected
-                for(cardview in cardViewList){
+                // set white background for all cards
+                for (cardview in cardViewList) {
+                    // Get the child LinearLayout
+                    val linearLayout = cardview.getChildAt(0) as LinearLayout
+                    // Hide the booking info text
+                    linearLayout.findViewById<LinearLayout>(R.id.bookinginfotext)?.visibility = View.GONE
+                    // Set the card background color to white
                     cardview.setCardBackgroundColor(context.getColor(R.color.white))
                 }
 
-                // set background for choice
-                holder.card_court.setCardBackgroundColor(context.getColor(R.color.themeRed))
-
-                // send broadcast to tell Booking Activity enable button next
-                val intent = Intent("ENABLE_BUTTON_NEXT")
-                intent.putExtra("COURT_SELECTED", courtList[pos])
-                intent.putExtra("STEP", 2)
-                localBroadcastManager.sendBroadcast(intent)
+                // set background for selected card
+                holder.card_court.setCardBackgroundColor(context.getColor(R.color.themeYellow))
+                // Get the child LinearLayout
+                val linearLayout = holder.card_court.getChildAt(0) as LinearLayout
+                // show the booking info text
+                if ( linearLayout.findViewById<LinearLayout>(R.id.bookinginfotext)?.visibility == View.GONE){
+                    linearLayout.findViewById<LinearLayout>(R.id.bookinginfotext)?.visibility = View.VISIBLE
+                    linearLayout.findViewById<TextView>(R.id.infotext).text = courtList[pos].getBookInfo()
+                }
+                else{
+                    linearLayout.findViewById<LinearLayout>(R.id.bookinginfotext)?.visibility = View.GONE
+                }
             }
         })
     }

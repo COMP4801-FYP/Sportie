@@ -9,7 +9,8 @@ class Court (
     private var address: String,
     private var courtId: String,
     private var playercountA: Int,
-    private var playercountB: Int
+    private var playercountB: Int,
+    private var bookingInfo: String
 
 
 ):Parcelable {
@@ -38,5 +39,9 @@ class Court (
     }
     fun getCourtB(): Int {
         return playercountB
+    }
+
+    fun getBookInfo(): String {
+        return bookingInfo
     }
 }

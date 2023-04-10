@@ -88,6 +88,8 @@ class Common {
         var curlongitude = 114.137676
 
 
+
+
         fun dmsToDd(dms: String): Double {
             val (degrees, minutes, seconds) = dms.split('-').map { it.toDouble() }
             val dd = degrees + minutes / 60 + seconds / 3600

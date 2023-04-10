@@ -32,8 +32,20 @@
         android:id="@+id/recycler_court"
         android:layout_marginTop="4dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         />
+
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:layout_gravity="center"-->
+<!--        android:id="@+id/checkBooking"-->
+<!--        android:layout_width="125dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Check Booking"-->
+<!--        android:background="@drawable/button_round_corner"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="15sp"-->
+<!--        android:fontFamily="@font/montserrat_bold" />-->
 </LinearLayout>

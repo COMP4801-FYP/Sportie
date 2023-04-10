@@ -229,7 +229,7 @@ class BookingActivity : AppCompatActivity() {
                 if (!documents.isEmpty) {
                     var courtArray = ArrayList<Court>()
                     for (document in documents) {
-                        courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
+                        courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt(),""))
                     }
                     // send broadcast to BookingStep2Fragment to load Recycler
                     val intent = Intent("COURT_LOAD_DONE")
@@ -295,10 +295,6 @@ class BookingActivity : AppCompatActivity() {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
-                        println("lat ${list[0].latitude}")
-                        println("lon ${list[0].longitude}")
-                        println("addr ${list[0].getAddressLine(0)}")
-                        println("loc ${list[0].locality}")
                         Common.curlatitude = list[0].latitude
                         Common.curlongitude = list[0].longitude
                     }

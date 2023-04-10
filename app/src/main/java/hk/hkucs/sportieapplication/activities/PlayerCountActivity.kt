@@ -71,7 +71,7 @@ class PlayerCountActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        getLocation()
+//        getLocation()
 
         dialog = SpotsDialog.Builder().setContext(this).setCancelable(false).build()
 
@@ -223,11 +223,7 @@ class PlayerCountActivity : AppCompatActivity() {
                 if (!documents.isEmpty) {
                     var courtArray = ArrayList<Court>()
                     for (document in documents) {
-                        println(document.data["name"].toString())
-                        println(document.data["address"].toString())
-                        println(document.data["playercount_a"].toString())
-                        println(document.data["playercount_b"].toString())
-                        courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt()))
+                        courtArray.add(Court(document.data["name"].toString(), document.data["address"].toString(), document.id, document.data["playercount_a"].toString().toInt(), document.data["playercount_b"].toString().toInt(),""))
                     }
                     // send broadcast to BookingStep2Fragment to load Recycler
                     val intent = Intent("COURT_LOAD_DONE")
