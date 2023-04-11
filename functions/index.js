@@ -92,7 +92,12 @@ exports.countPlayersImagesPresentation = functions.runWith(runtimeOpts).pubsub.s
 
   docRef.update({
       playercount_a: maxValue,
-      isUpdated: true
+      isUpdated: true,
+      photo_1: countDict['1'],
+      photo_2: countDict['2'],
+      photo_3: countDict['3'],
+      photo_4: countDict['4'],
+      photo_5: countDict['5'],
   })
   .then(() => {
       console.log("Document successfully updated!");
