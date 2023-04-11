@@ -1,65 +1,140 @@
-// const functions = require("firebase-functions");
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
 const functions = require("firebase-functions");
-
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');      //the duplicate initializeApp might cause some problem
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 // The Firebase Admin SDK to access Firestore.
 const admin = require("firebase-admin");
 admin.initializeApp();
 
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const {ImageAnnotatorClient} = require('@google-cloud/vision').v1;
 
-exports.addMessage = functions.https.onCall((data, context) => {
-  return data.text;
-});
+const runtimeOpts = {
+  timeoutSeconds: 540,
+}
 
+exports.analyzeImages = functions.runWith(runtimeOpts).https.onCall(async(data,context)=>{
 
+  var inputImageUriArray = new Array();
+  var category = data.text
 
-// Imports the Google Cloud Video Intelligence library + Node's fs library
-
-// Creates a client
-
-
-const Video = require('@google-cloud/video-intelligence').v1;
-
-
-
-exports.countPlayers = functions.https.onCall(async(data,context)=>{
-  const gcsUri = 'gs://sportie-a3ce0.appspot.com/WhatsApp Video 2022-10-29 at 9.23.07 PM.mp4';
-  const video = new Video.VideoIntelligenceServiceClient();
-  console.log("TESTTTTTTTTTTT---------------------------------")
-
-  const detectPersonGCS = async function() {
-    const request = {
-      inputUri: gcsUri,
-      features: ['PERSON_DETECTION'],
-      videoContext: {
-        personDetectionConfig: {
-          // Must set includeBoundingBoxes to true to get poses and attributes.
-//          includeBoundingBoxes: true,
-          // includePoseLandmarks: true,
-          // includeAttributes: true,
-        },
-      },
-    };
-    // Detects faces in a video
-    // We get the first result because we only process 1 video
-    const [operation] = await video.annotateVideo(request);
-    const results = await operation.promise();
-    console.log('Waiting for operation to complete...');
-  
-    // Gets annotations for video
-    const personAnnotations =
-      results[0].annotationResults[0].personDetectionAnnotations;
-
-    console.log('Number of people: ' + personAnnotations.length.toString())
-
-    return personAnnotations.length.toString()
+  for(var i = 1; i<6; i++){
+    inputImageUriArray.push('gs://sportie-a3ce0.appspot.com/'+category + '/' + i.toString() + '.jpg');
   }
-  return await detectPersonGCS();
+
+  var countArray = [];
+  const client = new ImageAnnotatorClient();
+  var countDict = {};
+
+  console.log("start analyzing")
+  for (var i = 0; i < inputImageUriArray.length; i++){
+    const [result] = await client.objectLocalization(inputImageUriArray[i]);
+    const objects = result.localizedObjectAnnotations;
+
+    var count = 0;
+    objects.forEach(object => {
+//      console.log(object)
+      if (object.name == 'Person' && object.score >= 0.8){
+        count += 1;
+      }
+    });
+    countArray.push(count)
+    countDict[i+1] = count
+  }
+  console.log("finish analyzing")
+  console.log("result for " + category)
+  console.log(countDict)
+  return countArray;
+})
+
+exports.countPlayersImagesPresentation = functions.runWith(runtimeOpts).pubsub.schedule('every 1 minutes').onRun(async(context)=>{
+
+  var inputImageUriArray = new Array();
+  var category = "presentation"
+
+  for(var i = 1; i<6; i++){
+    inputImageUriArray.push('gs://sportie-a3ce0.appspot.com/'+category + '/' + i.toString() + '.jpg');
+  }
+
+
+  var countArray = [];
+  const client = new ImageAnnotatorClient();
+  var countDict = {};
+
+  console.log("start analyzing")
+  for (var i = 0; i < inputImageUriArray.length; i++){
+    const [result] = await client.objectLocalization(inputImageUriArray[i]);
+    const objects = result.localizedObjectAnnotations;
+
+    var count = 0;
+    objects.forEach(object => {
+//      console.log(object)
+      if (object.name == 'Person' && object.score >= 0.8){
+        count += 1;
+      }
+    });
+    countArray.push(count)
+    countDict[i+1] = count
+  }
+  console.log("finish analyzing")
+  console.log("result for " + category)
+  console.log(countDict)
+
+  const db = getFirestore();
+  const docRef = db.collection("AllCourt").doc("Central & Western").collection("SportCentre").doc("dummytesting").collection("Court").doc("dummy_No_1");
+
+  // Update the "name" attribute of the document
+  // find max of array
+  maxValue = 0
+  countArray.forEach(count =>{
+    if (count > maxValue){
+        maxValue = count
+    }
+  })
+
+  docRef.update({
+      playercount_a: maxValue,
+      isUpdated: true
+  })
+  .then(() => {
+      console.log("Document successfully updated!");
+  })
+  .catch((error) => {
+      console.error("Error updating document: ", error);
+  });
+
+  return;
+})
+
+exports.countPlayersImages = functions.runWith(runtimeOpts).https.onCall(async(data,context)=>{
+
+  var inputImageUriArray = new Array();
+  var category = data.text
+
+  for(var i = 1; i<51; i++){
+    inputImageUriArray.push('gs://sportie-a3ce0.appspot.com/'+category + '/' + i.toString() + '.jpg');
+  }
+
+
+  var countArray = [];
+  const client = new ImageAnnotatorClient();
+  var countDict = {};
+
+  console.log("start analyzing")
+  for (var i = 0; i < inputImageUriArray.length; i++){
+    const [result] = await client.objectLocalization(inputImageUriArray[i]);
+    const objects = result.localizedObjectAnnotations;
+
+    var count = 0;
+    objects.forEach(object => {
+//      console.log(object)
+      if (object.name == 'Person' && object.score >= 0.8){
+        count += 1;
+      }
+    });
+    countArray.push(count)
+    countDict[i+1] = count
+  }
+  console.log("finish analyzing")
+  console.log("result for " + category)
+  console.log(countDict)
+  return;
 })
