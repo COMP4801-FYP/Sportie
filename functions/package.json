@@ -15,6 +15,7 @@
   "main": "index.js",
   "dependencies": {
     "@google-cloud/video-intelligence": "^4.1.0",
+    "@google-cloud/vision": "^3.1.2",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^4.0.1"
   },

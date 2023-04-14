@@ -1,65 +1,72 @@
-// const functions = require("firebase-functions");
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
 const functions = require("firebase-functions");
+const { getFirestore} = require('firebase-admin/firestore');
+const admin = require("firebase-admin"); // The Firebase Admin SDK to access Firestore.
+const {ImageAnnotatorClient} = require('@google-cloud/vision').v1;
 
-// The Firebase Admin SDK to access Firestore.
-const admin = require("firebase-admin");
 admin.initializeApp();
 
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const runtimeOpts = {
+  timeoutSeconds: 540
+}
 
-exports.addMessage = functions.https.onCall((data, context) => {
-  return data.text;
-});
+const numOfImages = 50;   // number of images per batch per court
+
+// Function to:
+// 1. Call Google Vision API on each of the 50 images of the court every 10 minutes
+// 2.
+// This function
+exports.countPlayers = functions.runWith(runtimeOpts).pubsub.schedule('every 10 minutes').onRun(async(data, context)=>{
+ var inputImageUriArray = new Array();          // array containing Images' URI
+ var courtId = data.text                        // courtId which will be used to navigate the Firebase Storage
+ var countArray = [];                           // array containing player counts for the photos
+ var countDict = {};                            // dictionary with key as the photo number and value as the player count of the photo
+ const db = getFirestore();
+
+ const client = new ImageAnnotatorClient();     // initialize Image Annotator Client of Google Vision API
+
+ // Build the array with Images' URI on Firebase Storage
+ for(var i = 1; i<numOfImages+1; i++){
+   inputImageUriArray.push('gs://sportie-a3ce0.appspot.com/'+courtId + '/' + i.toString() + '.jpg');
+ }
+
+ console.log("Start analyzing...")
+ for (var i = 0; i < inputImageUriArray.length; i++){
+   const [result] = await client.objectLocalization(inputImageUriArray[i]);     // call the Google Vision API on the Image
+   const objects = result.localizedObjectAnnotations;                           // get the object annotations
+   var count = 0;
+   objects.forEach(object => {
+     // count the number of objects analyzed that are "Person"(s) and with confidence score >= 0.8
+     if (object.name == 'Person' && object.score >= 0.8){
+       count += 1;
+     }
+   });
+   countArray.push(count)
+   countDict[i+1] = count
+ }
+ console.log("Finish analyzing!")
+ console.log("Result for " + courtId + ":")
+ console.log(countDict)
 
 
+ // Find max number of people based on the numOfImages photos
+ maxValue = 0
+ countArray.forEach(count =>{
+   if (count > maxValue){
+       maxValue = count
+   }
+ })
 
-// Imports the Google Cloud Video Intelligence library + Node's fs library
+ // Update the specific side of the court's player count in Firebase Firestore
+ const docRef = db.collection("AllCourt").doc("Central & Western").collection("SportCentre").doc("dummytesting").collection("Court").doc("dummy_No_1");
+ docRef.update({
+     playercount_a: maxValue,
+ })
+ .then(() => {
+     console.log("Document successfully updated!");
+ })
+ .catch((error) => {
+     console.error("Error updating document: ", error);
+ });
 
-// Creates a client
-
-
-const Video = require('@google-cloud/video-intelligence').v1;
-
-
-
-exports.countPlayers = functions.https.onCall(async(data,context)=>{
-  const gcsUri = 'gs://sportie-a3ce0.appspot.com/WhatsApp Video 2022-10-29 at 9.23.07 PM.mp4';
-  const video = new Video.VideoIntelligenceServiceClient();
-  console.log("TESTTTTTTTTTTT---------------------------------")
-
-  const detectPersonGCS = async function() {
-    const request = {
-      inputUri: gcsUri,
-      features: ['PERSON_DETECTION'],
-      videoContext: {
-        personDetectionConfig: {
-          // Must set includeBoundingBoxes to true to get poses and attributes.
-//          includeBoundingBoxes: true,
-          // includePoseLandmarks: true,
-          // includeAttributes: true,
-        },
-      },
-    };
-    // Detects faces in a video
-    // We get the first result because we only process 1 video
-    const [operation] = await video.annotateVideo(request);
-    const results = await operation.promise();
-    console.log('Waiting for operation to complete...');
-  
-    // Gets annotations for video
-    const personAnnotations =
-      results[0].annotationResults[0].personDetectionAnnotations;
-
-    console.log('Number of people: ' + personAnnotations.length.toString())
-
-    return personAnnotations.length.toString()
-  }
-  return await detectPersonGCS();
+ return;
 })
