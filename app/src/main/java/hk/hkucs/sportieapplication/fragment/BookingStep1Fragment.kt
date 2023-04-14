@@ -128,6 +128,7 @@ class BookingStep1Fragment:Fragment() {
                                     .addOnSuccessListener { documents ->
                                         if (!documents.isEmpty) {
                                             for (doc in documents) {
+                                                println("hei ${doc.data["facility_name"]}")
                                                 Common.allCentreArray.add(
                                                     SportCentre(
                                                         Name_en = doc.data["facility_name"].toString(),

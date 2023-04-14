@@ -16,26 +16,21 @@ class Common {
             var opentime = Common.currentSportCentre!!.getopenhour()
             var otime = opentime.split(" - ")[0]
             var ctime = opentime.split(" - ")[1]
-            var k = ctime.slice(0..1).toInt() - otime.slice(0..1).toInt() - 1
+
+            var k:Int
+            // if no time data
+            if (otime == ""){
+                otime = "08"
+                k = 12
+            }
+            else{
+                k = ctime.slice(0..1).toInt() - otime.slice(0..1).toInt() - 1
+            }
 
             var tmplist = mutableListOf<String>()
             for (i in 0..k){
                 var open = otime.slice(0..1).toInt() + i
                 var close = otime.slice(0..1).toInt() + i + 1
-//                lateinit var openstr:String
-//                lateinit var closestr:String
-//                if (open < 10){
-//                    openstr = "0$open:00"
-//                }
-//                else{
-//                    openstr = "$open:00"
-//                }
-//                if (close < 10){
-//                    closestr = "0$close:00"
-//                }
-//                else{
-//                    closestr = "$close:00"
-//                }
                 var openstr = "$open:00"
                 var closestr = "$close:00"
                 tmplist.add("$openstr - $closestr")

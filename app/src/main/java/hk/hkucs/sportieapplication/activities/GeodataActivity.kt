@@ -427,6 +427,43 @@ class GeodataActivity : AppCompatActivity() {
         }
     }
 
+//    var listss = arrayListOf<String>("7 am to 11 pm daily",
+//        "7 am – 11 pm daily",
+//        "7 am to 11 pm",
+//        "7:30 am &ndash; 10:00 pm&nbsp;daily",
+//        "7:00 am &ndash; 11:00 pm&nbsp;",
+//        "7:30 am &ndash; 10:00 pm&nbsp;daily&nbsp;",
+//        "8:00 am &ndash; 10:00 pm&nbsp;daily",
+//        "24 hours<br>",
+//        "7 am – 11 pm, 24 hours daily",
+//        "9am – 7pm",
+//        "7:00am – 11:00pm",
+//        "7am – 11pm",
+//        "7:00 am – 11:00 pm, 7am to 11pm daily",
+//        "7am – 11pm daily",
+//        "7 am-10 pm daily",
+//        "7 am - 11 pm daily (except maintenance days)",
+//        "7am – 10pm daily",
+//        "7 am-10:30 pm daily",
+//        "7am - 10pm daily",
+//        "6 am to 11 pm daily",
+//        "8 am to 11 pm<br>",
+//        "9 am to 11 pm, 6:30 am to 11 pm daily",
+//        "7am to 6 pm daily, 8 am to 11 pm daily",
+//        "8 am to 9 pm daily",
+//        "From 8am to 11pm daily",
+//        "6am – 11:30pm",
+//        "7 am to 11 pm (1 hour per session)",
+//        "6:30am &ndash; 11:00pm&nbsp;daily",
+//        "7:00 am to 11:00 pm daily",
+//        "9am – 10pm",
+//        "07:00 a.m to 11:00 p.m",
+//        "7:00 am &ndash; 11:00 pm daily")
+//
+//    for (i in listss){
+//        println("$i -> {${extractTime(i)}")
+//    }
+
 
 
 

@@ -38,6 +38,7 @@ class BookingListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         // get booking list
         FirestoreClass().getBookingList(this, "FUTURE")
         // get bookmark list
@@ -110,5 +111,6 @@ class BookingListActivity : AppCompatActivity() {
         binding.addBookingBtn.visibility = View.VISIBLE
         binding.bookingListView.visibility = View.GONE
     }
+
 }
 

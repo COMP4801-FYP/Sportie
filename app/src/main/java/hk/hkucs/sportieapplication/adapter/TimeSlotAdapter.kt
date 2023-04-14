@@ -68,7 +68,7 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
         val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
         var currentdate = currentTime.get(Calendar.DATE)
         var simpleDateFromat = SimpleDateFormat("dd_MM_yyyy")
-        var chosendate = simpleDateFromat.format(Common.bookingDate.time).substring(0,1).toInt()
+        var chosendate = simpleDateFromat.format(Common.bookingDate.time).substring(0,2).toInt()
         println("curdate ${currentdate}, bookdate ${chosendate}" )
 
         var slothour: Int
@@ -102,7 +102,7 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
         }
         // if have position booked
         else{
-            if (slothour < currentHour) { // if current time is later than booking slot time
+            if (slothour < currentHour && currentdate == chosendate) { // if current time is later than booking slot time
 
                 holder.card_time_slot.isEnabled = false
                 holder.card_time_slot.setCardBackgroundColor(context.getColor(R.color.darker_gray))
@@ -171,6 +171,9 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
 
     override fun getItemCount(): Int {
 //        return Common.TIME_SLOT_TOTAL
+        if (Common.currentSportCentre!!.getopenhour() == " - "){
+            return 12
+        }
         return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()
     }
 
