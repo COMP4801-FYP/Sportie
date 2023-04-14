@@ -71,7 +71,7 @@ class PlayerCountActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-//        getLocation()
+        getLocation()
 
         dialog = SpotsDialog.Builder().setContext(this).setCancelable(false).build()
 
