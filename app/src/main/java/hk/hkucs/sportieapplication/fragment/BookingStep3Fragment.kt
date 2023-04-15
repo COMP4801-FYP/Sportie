@@ -167,7 +167,7 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
 
         var horizontalCalendarView = HorizontalCalendar.Builder(itemView, R.id.calendarView)
             .range(startDate,endDate)
-            .datesNumberOnScreen(5)
+            .datesNumberOnScreen(1)
             .mode(HorizontalCalendar.Mode.DAYS)
             .defaultSelectedDate(startDate)
             .build()

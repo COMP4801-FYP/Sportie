@@ -174,7 +174,13 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
         if (Common.currentSportCentre!!.getopenhour() == " - "){
             return 12
         }
-        return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()
+
+        if ((Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(3..4)) == "00"){
+            return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()
+        }
+        else{
+            return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()-1
+            }
     }
 
     // to prevent unstable selected item position
