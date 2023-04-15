@@ -1,6 +1,6 @@
-# Firebase Function for Player Tracking
+# Firebase Function for Check Court Occupancy Feature
 
-This Firebase function provides a player count tracking feature for Sportie. The function is designed to capture photos of the court using a camera and use Google Vision API to detect number of people in the court. 
+This Firebase function provides Check Court Occupancy feature for Sportie. The function is designed to capture photos of the court using a camera and use Google Vision API to detect number of people in the court.
 
 Currently, the function is set to run every 10 minutes and analyze photos stored in Firebase Storage for each court.
 
