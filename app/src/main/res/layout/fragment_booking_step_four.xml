@@ -13,7 +13,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:src="@drawable/sportie_logo"
         android:background="@color/light_grey"
         android:layout_gravity="bottom"/>

@@ -4,12 +4,9 @@ import android.app.AlertDialog
 import android.content.*
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -17,12 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.HorizontalCalendarView
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -31,13 +24,9 @@ import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.Common.SpacesItemDecoration
 import hk.hkucs.sportieapplication.R
 import hk.hkucs.sportieapplication.`interface`.ITimeSlotListener
-import hk.hkucs.sportieapplication.adapter.CourtAdapter
 import hk.hkucs.sportieapplication.adapter.TimeSlotAdapter
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepThreeBinding
-import hk.hkucs.sportieapplication.databinding.FragmentBookingStepTwoBinding
-import hk.hkucs.sportieapplication.models.Court
 import hk.hkucs.sportieapplication.models.TimeSlot
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -167,13 +156,24 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
 
         var horizontalCalendarView = HorizontalCalendar.Builder(itemView, R.id.calendarView)
             .range(startDate,endDate)
-            .datesNumberOnScreen(5)
+            .datesNumberOnScreen(1)
             .mode(HorizontalCalendar.Mode.DAYS)
             .defaultSelectedDate(startDate)
             .build()
 
+
+
         horizontalCalendarView.calendarListener = object :HorizontalCalendarListener(){
             override fun onDateSelected(date: Calendar?, position: Int) {
+                println("horiz ${horizontalCalendarView.selectedDate.time}")
+                println("horiztime ${date!!.time}")
+                horizontalCalendarView.selectedDate.set(Calendar.YEAR, date!!.get(Calendar.YEAR))
+                horizontalCalendarView.selectedDate.set(Calendar.MONTH, date!!.get(Calendar.MONTH))
+                horizontalCalendarView.selectedDate.set(Calendar.DAY_OF_MONTH, date!!.get(Calendar.DAY_OF_MONTH))
+                horizontalCalendarView.selectedDate.set(Calendar.HOUR_OF_DAY, date!!.get(Calendar.HOUR_OF_DAY))
+                horizontalCalendarView.selectedDate.set(Calendar.MINUTE, date!!.get(Calendar.MINUTE))
+
+                println("horiz ${horizontalCalendarView.selectedDate.time}")
                 if(Common.bookingDate.timeInMillis != date!!.timeInMillis){
                     // code wont run again if select new day same with selected day
                     Common.bookingDate = date

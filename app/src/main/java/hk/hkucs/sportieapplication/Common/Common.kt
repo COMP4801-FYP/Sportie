@@ -25,14 +25,17 @@ class Common {
             }
             else{
                 k = ctime.slice(0..1).toInt() - otime.slice(0..1).toInt() - 1
+                if (otime.slice(3..4) != "00"){
+                    k -= 1
+                }
             }
 
             var tmplist = mutableListOf<String>()
             for (i in 0..k){
                 var open = otime.slice(0..1).toInt() + i
                 var close = otime.slice(0..1).toInt() + i + 1
-                var openstr = "$open:00"
-                var closestr = "$close:00"
+                var openstr = "$open:${otime.slice(3..4)}"
+                var closestr = "$close:${otime.slice(3..4)}"
                 tmplist.add("$openstr - $closestr")
             }
 
