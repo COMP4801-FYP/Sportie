@@ -180,8 +180,12 @@ class TimeSlotAdapter(requireActivity: Context, timeSlotArray: ArrayList<TimeSlo
         }
         else{
             return Common.currentSportCentre!!.getopenhour().split(" - ")[1].slice(0..1).toInt() - Common.currentSportCentre!!.getopenhour().split(" - ")[0].slice(0..1).toInt()-1
+<<<<<<< HEAD
         }
 
+=======
+            }
+>>>>>>> b483d84645043c17fffbec81d3a49a8a4c3cef07
     }
 
     // to prevent unstable selected item position
