@@ -32,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dmax.dialog.SpotsDialog
 import hk.hkucs.sportieapplication.Common.Common
 import hk.hkucs.sportieapplication.R
+import hk.hkucs.sportieapplication.activities.BookingActivity
 import hk.hkucs.sportieapplication.activities.BookingListActivity
 import hk.hkucs.sportieapplication.activities.SignInActivity
 import hk.hkucs.sportieapplication.databinding.FragmentBookingStepFourBinding
@@ -200,15 +201,43 @@ class BookingStep4Fragment:Fragment() {
                     .collection(Common.simpleDateFormat.format(Common.bookingDate.time))
                     .document(Common.currentTimeSlot.toString())
 
-                // write data
-                date.set(bookInfo)
-                    .addOnSuccessListener{
-                        // check if a booking exists, to prevent new booking
-                        addToUserBooking(bookInfo)
+                // Check if a booking already exists for the chosen time slot
+                date.get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        if (document != null && document.exists()) {
+                            // Booking already exists, show error message
+                            Toast.makeText(
+                                context,
+                                "Booking already exists for the chosen time slot",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            resetStaticData()
+                            requireActivity().finish()
+                            startActivity(Intent(requireView().context, BookingActivity::class.java))
+                        } else {
+                            // Booking does not exist, proceed with writing to the database
+                            date.set(bookInfo)
+                                .addOnSuccessListener {
+                                    // Booking added successfully, add to user's booking
+                                    addToUserBooking(bookInfo)
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(
+                                        context,
+                                        e.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Failed to check existing bookings",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                    .addOnFailureListener{e->
-                        Toast.makeText(context, e.message ,Toast.LENGTH_SHORT).show()
-                    }
+                }
             }
             else
             {

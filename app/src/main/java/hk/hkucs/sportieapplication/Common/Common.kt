@@ -25,13 +25,8 @@ class Common {
             }
             else{
                 k = ctime.slice(0..1).toInt() - otime.slice(0..1).toInt() - 1
-<<<<<<< HEAD
                 if (otime.slice(3..4) != "00"){
                     k -= 1
-=======
-                if (otime.slice(3..4)!="00"){
-                    k-=1
->>>>>>> b483d84645043c17fffbec81d3a49a8a4c3cef07
                 }
             }
 

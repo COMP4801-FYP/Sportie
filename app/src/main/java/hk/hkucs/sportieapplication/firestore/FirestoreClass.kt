@@ -236,7 +236,8 @@ class FirestoreClass {
                                     time = b["time"].toString(),
                                     timestamp = ts,
                                     bookingid = b["bookingid"].toString(),
-                                    courtId = b["courtId"].toString()
+                                    courtId = b["courtId"].toString(),
+                                    slot = b["slot"].toString().toLong()
                                 ))
                             }
                         }
@@ -250,7 +251,8 @@ class FirestoreClass {
                                     time = b["time"].toString(),
                                     timestamp = ts,
                                     bookingid = b["bookingid"].toString(),
-                                    courtId = b["courtId"].toString()
+                                    courtId = b["courtId"].toString(),
+                                    slot = b["slot"].toString().toLong()
                                 ))
                             }
                         }
