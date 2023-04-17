@@ -287,10 +287,7 @@ class PlayerCountActivity : AppCompatActivity() {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
-                        println("lat ${list[0].latitude}")
-                        println("lon ${list[0].longitude}")
-                        println("addr ${list[0].getAddressLine(0)}")
-                        println("loc ${list[0].locality}")
+
                         Common.curlatitude = list[0].latitude
                         Common.curlongitude = list[0].longitude
                     }

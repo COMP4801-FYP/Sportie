@@ -66,6 +66,7 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
             .collection("Court")
             .document(Common.currentCourt!!.getCourtId())
 
+
         // get info of the court
         courtRef.get().addOnSuccessListener() {
             // if court available
@@ -73,12 +74,13 @@ class BookingStep3Fragment:Fragment(), ITimeSlotListener {
                 if (documents.exists()) {
                     // get info of booking, return empty if not created
                     var date = FirebaseFirestore.getInstance().collection("AllCourt")
-                        .document(Common.district!!)
+                        .document(Common.currentSportCentre!!.getDistrict())
                         .collection("SportCentre")
                         .document(Common.currentSportCentre!!.getCourtId())
                         .collection("Court")
                         .document(Common.currentCourt!!.getCourtId())
                         .collection(bookDate)
+
 
                     date.get().addOnSuccessListener {
                         documents ->

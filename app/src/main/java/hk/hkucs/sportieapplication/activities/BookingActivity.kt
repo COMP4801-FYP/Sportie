@@ -117,6 +117,7 @@ class BookingActivity : AppCompatActivity() {
                 // pick time slot
                 else if(Common.step == 2){
                     if (Common.currentCourt != null){
+                        println("courtidid ${Common.currentCourt!!.getCourtId()}")
                         loadTimeSlotOfCourt(Common.currentCourt!!.getCourtId())
                     }
                 }
